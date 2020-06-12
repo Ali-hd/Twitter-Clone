@@ -1,0 +1,93 @@
+.Nav-width{
+    width: 275px;
+}
+
+.Nav{
+    top: 0;
+    left: 0;
+    height: 100%;
+    position: fixed;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    border-right: 1px solid rgb(230, 236, 240);
+}
+
+.Nav-Content{
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 275px;
+    padding-right: 20px;
+    padding-left: 20px;
+    // justify-content: space-between;
+    height: 100%;
+}
+.Nav-wrapper{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+}
+.logo-wrapper{
+    min-width: 30px;
+    cursor: pointer;
+    margin-top: 11.5px;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+}
+
+.Nav-link{
+    padding: 7px 0;
+    display: flex;
+}
+.Nav-item-hover{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: center;
+    max-width: 100%;
+    border-radius: 9999px;
+    transition-property: background-color, box-shadow;
+    transition-duration: 0.2s;
+    &:hover{
+        background-color: rgba(29,161,242, 0.1);
+    }
+}
+.Nav-item{
+    font-size: 19px;
+    font-weight: 700;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.Nav-tweet{
+    width: 90%;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.Nav-tweet-link{
+    background-color: rgb(29, 161, 242);
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 8px 28px;
+    outline-style: none;
+    transition-property: background-color, box-shadow;
+    transition-duration: 0.2s;
+    min-width: calc(78.89px);
+    min-height: 49px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: 1px solid rgba(0, 0, 0, 0);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 9999px;
+}
+.Nav-tweet-btn{
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    overflow-wrap: break-word;
+    text-align: center;
+    max-width: 100%;
+}

@@ -7,7 +7,7 @@ import Loader from './components/Loader'
 import Nav from './components/Nav'
 
 const Home = lazy(()=> import('./components/Home'))
-// const Login = lazy(()=> import('./components/Login'))
+const Profile = lazy(()=> import('./components/Profile'))
 
 
 function App(){
@@ -25,9 +25,9 @@ function App(){
               <Route path="/home" exact>
                 <Home />
               </Route>
-              {/* <Route path="/messages/:id" exact>
-                <Chat />
-              </Route> */}
+              <Route path="/profile" exact>
+                <Profile />
+              </Route>
           </Switch>
           </main>
         </div>

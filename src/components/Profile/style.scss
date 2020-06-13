@@ -1,0 +1,202 @@
+.profile-wrapper{
+    max-width: 600px;
+    border-right: 1px solid rgb(230, 236, 240);
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-header-wrapper{
+    position: sticky;
+    border-bottom: 1px solid rgb(230, 236, 240);
+    border-left: 1px solid rgb(230, 236, 240);
+    background-color: #fff;
+    z-index: 3;
+    top: 0px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height: 53px;
+    padding-left: 15px;
+    padding-right: 15px;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.profile-header-back{
+    min-width: 55px;
+    min-height: 30px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.header-back-wrapper{
+    margin-left: -5px;
+    width: 39px;
+    height: 39px;
+    transition: 0.2s ease-in-out;
+    will-change: background-color;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 9999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header-back-wrapper svg{
+    height: 1.5em;
+    fill: rgb(29,161,242);
+}
+.header-back-wrapper:hover{
+    background-color: rgba(29,161,242,0.1);
+}
+
+.profile-header-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-header-name{
+    font-weight: 800;
+    font-size: 19px;
+}
+
+.profile-header-tweets{
+    font-size: 14px;
+    line-height: calc(19.6875px);
+    color: rgb(101, 119, 134);
+}
+
+.profile-banner-wrapper{
+    max-width: 600px;
+    height: 200px;
+    position: relative;
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.profile-details-wrapper{
+    padding: 10px 15px 15px 15px;
+}
+
+.profile-options{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+}
+
+.profile-image-wrapper{
+    position: absolute;
+    left: 0px;
+    bottom: -30px;
+    width: 134px;
+    min-width: 49px;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    height: 134px;
+    z-index: 5;
+    img{
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.profile-edit-button{
+    min-height: 39px;
+    min-width: 78px;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+    border: 1px solid rgb(29, 161, 242);
+    border-radius: 9999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 1em;
+    padding-right: 1em;
+    span{
+        font-weight: 800;
+        color: rgb(29, 161, 242);
+        width: 100%
+    }
+    &:hover{
+        background-color: rgba(29, 161, 242,0.1);
+    }
+}
+
+.profile-details-box{
+    margin-top: 40px;
+}
+
+.profile-name{
+    font-weight: 800;
+    font-size: 19px;
+}
+
+.profile-username{
+    font-size: 15px;
+    color: rgb(101, 119, 134);
+}
+
+.profile-info-box{
+    display: flex;
+    margin-top: 10px;
+}
+
+.profile-info-box svg{
+    margin-right: 5px;
+    fill: rgb(101, 119, 134);
+    height: 18.75px;
+}
+
+.profile-location, .profile-date{
+    color: rgb(101, 119, 134);
+    margin-right: 10px;
+}
+
+.profile-social-box{
+    display: flex;
+    margin-top: 7px;
+}
+
+.follow-num{
+    font-weight: bold;
+    margin-right: 3px;
+}
+
+.follow-text{
+    color: rgb(101, 119, 134);
+    margin-right: 20px;
+}
+
+.profile-nav-menu{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid rgb(230, 236, 240);
+}
+
+.profile-nav-item{
+    padding: 15px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: rgb(101, 119, 134);
+    transition: 0.2s;
+    will-change: background-color;
+    &:hover{
+        background-color: rgba(29, 161, 242, 0.1);
+    }
+}
+
+.activeTab{
+    border-bottom: 2px solid rgb(29, 161, 242);
+    color: rgb(29, 161, 242);
+}

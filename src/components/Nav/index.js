@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './style.scss'
 import { Icon_Logo, Icon_Home, Icon_Hash, Icon_Bell, Icon_Inbox
 ,Icon_Bookmark, Icon_List, Icon_User, Icon_Settings } from '../../Icons'
@@ -12,12 +13,12 @@ const Nav = () => {
                     <Icon_Logo styles={{fill:"rgb(29,161,242)", width:'47px', height:"30px"}}/>
                 </div>
                 <nav className="Nav-wrapper">
-                    <a href="#" className="Nav-link">
+                    <Link className="Nav-link" to={`/home`}>
                         <div className="Nav-item-hover">
                             <Icon_Home styles={{ width:'26.25px', height:"26.25px"}} />
                             <div className="Nav-item">Home</div>
                         </div>
-                    </a>
+                    </Link>
                     <a href="#" className="Nav-link">
                         <div className="Nav-item-hover">
                             <Icon_Hash styles={{ width:'26.25px', height:"26.25px"}} />
@@ -48,12 +49,12 @@ const Nav = () => {
                             <div className="Nav-item">Lists</div>
                         </div>
                     </a>
-                    <a href="#" className="Nav-link">
+                    <Link className="Nav-link" to={`/profile`}>
                         <div className="Nav-item-hover">
                             <Icon_User styles={{ width:'26.25px', height:"26.25px"}} />
                             <div className="Nav-item">Profile</div>
                         </div>
-                    </a>
+                    </Link>
                     <a href="#" className="Nav-link">
                         <div className="Nav-item-hover">
                             <Icon_Settings styles={{ width:'26.25px', height:"26.25px"}} />

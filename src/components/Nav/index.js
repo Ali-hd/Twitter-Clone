@@ -49,7 +49,7 @@ const Nav = () => {
                             <div className="Nav-item">Lists</div>
                         </div>
                     </a>
-                    <Link className="Nav-link" to={`/profile`}>
+                    <Link className="Nav-link" to={`/profile/ALIMKHD`}>
                         <div className="Nav-item-hover">
                             <Icon_User styles={{ width:'26.25px', height:"26.25px"}} />
                             <div className="Nav-item">Profile</div>

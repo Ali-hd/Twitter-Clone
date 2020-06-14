@@ -2,9 +2,13 @@ import types from './typeActions'
 import jwt from 'jsonwebtoken'
 
 export const useActions = (state, dispatch) => ({
-    loginUser: data => {
+    login: data => {
         dispatch({type: types.SET_STATE, payload: {loading: true}})
         dispatch({type: types.LOGIN, payload: data})
+    },
+    signup: data => {
+        dispatch({type: types.SET_STATE, payload: {loading: true}})
+        dispatch({type: types.REGISTER, payload: data})
     },
     // logout: data => {
     //     localStorage.removeItem("token")

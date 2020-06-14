@@ -1,0 +1,56 @@
+import React, { useEffect, useState, useContext } from 'react'
+import { StoreContext } from '../../store/store'
+import './style.scss'
+import { Link } from 'react-router-dom'
+import { Icon_Logo } from '../../Icons'
+
+const LoginPage = () => {
+    const { state, actions } = useContext(StoreContext)
+
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    const Login = (e) => {
+        e.preventDefault()
+        if(username.length && password.length){
+            const values = {
+                username,
+                password
+            }
+            actions.loginUser(values)
+        }
+    }
+
+    return(
+        <div className="login-wrapper">
+            <Icon_Logo/>
+            <h1 className="login-header">
+                Log in to Twitter
+            </h1>
+            <form id="loginForm" onSubmit={(e)=>Login(e)} className="login-form">
+                <div className="login-input-wrap">
+                    <div className="login-input-content">
+                        <label>Email or username</label>
+                        <input onChange={(e)=>setUsername(e.target.value)} type="text" name="username" className="login-input"/>
+                    </div>
+                </div>
+                <div className="login-input-wrap">
+                    <div className="login-input-content">
+                        <label>Password</label>
+                        <input onChange={(e)=>setPassword(e.target.value)} type="password" name="password" className="login-input"/>
+                    </div>
+                </div>
+                <button type="submit" form="loginForm" className={username.length && password.length > 0 ? "login-btn-wrap button-active": "login-btn-wrap"}>
+                    Log in
+                </button>
+            </form>
+            <p className="signup-option">
+                <Link to="/signup">
+                    Sign up for Twitter
+                </Link>
+            </p>
+        </div>
+    )
+}
+
+export default LoginPage

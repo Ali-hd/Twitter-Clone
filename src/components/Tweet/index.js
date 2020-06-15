@@ -1,8 +1,17 @@
-import React from 'react'
+import React , { useEffect, useState, useContext, useRef } from 'react'
+import { StoreContext } from '../../store/store'
+import { withRouter } from 'react-router-dom'
 import './style.scss'
+import moment from 'moment'
+import Loader from '../Loader'
 import { Icon_ArrowBack, Icon_Heart, Icon_Reply, Icon_Retweet, Icon_Share } from '../../Icons'
 
-const TweetPage = () => {
+const TweetPage = (props) => {
+    const { state, actions } = useContext(StoreContext)
+
+    useEffect(()=>{
+        actions.getTweet(props.match.params.id)
+    }, [])
     return(
         <div className="tweet-wrapper">
             <div className="tweet-header-wrapper">
@@ -112,4 +121,4 @@ const TweetPage = () => {
     )
 }
 
-export default TweetPage
+export default withRouter(TweetPage)

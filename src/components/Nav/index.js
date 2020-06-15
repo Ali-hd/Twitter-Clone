@@ -1,10 +1,21 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React , { useEffect, useState, useContext, useRef } from 'react'
+import { StoreContext } from '../../store/store'
+import { Link, withRouter } from 'react-router-dom'
 import './style.scss'
 import { Icon_Logo, Icon_Home, Icon_Hash, Icon_Bell, Icon_Inbox
 ,Icon_Bookmark, Icon_List, Icon_User, Icon_Settings } from '../../Icons'
 
-const Nav = () => {
+const Nav = ({history}) => {
+    const { state, actions } = useContext(StoreContext)
+
+    useEffect(()=>{  
+        let ran = false
+        history.listen((location, action) => {
+          state.account == null ? actions.verifyToken('get account') : actions.verifyToken()
+        });
+        !ran && state.account == null ? actions.verifyToken('get account') : actions.verifyToken()
+      }, [])
+
     return(
         <div className="Nav-width">
             <div className="Nav">
@@ -78,4 +89,4 @@ const Nav = () => {
     )
 }
 
-export default Nav
+export default withRouter(Nav)

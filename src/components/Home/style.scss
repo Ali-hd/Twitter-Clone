@@ -58,7 +58,16 @@
 .inner-input-box{
     padding: 10px 0;
     font-size: 19px;
-    color: #9197a3
+    color: #9197a3;
+    position: relative;
+}
+
+.inner-input-box div{
+    outline: none;
+}
+
+.inner-input-box div:focus{
+    outline: none;
 }
 
 .inner-input-links{
@@ -79,6 +88,22 @@
     height: 39px;
     cursor: pointer;
     padding: 8.3px;
+    position: relative;
+    input{
+        position: absolute;
+        width: 0.3px;
+        height: 0.3px;
+        overflow: hidden;
+        z-index: 4;
+        padding: 19px;
+        top: 1px;
+        left: 1px;
+        cursor: pointer;
+        color: inherit;
+        background-color: initial;
+        border: initial;
+        text-align: start !important;
+    }
 }
 .input-attach-wrapper:hover{
     border-radius: 50%;
@@ -98,8 +123,14 @@
     align-items: center;
     color: #fff;
     font-weight: 700;
-    cursor: pointer;
+    // cursor: pointer;
     opacity: 0.5;
+    transition: 0.15s ease-in-out;
+}
+
+.tweet-btn-active{
+    cursor: pointer;
+    opacity: 1;
 }
 
 .Tweet-input-divider{
@@ -255,3 +286,58 @@
     font-size: 13px;
 
 }
+
+[contenteditable=true]:empty:before{
+    content: attr(placeholder);
+    pointer-events: none;
+    display: block; /* For Firefox */
+  }
+  
+  /* */
+
+  [contenteditable=true]:empty:focus{
+      opacity: 0.7;
+  }
+  
+//   .inner-input-box{
+//     span[contenteditable=true] {
+//         display: block;
+//       }
+//   }
+
+  .tweet-input-active{
+    color: rgb(20, 23, 26);
+  }
+  
+  .tweet-upload-image{
+      margin-top: 10px;
+      border-radius: 14px;
+      max-height: 253px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+  }
+
+  .inner-image-box{
+      position: relative;
+  }
+
+  .cancel-image{
+    position: absolute;
+    color: white;
+    left: 9px;
+    top: 18px;
+    width: 33px;
+    align-items: center;
+    justify-content: center;
+    line-height: 23px;
+    text-align: center;
+    display: flex;
+    height: 33px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    padding-bottom: 3.5px;
+  }

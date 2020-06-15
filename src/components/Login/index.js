@@ -17,7 +17,7 @@ const LoginPage = () => {
                 username,
                 password
             }
-            actions.loginUser(values)
+            actions.login(values)
         }
     }
 

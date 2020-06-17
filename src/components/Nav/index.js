@@ -8,6 +8,8 @@ import { Icon_Logo, Icon_Home, Icon_Hash, Icon_Bell, Icon_Inbox
 const Nav = ({history}) => {
     const { state, actions } = useContext(StoreContext)
 
+    const { account } = state
+
     useEffect(()=>{  
         let ran = false
         history.listen((location, action) => {
@@ -48,19 +50,19 @@ const Nav = ({history}) => {
                             <div className="Nav-item">Messages</div>
                         </div>
                     </a>
-                    <a href="#" className="Nav-link">
+                    <Link className="Nav-link" to={`/bookmarks`}>
                         <div className="Nav-item-hover">
                             <Icon_Bookmark styles={{ width:'26.25px', height:"26.25px"}} />
                             <div className="Nav-item">Bookmarks</div>
                         </div>
-                    </a>
+                    </Link>
                     <a href="#" className="Nav-link">
                         <div className="Nav-item-hover">
                             <Icon_List styles={{ width:'26.25px', height:"26.25px"}} />
                             <div className="Nav-item">Lists</div>
                         </div>
                     </a>
-                    <Link className="Nav-link" to={`/profile/ALIMKHD`}>
+                    <Link className="Nav-link" to={`/profile/${account && account.username}`}>
                         <div className="Nav-item-hover">
                             <Icon_User styles={{ width:'26.25px', height:"26.25px"}} />
                             <div className="Nav-item">Profile</div>

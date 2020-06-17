@@ -3,16 +3,17 @@ import { StoreContext } from '../../store/store'
 import './style.scss'
 import axios from 'axios'
 import ContentEditable from 'react-contenteditable'
-import { Icon_ImgUpload, Icon_Reply, Icon_Retweet,
-Icon_Heart, Icon_Share, Icon_Bookmark, Icon_HeartFull, Icon_BookmarkFill } from '../../Icons'
+import { Icon_ImgUpload } from '../../Icons'
 import {API_URL} from '../../config'
 import Loader from '../Loader'
 import moment from 'moment'
+import TweetCard from '../TweetCard'
 
 const Home = () => {
     const { state, actions } = useContext(StoreContext)
 
     useEffect(() => {
+        window.scrollTo(0, 0)
         actions.getTweets()
     }, [])
 
@@ -54,14 +55,6 @@ const Home = () => {
         document.getElementById('file').value = "";
         setTweetImage(null)
         setImageLoaded(false)
-    }
-
-    const likeTweet = (id) => {
-        actions.likeTweet(id)
-    }
-
-    const bookmarkTweet = (id) => {
-        actions.bookmarkTweet(id)
     }
 
     return(
@@ -106,78 +99,11 @@ const Home = () => {
                 </div>
             </div>
             <div className="Tweet-input-divider"></div>
+            {/* { state.account && <TweetCard key={'1'} id={'1'} user={'1'} createdAt={'2019'} description={'t.description'}
+                images={'t.images'} replies={[]} retweets={[]} likes={[]} style={{height:'0'}} />} */}
             {state.tweets.length> 0 ? state.tweets.map(t=>{
-                return <div key={t._id} className="Tweet-card-wrapper">
-                <div className="card-userPic-wrapper">
-                    <a href="#">
-                        <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={t.user.profileImg}/>
-                    </a>
-                </div>
-                <div className="card-content-wrapper">
-                    <div className="card-content-header">
-                        <div className="card-header-detail">
-                            <span className="card-header-user">
-                                         {t.user.name}
-                            </span>
-                            <span className="card-header-username">
-                                        {'@'+ t.user.username}
-                            </span>
-                            <span className="card-header-dot">·</span>
-                            <span className="card-header-date">
-                                        {moment(t.createdAt).fromNow(true).replace(' ','').replace('an','1').replace('minutes','m').replace('hour','h').replace('hs','h')}
-                            </span>
-                        </div>
-                        <div className="card-header-more">
-                        
-                        </div>
-                    </div>
-                    <div className="card-content-info">
-                    {t.description}
-                    </div>
-                    {t.images[0] && 
-                    <div className="card-content-images">
-                        <div className="card-image-link">
-                            <img src={t.images[0]}/>
-                        </div>
-                    </div> }
-                    <div className="card-buttons-wrapper">
-                        <div className="card-button-wrap reply-wrap">
-                            <div className="card-icon reply-icon">
-                                <Icon_Reply styles={{fill:'rgb(101, 119, 134)', width:'18.75px', height:'18.75px'}}/>
-                            </div>
-                            <div className="card-icon-value">
-                                {t.replies.length > 0 && t.replies.length}
-                            </div>
-                        </div>
-                        <div className="card-button-wrap retweet-wrap">
-                            <div className="card-icon retweet-icon">
-                                <Icon_Retweet styles={{fill:'rgb(101, 119, 134)', width:'18.75px', height:'18.75px'}}/>
-                            </div>
-                            <div className="card-icon-value">
-                                {t.retweets.length > 0 && t.retweets.length}
-                            </div>
-                        </div>
-                        <div onClick={()=>likeTweet(t._id)} className="card-button-wrap heart-wrap">
-                            <div className="card-icon heart-icon">
-                                {state.account.likes.includes(t._id) ? 
-                                <Icon_HeartFull styles={{fill:'rgb(224, 36, 94)', width:'18.75px', height:'18.75px'}}/> :
-                                <Icon_Heart styles={{fill:'rgb(101, 119, 134)', width:'18.75px', height:'18.75px'}}/>}
-                            </div>
-                            <div style={{color: state.account.likes.includes(t._id) && 'rgb(224, 36, 94)', opacity: t.likes.length > 0 ? '1':'0'}} className="card-icon-value">
-                                {t.likes.length}  
-                            </div>
-                        </div>
-                        <div onClick={()=>bookmarkTweet(t._id)} className="card-button-wrap">
-                            <div className="card-icon share-icon">
-                                {state.account.bookmarks.includes(t._id) ?
-                                <Icon_BookmarkFill styles={{fill:'rgb(10, 113, 176)', width:'18.75px', height:'18.75px'}}/> :
-                                <Icon_Bookmark styles={{fill:'rgb(101, 119, 134)', width:'18.75px', height:'18.75px'}}/>}
-                                {/* <Icon_Share /> */}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
+                return <TweetCard key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  /> 
             }): <Loader/>}
             
         </div>

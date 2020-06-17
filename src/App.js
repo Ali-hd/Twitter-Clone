@@ -8,6 +8,7 @@ import Nav from './components/Nav'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Tweet from './components/Tweet'
+import Bookmarks from './components/Bookmarks'
 
 const Home = lazy(() => import('./components/Home'))
 const Profile = lazy(() => import('./components/Profile'))
@@ -29,6 +30,9 @@ const DefaultContainer = () => {
       </Route>
       <Route path="/profile/:username/:id" exact>
         <Tweet />
+      </Route>
+      <Route path="/bookmarks" exact>
+        <Bookmarks />
       </Route>
     </main>
   </div>)

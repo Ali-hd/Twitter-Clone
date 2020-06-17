@@ -15,7 +15,7 @@ export const useActions = (state, dispatch) => ({
         dispatch({type: types.TWEET, payload: data})
     },
     likeTweet: data => {
-        console.log('like tweet')
+        console.log('like tweet', data)
         dispatch({type: types.LIKE_TWEET, payload: data})
     },
     getTweets: data => {
@@ -38,6 +38,26 @@ export const useActions = (state, dispatch) => ({
                 dispatch({type: types.SET_STATE, payload: {session: true, decoded: decoded}})  }
         });
     },
+    getUser: data => {
+        dispatch({type: types.SET_STATE, payload: {loading: true}})
+        dispatch({type: types.GET_USER, payload: data})
+    },
+    getBookmarks: data => {
+        dispatch({type: types.GET_BOOKMARKS})
+    },
+    updateUser: data => {
+        dispatch({type: types.SET_STATE, payload: {loading: true}})
+        dispatch({type: types.UPDATE_USER, payload: data})
+    },
+    retweet: data => {
+        dispatch({type: types.RETWEET, payload: data})
+    },
+    deleteTweet: data => {
+        dispatch({type: types.DELETE_TWEET, payload: data})
+    },
+    followUser: data => {
+        dispatch({type: types.FOLLOW_USER, payload: data})
+    }
     // logout: data => {
     //     localStorage.removeItem("Twittertoken")
     //     sessionStorage.removeItem("Twittertoken")

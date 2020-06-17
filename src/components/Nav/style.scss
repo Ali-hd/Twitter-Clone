@@ -52,8 +52,12 @@
     transition-duration: 0.2s;
     &:hover{
         background-color: rgba(29,161,242, 0.1);
+        color: rgb(29, 161, 242);
+        svg{fill: rgb(29, 161, 242)}
     }
 }
+
+
 .Nav-item{
     font-size: 19px;
     font-weight: 700;

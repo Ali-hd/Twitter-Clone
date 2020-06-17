@@ -1,0 +1,156 @@
+.Tweet-card-wrapper{
+    border-bottom: 1px solid rgb(230, 236, 240);
+    display: flex;
+    transition: 0.2s ease-in-out;
+    will-change: background-color;
+    cursor: pointer;
+    padding: 10px 15px;
+    &:hover{
+        background-color: rgb(245,248,250);
+    }
+}
+
+.card-userPic-wrapper{
+    flex-basis: 49px;
+    margin-right: 10px;   
+}
+
+.card-content-wrapper{
+    flex-basis: calc(100% - 49px);
+}
+
+.card-content-header{
+    margin-bottom: 2px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.card-header-user:hover{
+    text-decoration: underline;
+}
+
+
+.card-header-date{
+    &:hover{
+        text-decoration: underline;
+    }
+}
+
+.card-header-user{
+    font-weight: bold;
+}
+
+.card-header-username{
+    margin-left: 5px;
+    color: rgb(101, 119, 134)
+}
+
+.card-header-dot{
+    padding: 0 5px;
+    color: rgb(101, 119, 134)
+}
+
+.card-header-date{
+    color: rgb(101, 119, 134)
+
+}
+
+.card-header-more{
+
+}
+
+.card-content-images{
+    margin-top: 10px;
+    border: 1px solid rgb(204, 214, 221);
+    border-radius: 14px;
+    // display: flex;
+    // flex-direction: column;
+
+}
+
+.card-image-link{
+    cursor: pointer;
+    display: block;
+    max-height: 253px;
+    border-radius: 14px;
+
+    img{
+        max-height:253px;
+        border-radius: 14px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.card-buttons-wrapper{
+    margin-top: 5px;
+    max-width: 425px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: -5px;
+}
+
+.card-button-wrap{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: rgb(134, 120, 101);
+    &:hover{
+        .reply-icon{
+            .card-button-wrap{color: rgb(212, 11, 11) !important}
+            background-color: rgba(29, 161, 242,0.1);
+            svg{ fill: rgb(29, 161, 242) !important; }
+        }
+        .retweet-icon{
+            background-color: rgba(23, 191, 99,0.1);
+            svg{ fill: rgb(23, 191, 99) !important; }
+        }
+        .heart-icon{
+            
+            background-color: rgba(224, 36, 94,0.1);
+            svg{ fill: rgb(224, 36, 94) !important; }
+        }
+        .share-icon{
+            background-color: rgba(29, 161, 242,0.1);
+            svg{ fill: rgb(29, 161, 242) !important; }
+        }
+        .delete-icon{
+            background-color: rgba(212, 11, 11, 0.1);
+            svg{ fill: rgb(212, 11, 11) !important; }
+        }
+    }
+}
+
+.reply-wrap:hover{
+    color: rgb(29, 161, 242);
+}
+.retweet-wrap:hover{
+    color: rgb(23, 191, 99);
+}
+.heart-wrap:hover{
+    color: rgb(224, 36, 94);
+}
+
+.card-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 7.4px;
+    border-radius: 50%;
+    transition: 0.2s ease-in-out;
+    will-change: background-color;
+}
+
+.card-icon svg{
+    width: 18.75px;
+    height: 18.75px;
+}
+
+.card-icon-value{
+    margin-left: 3px;
+    font-size: 13px;
+
+}

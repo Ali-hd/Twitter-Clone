@@ -3,8 +3,8 @@ import './style.scss'
 import moment from 'moment'
 import { StoreContext } from '../../store/store'
 import { Link, withRouter } from 'react-router-dom'
-import { Icon_Reply, Icon_Retweet,
-    Icon_Heart, Icon_Share, Icon_Bookmark, Icon_HeartFull, Icon_BookmarkFill, Icon_delete } from '../../Icons'
+import { ICON_REPLY, ICON_RETWEET,
+    ICON_HEART, ICON_SHARE, ICON_BOOKMARK, ICON_HEARTFULL, ICON_BOOKMARKFILL, ICON_DELETE } from '../../Icons'
 const TweetCard = (props) => {
     const { state, actions } = useContext(StoreContext)
     const {account, user} = state
@@ -80,7 +80,7 @@ const TweetCard = (props) => {
                 <div className="card-buttons-wrapper">
                     <div className="card-button-wrap reply-wrap">
                         <div className="card-icon reply-icon">
-                            <Icon_Reply styles={{fill:'rgb(101, 119, 134)'}}/>
+                            <ICON_REPLY styles={{fill:'rgb(101, 119, 134)'}}/>
                         </div>
                         <div className="card-icon-value">
                             {props.replies.length > 0 && props.replies.length}
@@ -88,7 +88,7 @@ const TweetCard = (props) => {
                     </div>
                     <div onClick={()=>retweet(props.id)} className="card-button-wrap retweet-wrap">
                         <div className="card-icon retweet-icon">
-                            <Icon_Retweet styles={account.retweets.includes(props.id) ? {stroke: 'rgb(23, 191, 99)'} : {fill:'rgb(101, 119, 134)'}}/>
+                            <ICON_RETWEET styles={account.retweets.includes(props.id) ? {stroke: 'rgb(23, 191, 99)'} : {fill:'rgb(101, 119, 134)'}}/>
                         </div>
                         <div style={{color: account.retweets.includes(props.id) && 'rgb(23, 191, 99)', opacity: props.retweets.length > 0 ? '1':'0'}} className="card-icon-value">
                             {props.retweets.length}
@@ -97,8 +97,8 @@ const TweetCard = (props) => {
                     <div onClick={()=>likeTweet(props.id)} className="card-button-wrap heart-wrap">
                         <div className="card-icon heart-icon">
                             {state.account.likes.includes(props.id) ? 
-                            <Icon_HeartFull styles={{fill:'rgb(224, 36, 94)'}}/> :
-                            <Icon_Heart styles={{fill:'rgb(101, 119, 134)'}}/>}
+                            <ICON_HEARTFULL styles={{fill:'rgb(224, 36, 94)'}}/> :
+                            <ICON_HEART styles={{fill:'rgb(101, 119, 134)'}}/>}
                         </div>
                         <div style={{color: state.account.likes.includes(props.id) && 'rgb(224, 36, 94)', opacity: props.likes.length > 0 ? '1':'0'}} className="card-icon-value">
                             {props.likes.length}  
@@ -107,10 +107,10 @@ const TweetCard = (props) => {
                     <div onClick={()=>state.account.username === props.user.username ? deleteTweet(props.id): bookmarkTweet(props.id)} className="card-button-wrap">
                         <div className={state.account && state.account.username === props.user.username ? "card-icon delete-icon" :"card-icon share-icon"}>
                             {state.account && state.account.username === props.user.username ? 
-                            <Icon_delete styles={{fill:'rgb(101, 119, 134)'}} /> : state.account.bookmarks.includes(props.id) ?
-                            <Icon_BookmarkFill styles={{fill:'rgb(10, 113, 176)'}}/> :
-                            <Icon_Bookmark styles={{fill:'rgb(101, 119, 134)'}}/>}
-                            {/* <Icon_Share /> */}
+                            <ICON_DELETE styles={{fill:'rgb(101, 119, 134)'}} /> : state.account.bookmarks.includes(props.id) ?
+                            <ICON_BOOKMARKFILL styles={{fill:'rgb(10, 113, 176)'}}/> :
+                            <ICON_BOOKMARK styles={{fill:'rgb(101, 119, 134)'}}/>}
+                            {/* <ICON_SHARE /> */}
                         </div>
                     </div>
                 </div>

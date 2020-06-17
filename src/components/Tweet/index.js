@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import './style.scss'
 import moment from 'moment'
 import Loader from '../Loader'
-import { Icon_ArrowBack, Icon_Heart, Icon_Reply, Icon_Retweet, Icon_Share } from '../../Icons'
+import { ICON_ARROWBACK, ICON_HEART, ICON_REPLY, ICON_RETWEET, ICON_SHARE } from '../../Icons'
 
 const TweetPage = (props) => {
     const { state, actions } = useContext(StoreContext)
@@ -17,7 +17,7 @@ const TweetPage = (props) => {
             <div className="tweet-header-wrapper">
                 <div className="profile-header-back">
                     <div onClick={()=>window.history.back()} className="header-back-wrapper">
-                        <Icon_ArrowBack/>
+                        <ICON_ARROWBACK/>
                     </div>
                 </div>
                 <div className="tweet-header-content"> Tweet </div>
@@ -52,16 +52,16 @@ const TweetPage = (props) => {
                 </div>
                 <div className="tweet-interactions">
                     <div className="tweet-int-icon">
-                        <div className="card-icon reply-icon"> <Icon_Reply /> </div>
+                        <div className="card-icon reply-icon"> <ICON_REPLY /> </div>
                     </div>
                     <div className="tweet-int-icon">
-                        <div className="card-icon retweet-icon"> <Icon_Retweet/> </div>
+                        <div className="card-icon retweet-icon"> <ICON_RETWEET/> </div>
                     </div>
                     <div className="tweet-int-icon">
-                        <div className="card-icon heart-icon"> <Icon_Heart/> </div>
+                        <div className="card-icon heart-icon"> <ICON_HEART/> </div>
                     </div>
                     <div className="tweet-int-icon">
-                        <div className="card-icon share-icon"> <Icon_Share/> </div>
+                        <div className="card-icon share-icon"> <ICON_SHARE/> </div>
                     </div>
                 </div>
             </div>
@@ -97,22 +97,22 @@ const TweetPage = (props) => {
                         </div>
                         <div className="reply-tweet-interactions">
                             <div className="reply-int-icon">
-                                <div className="card-icon reply-int reply-icon"> <Icon_Reply /> </div>
+                                <div className="card-icon reply-int reply-icon"> <ICON_REPLY /> </div>
                             </div>
                             <div className="reply-int-icon retweet-int">
-                                <div className="card-icon reply-int retweet-icon"> <Icon_Retweet/> </div>
+                                <div className="card-icon reply-int retweet-icon"> <ICON_RETWEET/> </div>
                                 <div className="card-icon-value">
                                     1
                                 </div>
                             </div>
                             <div className="reply-int-icon heart-int">
-                                <div className="card-icon reply-int heart-icon"> <Icon_Heart/> </div>
+                                <div className="card-icon reply-int heart-icon"> <ICON_HEART/> </div>
                                 <div className="card-icon-value">
                                     7
                                 </div>
                             </div>
                             <div className="reply-int-icon">
-                                <div className="card-icon reply-int share-icon"> <Icon_Share/> </div>
+                                <div className="card-icon reply-int share-icon"> <ICON_SHARE/> </div>
                             </div>           
                         </div>
                     </div>

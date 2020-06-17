@@ -57,7 +57,19 @@ export const useActions = (state, dispatch) => ({
     },
     followUser: data => {
         dispatch({type: types.FOLLOW_USER, payload: data})
-    }
+    },
+    editList: data => {
+        dispatch({type: types.EDIT_LIST, payload: data})
+    },
+    createList: data => {
+        dispatch({type: types.CREATE_LIST, payload: data})
+    },
+    deleteList: data => {
+        dispatch({type: types.DELETE_LIST, payload: data})
+    },
+    getLists: data => [
+        dispatch({type: types.GET_LISTS, payload: data})
+    ]
     // logout: data => {
     //     localStorage.removeItem("Twittertoken")
     //     sessionStorage.removeItem("Twittertoken")

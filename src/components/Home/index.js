@@ -3,7 +3,7 @@ import { StoreContext } from '../../store/store'
 import './style.scss'
 import axios from 'axios'
 import ContentEditable from 'react-contenteditable'
-import { Icon_ImgUpload } from '../../Icons'
+import { ICON_IMGUPLOAD } from '../../Icons'
 import {API_URL} from '../../config'
 import Loader from '../Loader'
 import moment from 'moment'
@@ -82,14 +82,14 @@ const Home = () => {
                     <div className="inner-input-links">
                         <div className="input-links-side">
                             <div style={{marginLeft:'-10px'}} className="input-attach-wrapper">
-                                <Icon_ImgUpload styles={{fill:'rgb(29, 161, 242)'}}/>
-                                <input id="file" style={{opacity:'0'}} type="file" onChange={()=>onchangefile()} />
+                                <ICON_IMGUPLOAD styles={{fill:'rgb(29, 161, 242)'}}/>
+                                <input title=" " id="file" style={{opacity:'0'}} type="file" onChange={()=>onchangefile()} />
                             </div>
                             {/* <div className="input-attach-wrapper">
-                                <Icon_ImgUpload styles={{fill:'rgb(29, 161, 242)'}}/>
+                                <ICON_IMGUPLOAD styles={{fill:'rgb(29, 161, 242)'}}/>
                             </div>
                             <div className="input-attach-wrapper">
-                                <Icon_ImgUpload styles={{fill:'rgb(29, 161, 242)'}}/>
+                                <ICON_IMGUPLOAD styles={{fill:'rgb(29, 161, 242)'}}/>
                             </div> */}
                         </div>
                         <div onClick={submitTweet} className={tweetText.length ? 'tweet-btn-side tweet-btn-active' : 'tweet-btn-side'}>

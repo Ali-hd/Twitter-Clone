@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { StoreContext } from '../../store/store'
 import './style.scss'
 import { Link } from 'react-router-dom'
-import { Icon_Logo } from '../../Icons'
+import { ICON_LOGO } from '../../Icons'
 
 const LoginPage = () => {
     const { state, actions } = useContext(StoreContext)
@@ -23,7 +23,7 @@ const LoginPage = () => {
 
     return(
         <div className="login-wrapper">
-            <Icon_Logo/>
+            <ICON_LOGO/>
             <h1 className="login-header">
                 Log in to Twitter
             </h1>

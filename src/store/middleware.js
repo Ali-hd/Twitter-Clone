@@ -80,6 +80,26 @@ export const applyMiddleware = dispatch => action => {
             .then(res=>dispatch({ type: types.FOLLOW_USER, payload: res.data, data: action.payload }))
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
+        case types.EDIT_LIST:
+            return axios.put(`${API_URL}/lists/${action.payload.id}/edit`, action.payload, headers)
+            .then(res=>dispatch({ type: types.EDIT_LIST, payload: res.data, data: action.payload }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        case types.CREATE_LIST:
+            return axios.post(`${API_URL}/lists/create`, action.payload, headers)
+            .then(res=>dispatch({ type: types.CREATE_LIST, payload: res.data, data: action.payload }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        case types.DELETE_LIST:
+            return axios.delete(`${API_URL}/lists/${action.payload}/delete`, action.payload, headers)
+            .then(res=>dispatch({ type: types.DELETE_LIST, payload: res.data, data: action.payload }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        case types.GET_LISTS:
+            return axios.get(`${API_URL}/user/i/lists`, headers)
+            .then(res=>dispatch({ type: types.GET_LISTS, payload: res.data, data: action.payload }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
         default: dispatch(action)
     }
 }

@@ -9,6 +9,8 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import Tweet from './components/Tweet'
 import Bookmarks from './components/Bookmarks'
+import Lists from './components/Lists'
+import ListPage from './components/ListPage'
 
 const Home = lazy(() => import('./components/Home'))
 const Profile = lazy(() => import('./components/Profile'))
@@ -33,6 +35,12 @@ const DefaultContainer = () => {
       </Route>
       <Route path="/bookmarks" exact>
         <Bookmarks />
+      </Route>
+      <Route path="/lists" exact>
+        <Lists />
+      </Route>
+      <Route path="/lists/:id" exact>
+        <ListPage />
       </Route>
     </main>
   </div>)

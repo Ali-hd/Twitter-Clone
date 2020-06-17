@@ -1,11 +1,13 @@
 import React , { useEffect, useState, useContext, useRef } from 'react'
 import './style.scss'
-import { Icon_ArrowBack, Icon_markDown, Icon_Date, Icon_close } from '../../Icons'
+import { ICON_ARROWBACK, ICON_MARKDOWN, ICON_DATE, ICON_CLOSE, ICON_UPLOAD } from '../../Icons'
 import { Link, withRouter } from 'react-router-dom'
 import { StoreContext } from '../../store/store'
 import Loader from '../Loader'
 import moment from 'moment'
 import TweetCard from '../TweetCard'
+import {API_URL} from '../../config'
+import axios from 'axios'
 
 
 const Profile = (props) => {
@@ -15,6 +17,9 @@ const Profile = (props) => {
     const [editBio, setBio] = useState('')
     const [editLocation, setLocation] = useState('')
     const [modalOpen, setModalOpen] = useState(false)
+    const [banner, setBanner] = useState('')
+    const [avatar, setAvatar] = useState('')
+    const [saved, setSaved] = useState(false)
     
     const {account, user} = state
     const userParam = props.match.params.username
@@ -28,10 +33,11 @@ const Profile = (props) => {
             name: editName,
             description: editBio,
             location: editLocation,
-            profileImg: 'https://i.imgur.com/iV7Sdgm.jpg',
-            banner: 'https://i.imgur.com/CAFy1oY.jpg'
+            profileImg: avatar,
+            banner: banner
         }
         actions.updateUser(values)
+        setSaved(true)
         toggleModal()
     }
     // const mounted = useRef()
@@ -46,17 +52,34 @@ const Profile = (props) => {
         document.getElementsByTagName("body")[0].style.overflow = modalOpen? "hidden" : "visible";
       }, [modalOpen])
 
-    const toggleModal = () => {
+    const toggleModal = (param) => {
+        if(param === 'edit'){setSaved(false)}
         setModalOpen(!modalOpen)
     }
 
     const handleModalClick = (e) => {
         e.stopPropagation()
-        e.preventDefault()
     }
 
     const followUser = () => {
         actions.followUser(user._id)
+    }
+
+    const uploadImage = (file,type) => {
+        let bodyFormData = new FormData()
+        bodyFormData.append('image', file)
+        axios.post(`${API_URL}/tweet/upload`, bodyFormData, { headers: { Authorization: `Bearer ${localStorage.getItem('Twittertoken')}`}})
+            .then(res=>{ type === 'banner' ? setBanner(res.data.imageUrl) : setAvatar(res.data.imageUrl)})
+            .catch(err=>alert('error uploading image'))
+    }
+
+    const changeBanner = () => {
+        let file = document.getElementById('banner').files[0];
+        uploadImage(file, 'banner')
+    }
+    const changeAvatar = () => {
+        let file = document.getElementById('avatar').files[0];
+        uploadImage(file, 'avatar')
     }
 
     
@@ -68,7 +91,7 @@ const Profile = (props) => {
             <div className="profile-header-wrapper">
                 <div className="profile-header-back">
                     <div onClick={()=>window.history.back()} className="header-back-wrapper">
-                        <Icon_ArrowBack/>
+                        <ICON_ARROWBACK/>
                     </div>
                 </div>
                 <div className="profile-header-content">
@@ -81,14 +104,14 @@ const Profile = (props) => {
                 </div>
             </div>
             <div className="profile-banner-wrapper">
-                <img src={account.username === userParam? account.profileImg : user.profileImg}/>
+                <img src={banner.length > 0 && saved ? banner : user.banner}/>
             </div>
             <div className="profile-details-wrapper">
                 <div className="profile-options">
                     <div className="profile-image-wrapper">
-                        <img src={account.username === userParam? account.profileImg : user.profileImg}/>
+                        <img src={avatar.length > 0 && saved ? avatar : user.profileImg}/>
                     </div>
-                    <div onClick={()=>account.username === userParam ? toggleModal(): followUser( user._id)} 
+                    <div onClick={()=>account.username === userParam ? toggleModal('edit'): followUser( user._id)} 
                      className={account.following.includes(user._id) ? 'unfollow-switch profile-edit-button' : 'profile-edit-button'}>
                         {account.username === userParam?
                         <span>Edit profile</span> :
@@ -102,9 +125,10 @@ const Profile = (props) => {
                         {user.description}
                     </div>
                     <div className="profile-info-box">
-                        <Icon_markDown/>
-                        <div className="profile-location"> {user.location} </div>
-                        <Icon_Date/>
+                        {user.location.length>0 && 
+                        <ICON_MARKDOWN/>}
+                        <div className={user.location.length>0 && "profile-location"}> {user.location} </div>
+                        <ICON_DATE/>
                         <div className="profile-date"> Joined {moment(user.createdAt).format("MMMM YYYY")} </div>
                     </div>
                 </div>
@@ -145,7 +169,7 @@ const Profile = (props) => {
                     <div className="modal-header">
                         <div className="modal-closeIcon">
                             <div onClick={()=>toggleModal()} className="modal-closeIcon-wrap">
-                                <Icon_close />
+                                <ICON_CLOSE />
                             </div>
                         </div>
                         <p className="modal-title">Edit Profile</p>
@@ -158,11 +182,19 @@ const Profile = (props) => {
 
                     <div className="modal-body">
                         <div className="modal-banner">
-                            <img src="https://i.imgur.com/CAFy1oY.jpg" alt="modal-banner" />
+                            <img src={banner.length > 0 ? banner : user.banner} alt="modal-banner" />
+                            <div>
+                                <ICON_UPLOAD/>
+                                <input onChange={()=>changeBanner()} title=" " id="banner" style={{opacity:'0'}} type="file"/>
+                            </div>
                         </div>
                         <div className="modal-profile-pic">
                             <div className="modal-back-pic">
-                                <img src={account.username === userParam? account.profileImg : null} alt="profile" />
+                                <img src={avatar.length > 0 ? avatar : user.profileImg} alt="profile" />
+                                <div>
+                                    <ICON_UPLOAD/>
+                                    <input onChange={()=>changeAvatar()} title=" " id="avatar" style={{opacity:'0'}} type="file"/>
+                                </div>
                             </div>
                         </div>
                         <form className="edit-form">

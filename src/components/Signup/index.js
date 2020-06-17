@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { StoreContext } from '../../store/store'
 import './style.scss'
 import { Link } from 'react-router-dom'
-import { Icon_Logo } from '../../Icons'
+import { ICON_LOGO } from '../../Icons'
 
 const SignUpPage = () => {
     const { state, actions } = useContext(StoreContext)
@@ -27,7 +27,7 @@ const SignUpPage = () => {
 
     return(
         <div className="signup-wrapper">
-            <Icon_Logo/>
+            <ICON_LOGO/>
             <h1 className="signup-header">
                 Sign up to Twitter
             </h1>

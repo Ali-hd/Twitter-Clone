@@ -12,7 +12,8 @@ const initialState = {
     account: null,
     user: null,
     bookmarks: [],
-    recent_tweets: []
+    recent_tweets: [],
+    lists: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -149,6 +150,21 @@ const reducer = (state = initialState, action) => {
                     return f !== action.data })
             }
             return {...state, ...{account: accountF}}
+
+        case type.EDIT_LIST: 
+            ////
+            return state
+
+        case type.CREATE_LIST: 
+            ////
+            return state
+
+        case type.DELETE_LIST: 
+            ////
+            return state
+
+        case type.GET_LISTS: 
+            return {...state, ...action.payload}
         default:
             return state
     }

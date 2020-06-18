@@ -17,5 +17,6 @@ export default {
     EDIT_LIST: 'EDIT_LIST',
     CREATE_LIST: 'CREATE_LIST',
     DELETE_LIST: 'DELETE_LIST',
-    GET_LISTS: 'GET_LISTS'
+    GET_LISTS: 'GET_LISTS',
+    LOG_OUT: 'LOG_OUT'
 }

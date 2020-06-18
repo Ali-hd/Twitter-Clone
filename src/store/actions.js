@@ -26,6 +26,7 @@ export const useActions = (state, dispatch) => ({
         dispatch({type: types.BOOKMARK, payload: data})
     },
     getTweet: data => {
+        console.log(data)
         dispatch({type: types.SET_STATE, payload: {loading: true}})
         dispatch({type: types.GET_TWEET, payload: data})
     },
@@ -67,9 +68,13 @@ export const useActions = (state, dispatch) => ({
     deleteList: data => {
         dispatch({type: types.DELETE_LIST, payload: data})
     },
-    getLists: data => [
+    getLists: data => {
         dispatch({type: types.GET_LISTS, payload: data})
-    ]
+    },
+    logout: data => {
+        localStorage.removeItem("Twittertoken")
+        window.location.reload()
+    }
     // logout: data => {
     //     localStorage.removeItem("Twittertoken")
     //     sessionStorage.removeItem("Twittertoken")

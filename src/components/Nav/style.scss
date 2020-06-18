@@ -1,5 +1,6 @@
 .Nav-width{
     width: 275px;
+    position: relative;
 }
 
 .Nav{
@@ -40,6 +41,14 @@
 .Nav-link{
     padding: 7px 0;
     display: flex;
+    cursor: pointer;
+    &:hover{
+        .Nav-item-hover{
+            background-color: rgba(29,161,242, 0.1);
+            color: rgb(29, 161, 242);
+            svg{fill: rgb(29, 161, 242)}
+        }
+    }
 }
 .Nav-item-hover{
     display: flex;
@@ -50,11 +59,6 @@
     border-radius: 9999px;
     transition-property: background-color, box-shadow;
     transition-duration: 0.2s;
-    &:hover{
-        background-color: rgba(29,161,242, 0.1);
-        color: rgb(29, 161, 242);
-        svg{fill: rgb(29, 161, 242)}
-    }
 }
 
 
@@ -94,4 +98,46 @@
     overflow-wrap: break-word;
     text-align: center;
     max-width: 100%;
+}
+
+.more-menu-background{
+    position: fixed; 
+    z-index: 20; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto; 
+}
+
+.more-menu-content{
+    min-height: 200px;
+    max-width: 40vw;
+    max-height: 50vh;
+    height: 220px;
+    width: 190px;
+    min-width: 190px;
+    border-radius: 14px;
+    background-color: #fff;
+    position: fixed;
+    top: 411px;
+    left: 126px;
+    z-index: 50;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+    display: flex;
+    flex-direction: column;
+}
+
+.more-menu-item{
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    transition: 0.2 ease-in-out;
+    cursor: pointer;
+    &:hover{
+        background-color: rgb(245, 248, 250);
+    }
 }

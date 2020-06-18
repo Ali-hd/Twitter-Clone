@@ -74,7 +74,7 @@ return(
             {lists.map(l=>{
                 return <Link key={l._id} to={`/lists/${l._id}`} className="list-card-wrapper">
                 <div className="list-img-wrap">
-                    <img src={l.banner} alt="list"/>
+                    <img src={l.banner.length>0 ? l.banner : "https://pbs-o.twimg.com/media/EXZ3BXhUwAEFNBE?format=png&name=small"} alt="list"/>
                 </div>
                 <div className="list-content-wrap">
                     <h4>{l.name}</h4>
@@ -89,7 +89,7 @@ return(
             {/* add loader for bookmarks when empty using dispatch */}
             {/* {bookmarks.map(t=>{
                 console.log(t)
-                return <TweetCard key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
+                return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
             })} */}
         </div>
         <div onClick={()=>toggleModal()} style={{display: modalOpen ? 'block' : 'none'}} className="modal-edit">

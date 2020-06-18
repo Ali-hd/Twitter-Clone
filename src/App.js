@@ -30,7 +30,7 @@ const DefaultContainer = () => {
       <Route path="/profile/:username" exact>
         <Profile />
       </Route>
-      <Route path="/profile/:username/:id" exact>
+      <Route path="/tweet/:username/:id" exact>
         <Tweet />
       </Route>
       <Route path="/bookmarks" exact>

@@ -3,7 +3,7 @@ import { StoreContext } from '../../store/store'
 import './style.scss'
 import axios from 'axios'
 import ContentEditable from 'react-contenteditable'
-import { ICON_IMGUPLOAD } from '../../Icons'
+import { ICON_IMGUPLOAD} from '../../Icons'
 import {API_URL} from '../../config'
 import Loader from '../Loader'
 import moment from 'moment'
@@ -11,7 +11,7 @@ import TweetCard from '../TweetCard'
 
 const Home = () => {
     const { state, actions } = useContext(StoreContext)
-
+    const {account} = state
     useEffect(() => {
         window.scrollTo(0, 0)
         actions.getTweets()
@@ -68,7 +68,7 @@ const Home = () => {
             <div className="Tweet-input-wrapper">
                 <div className="Tweet-profile-wrapper">
                     <a href="#">
-                        <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src="https://i.imgur.com/vYQYRmp.jpg"/>
+                        {account &&<img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={account.profileImg}/>}
                     </a>
                 </div>
                 <div className="Tweet-input-side">
@@ -99,13 +99,12 @@ const Home = () => {
                 </div>
             </div>
             <div className="Tweet-input-divider"></div>
-            {/* { state.account && <TweetCard key={'1'} id={'1'} user={'1'} createdAt={'2019'} description={'t.description'}
+            {/* { state.account && <TweetCard parent={t.parent} key={'1'} id={'1'} user={'1'} createdAt={'2019'} description={'t.description'}
                 images={'t.images'} replies={[]} retweets={[]} likes={[]} style={{height:'0'}} />} */}
             {state.tweets.length> 0 ? state.tweets.map(t=>{
-                return <TweetCard key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  /> 
             }): <Loader/>}
-            
         </div>
     )
 }

@@ -85,6 +85,7 @@ const Profile = (props) => {
     
     return(
         <div>
+            {console.log(state)}
             {user && account ? 
             <div>
             <div className="profile-wrapper">
@@ -127,7 +128,7 @@ const Profile = (props) => {
                     <div className="profile-info-box">
                         {user.location.length>0 && 
                         <ICON_MARKDOWN/>}
-                        <div className={user.location.length>0 && "profile-location"}> {user.location} </div>
+                        <div className={user.location.length>0 ? "profile-location" : ''}> {user.location} </div>
                         <ICON_DATE/>
                         <div className="profile-date"> Joined {moment(user.createdAt).format("MMMM YYYY")} </div>
                     </div>
@@ -152,15 +153,15 @@ const Profile = (props) => {
             </div>
             {activeTab === 'Tweets' ? 
             user.tweets.map(t=>{
-                return <TweetCard key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
+                return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
             }): activeTab === 'Likes' ? 
             user.likes.map(t=>{
-                return <TweetCard key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
             }): activeTab === 'Media' ? 
             user.tweets.map(t=>{
                 if(t.images[0])
-                return <TweetCard key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
              }):null}
             </div>

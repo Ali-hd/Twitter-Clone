@@ -19,6 +19,7 @@
     flex-basis: calc(100% - 49px);
 }
 
+
 .card-content-header{
     margin-bottom: 2px;
     display: flex;
@@ -154,3 +155,33 @@
     font-size: 13px;
 
 }
+
+
+/////////reply modal
+.reply-content-wrapper{
+    display: flex;
+    padding: 10px 15px;
+}
+
+
+.reply-tweet-username{
+    font-size: 15.5px;
+    margin-right: 5px;
+    color: rgb(101, 119, 134);
+}
+
+.main-tweet-user{
+    color: rgb(27, 149, 224);
+    &:hover{ text-decoration: underline;}
+}
+
+.reply-to-user{
+    margin-top: 15px;
+}
+
+// .reply-thread{
+//     border-right: 2px solid #ccd6dd;
+//     text-align: center;
+//     height: 100%;
+//     width: 100%;
+// }

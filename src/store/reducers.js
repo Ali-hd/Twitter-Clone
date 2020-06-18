@@ -2,7 +2,7 @@ import type from './typeActions'
 import moment from 'moment' 
 
 const initialState = {
-    session: false,
+    session: true,
     user: {
         _id: ""
     },
@@ -73,7 +73,6 @@ const reducer = (state = initialState, action) => {
             return {...state, ...action.payload, loading: false, error: false}
 
         case type.GET_TWEET:
-            alert('got tweet')
             console.log(action.payload)
             return {...state, ...action.payload, loading: false, error: false}
 
@@ -164,6 +163,7 @@ const reducer = (state = initialState, action) => {
             return state
 
         case type.GET_LISTS: 
+        console.log(action.payload)
             return {...state, ...action.payload}
         default:
             return state

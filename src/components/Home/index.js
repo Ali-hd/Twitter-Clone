@@ -29,13 +29,18 @@ const Home = () => {
     
     const submitTweet = () => {
         if(!tweetText.length){return}
+
+        let hashtags = tweetText.match(/#(\w+)/g)
+
         const values = {
             description: tweetText,
-            images: [tweetImage]
+            images: [tweetImage],
+            hashtags
         }
         actions.tweet(values)
         tweetT.current = ''
         setTweetText('')
+        setTweetImage(null)
     }
 
     const onchangefile = () => {
@@ -59,7 +64,6 @@ const Home = () => {
 
     return(
         <div className="Home-wrapper">
-            {console.log(state)}
             <div className="Home-header-wrapper">
                 <h2 className="Home-header">
                     Latest Tweets
@@ -101,7 +105,7 @@ const Home = () => {
             <div className="Tweet-input-divider"></div>
             {/* { state.account && <TweetCard parent={t.parent} key={'1'} id={'1'} user={'1'} createdAt={'2019'} description={'t.description'}
                 images={'t.images'} replies={[]} retweets={[]} likes={[]} style={{height:'0'}} />} */}
-            {state.tweets.length> 0 ? state.tweets.map(t=>{
+            {account && state.tweets.length> 0 ? state.tweets.map(t=>{
                 return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  /> 
             }): <Loader/>}

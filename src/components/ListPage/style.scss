@@ -1,5 +1,6 @@
 .listp-banner{
-    max-height: 199px;
+    max-height: 200px;
+    height: 200px;
     width: 100%;
     img{
         width: 100%;
@@ -75,5 +76,18 @@
     &:hover{
         font-weight: 600;
         background-color: rgba(224, 36, 94, 0.1);
+    }
+}
+
+
+.no-b-border{
+    border-bottom: 1px solid transparent;
+}
+
+.Remove-switch{
+    background-color: rgb(224, 36, 94) !important;
+    border-color: rgb(224, 36, 94) !important;
+    span{
+        color: #fff !important;
     }
 }

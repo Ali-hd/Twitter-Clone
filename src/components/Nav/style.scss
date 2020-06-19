@@ -5,7 +5,6 @@
 
 .Nav{
     top: 0;
-    left: 0;
     height: 100%;
     position: fixed;
     display: flex;
@@ -38,6 +37,7 @@
     // justify-content: center;
 }
 
+
 .Nav-link{
     padding: 7px 0;
     display: flex;
@@ -61,6 +61,19 @@
     transition-duration: 0.2s;
 }
 
+.Nav-item-hover svg{
+    width: 26.25px; height:26.25px;
+}
+
+.active-Nav{
+    svg{
+        fill: rgb(29, 161, 242);
+    }
+    .Nav-item{
+        color: rgb(29, 161, 242);
+    }
+}
+
 
 .Nav-item{
     font-size: 19px;
@@ -80,7 +93,7 @@
     outline-style: none;
     transition-property: background-color, box-shadow;
     transition-duration: 0.2s;
-    min-width: calc(78.89px);
+    min-width: 78.89px;
     min-height: 49px;
     padding-left: 30px;
     padding-right: 30px;
@@ -98,6 +111,33 @@
     overflow-wrap: break-word;
     text-align: center;
     max-width: 100%;
+    span{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    content: 'Tweet';
+}
+.btn-show{
+    display: none;
+}
+@media only screen and (max-width: 1282px) {
+    .Nav-tweet-link{
+        max-width: 49px;
+        width: 49px;
+        padding: 0;
+        min-width: 49px;
+    }
+    .btn-hide{
+        display: none;
+    }
+    .btn-show{
+        display: block;
+    }
+  }
+.Nav-tweet-btn span svg{
+    width: 22.25px; height:22.25px;
+    fill: #fff;
 }
 
 .more-menu-background{
@@ -141,3 +181,16 @@
         background-color: rgb(245, 248, 250);
     }
 }
+
+
+@media only screen and (max-width: 1282px) {
+    .Nav-item{
+        display: none;
+    }
+    .Nav-width{
+        width: 88px;
+    }
+    .Nav-Content{
+        width: 88px;
+    }
+  }

@@ -1,0 +1,260 @@
+.explore-wrapper{
+    max-width: 600px;
+    border-right: 1px solid rgb(230, 236, 240);
+    width: 100%;
+    // height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 2000px;
+}
+
+
+.explore-header{
+    position: sticky;
+    border-left: 1px solid rgb(230, 236, 240);
+    background-color: #fff;
+    z-index: 8;
+    top: 0px;
+    display: flex;
+    align-items: center;
+    height: 53px;
+    min-height: 53px;
+    padding-left: 15px;
+    padding-right: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.header-border{
+    border-bottom: 1px solid rgb(230, 236, 240);
+}
+
+.explore-search-wrapper{
+    background-color: rgb(230, 236, 240);
+    border: 1px solid transparent;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    min-height: 38px;
+    width: 100%;
+    
+}
+
+.explore-search-icon{
+    display: flex;
+    align-items: center;
+}
+
+.explore-search-icon svg{
+    width: 40px;
+    height: 18.75px;
+    fill: rgb(101, 119, 134);
+    padding-left: 10px;
+}
+
+.explore-search-input{
+    width: 100%;
+}
+
+.explore-search-input input{
+    background-color: inherit;
+    border: inherit;
+    padding: 6px 10px;
+    width: 100%;
+    font-size: 15px;
+    color: rgb(101, 119, 134);
+    outline: none;
+}
+
+.explore-nav-menu{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid rgb(230, 236, 240);
+}
+
+.explore-nav-item{
+    padding: 15px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: rgb(101, 119, 134);
+    transition: 0.2s;
+    will-change: background-color;
+    box-sizing:border-box;
+    border-bottom: 2px solid transparent;
+    &:hover{
+        background-color: rgba(29, 161, 242, 0.1);
+        color: rgb(29, 161, 242);
+    }
+}
+
+.activeTab{
+    border-bottom: 2px solid rgb(29, 161, 242);
+    color: rgb(29, 161, 242);
+}
+
+.search-result-wapper{
+    border-bottom: 1px solid rgb(230, 236, 240);
+    padding: 10px 15px;
+    transition: 0.2s;
+    cursor: pointer;
+    display: flex;
+    &:hover{
+        background-color: rgb(245,248,250);
+    }
+}
+
+.search-userPic-wrapper{
+    flex-basis: 49px;
+    margin-right: 10px;   
+}
+
+.search-user-details{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.search-user-info{
+    display: flex;
+    flex-direction: column;
+}
+
+.search-user-name{
+    font-weight: bold;
+}
+
+.search-user-username{
+    color: rgb(101, 119, 134);
+    line-height: 1;
+}
+
+.search-user-bio{
+    margin-top: 7px;
+}
+
+.search-user-warp{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.follow-btn-wrap{
+    min-height: 30px;
+    min-width: 70px;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+    border: 1px solid #1da1f2;
+    border-radius: 9999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 1em;
+    padding-right: 1em;
+    &:hover{
+        background-color: rgba(29, 161, 242, 0.1);
+    }
+}
+
+.follow-btn-wrap span{
+    text-align: center;
+    font-weight: 800;
+    color: #1da1f2;
+    width: 100%;
+}
+
+
+
+.trending-card-wrapper{
+    border-bottom: 1px solid rgb(245,248,250);
+    padding: 10px 15px;
+    transition: 0.2s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    &:hover{
+        background-color: rgb(245, 248, 250);
+    }
+}
+
+.trending-card-header{
+    color: rgb(101, 119, 134);
+    font-size: 14px;
+    span{
+        padding: 0 3px;
+    }
+}
+
+.trending-card-content{
+    font-weight: bold;
+    font-size: 19px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.trending-card-count{
+    font-size: 15px;
+    color: rgb(101, 119, 134);
+}
+
+.try-searching{
+    font-weight: bold;
+    font-size: 17px;
+    text-align: center;
+    margin-top: 40px;
+    color: #657786;
+    div{
+        margin-bottom: 15px;
+    }
+}
+
+
+.unfollow-switch{
+    background-color: rgb(29, 161, 242);
+    span{color: #fff;}
+}
+
+.unfollow-switch:hover{
+    background-color: rgb(202,32,85);
+    border: 1px solid transparent;
+    span{
+        color: #fff;
+        span{display: none;}
+        &:before{
+            content: 'Unfollow';
+        }
+    }
+}
+
+.explore-header-back{
+    min-width: 55px;
+    min-height: 30px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.explore-back-wrapper{
+    margin-left: -5px;
+    width: 39px;
+    height: 39px;
+    transition: 0.2s ease-in-out;
+    will-change: background-color;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 9999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.explore-back-wrapper svg{
+    height: 1.5em;
+    fill: rgb(29,161,242);
+}
+.explore-back-wrapper:hover{
+    background-color: rgba(29,161,242,0.1);
+}

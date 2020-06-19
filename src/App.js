@@ -11,6 +11,8 @@ import Tweet from './components/Tweet'
 import Bookmarks from './components/Bookmarks'
 import Lists from './components/Lists'
 import ListPage from './components/ListPage'
+import Explore from './components/Explore'
+import Feed from './components/Feed'
 
 const Home = lazy(() => import('./components/Home'))
 const Profile = lazy(() => import('./components/Profile'))
@@ -21,27 +23,35 @@ const DefaultContainer = () => {
       <Nav />
     </header>
     <main className="main">
-      <Route path="/" exact>
-        <Redirect to="/home" />
-      </Route>
-      <Route path="/home" exact>
-        <Home />
-      </Route>
-      <Route path="/profile/:username" exact>
-        <Profile />
-      </Route>
-      <Route path="/tweet/:username/:id" exact>
-        <Tweet />
-      </Route>
-      <Route path="/bookmarks" exact>
-        <Bookmarks />
-      </Route>
-      <Route path="/lists" exact>
-        <Lists />
-      </Route>
-      <Route path="/lists/:id" exact>
-        <ListPage />
-      </Route>
+      <div className="middle-section">
+        <Route path="/" exact>
+          <Redirect to="/home" />
+        </Route>
+        <Route path="/home" exact>
+          <Home />
+        </Route>
+        <Route path="/profile/:username" exact>
+          <Profile />
+        </Route>
+        <Route path="/tweet/:username/:id" exact>
+          <Tweet />
+        </Route>
+        <Route path="/bookmarks" exact>
+          <Bookmarks />
+        </Route>
+        <Route path="/lists" exact>
+          <Lists />
+        </Route>
+        <Route path="/lists/:id" exact>
+          <ListPage />
+        </Route>
+        <Route path="/explore" exact>
+          <Explore/>
+        </Route>
+      </div>
+      <div className="right-section">
+        <Feed/>
+      </div>
     </main>
   </div>)
 }

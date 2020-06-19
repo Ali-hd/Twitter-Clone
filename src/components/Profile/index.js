@@ -141,27 +141,37 @@ const Profile = (props) => {
                 </div>
             </div>
             <div className="profile-nav-menu">
-                <div onClick={()=>changeTab('Tweets')} className={activeTab =='Tweets' ? `profile-nav-item activeTab` : `profile-nav-item`}>
+                <div key={'tweets'} onClick={()=>changeTab('Tweets')} className={activeTab =='Tweets' ? `profile-nav-item activeTab` : `profile-nav-item`}>
                     Tweets
                 </div>
-                <div onClick={()=>changeTab('Media')} className={activeTab =='Media' ? `profile-nav-item activeTab` : `profile-nav-item`}>
+                <div key={'replies'} onClick={()=>changeTab('Tweets&Replies')} className={activeTab =='Tweets&Replies' ? `profile-nav-item activeTab` : `profile-nav-item`}>
+                    Tweets & replies
+                </div>
+                <div key={'media'} onClick={()=>changeTab('Media')} className={activeTab =='Media' ? `profile-nav-item activeTab` : `profile-nav-item`}>
                     Media
                 </div>
-                <div onClick={()=>changeTab('Likes')} className={activeTab =='Likes' ? `profile-nav-item activeTab` : `profile-nav-item`}>
+                <div key={'likes'} onClick={()=>changeTab('Likes')} className={activeTab =='Likes' ? `profile-nav-item activeTab` : `profile-nav-item`}>
                     Likes
                 </div>
             </div>
             {activeTab === 'Tweets' ? 
             user.tweets.map(t=>{
-                return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
-            }): activeTab === 'Likes' ? 
+                if(!t.parent)
+                return <TweetCard key={'tweets'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
+            }): activeTab === 'Tweets&Replies' ? 
+            user.tweets.map(t=>{
+                if(t.parent)
+                return <TweetCard key={'replies'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
+             }) :
+            activeTab === 'Likes' ? 
             user.likes.map(t=>{
-                return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                return <TweetCard key={'likes'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
             }): activeTab === 'Media' ? 
             user.tweets.map(t=>{
                 if(t.images[0])
-                return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                return <TweetCard key={'tweets'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
              }):null}
             </div>

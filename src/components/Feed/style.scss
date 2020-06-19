@@ -1,0 +1,59 @@
+.feed-wrapper{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.feed-trending-card{
+    width: 100%;
+    background-color: rgb(245, 248, 250);
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgb(245, 248, 250);
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+}
+
+.feed-card-header{
+    border-bottom: 1px solid rgb(230, 236, 240);
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.feed-card-trend{
+    border-bottom: 1px solid rgb(230, 236, 240);
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    &:hover{
+        background-color: rgba(0, 0, 0, 0.03);
+    }
+    div:nth-child(1){
+        font-size: 13px;
+        color: rgb(101, 119, 134);
+    }
+    div:nth-child(2){
+        font-size: 15px;
+        color: rgb(20, 23, 26);
+        font-weight: bold;
+        padding-top: 2px;
+    }
+    div:nth-child(3){
+        font-size: 15px;
+        color: rgb(101, 119, 134);
+        padding-top: 2px;
+    }
+}
+
+.feed-more{
+    padding: 15px;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+    font-size: 15px;
+    color: rgb(29,161,242);
+}

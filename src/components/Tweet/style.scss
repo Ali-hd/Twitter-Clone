@@ -240,6 +240,10 @@
     background-color: rgba(29, 161, 242,0.1);
     svg{ fill: rgb(29, 161, 242) !important; }
 }
+.delete-icon:hover{
+    background-color: rgba(212, 11, 11, 0.1);
+    svg{ fill: red !important; }
+}
 
 .reply-int svg{
     display: flex;

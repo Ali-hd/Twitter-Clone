@@ -71,22 +71,24 @@ export const useActions = (state, dispatch) => ({
     getLists: data => {
         dispatch({type: types.GET_LISTS, payload: data})
     },
-    logout: data => {
+    logout: () => {
         localStorage.removeItem("Twittertoken")
         window.location.reload()
+    },
+    getList: data => {
+        dispatch({type: types.GET_LIST, payload: data})
+    },
+    getTrend: data => {
+        dispatch({type: types.GET_TREND, payload: data})
+    },
+    search: data => {
+        dispatch({type: types.SEARCH, payload: data})
+    },
+    getTrendTweets: data => {
+        dispatch({type: types.TREND_TWEETS, payload: data})
+    },
+    addToList: data => {
+        dispatch({type: types.ADD_TO_LIST, payload: data})
     }
-    // logout: data => {
-    //     localStorage.removeItem("Twittertoken")
-    //     sessionStorage.removeItem("Twittertoken")
-    //     window.location.reload()
-    // },
-    // verifyToken: data => {
-    //     jwt.verify(localStorage.getItem('Twittertoken') || sessionStorage.getItem('Twittertoken'), process.env.REACT_APP_JWT_SECRET, function (err, decoded) {
-    //         if (err) { dispatch({type: types.SET_STATE, payload: {session: false, decoded: decoded }})  }
-    //         else {  
-    //             if(data == 'get account'){ dispatch({type: types.GET_ACCOUNT}) }
-    //             console.log('verifying Twittertoken')
-    //             dispatch({type: types.SET_STATE, payload: {session: true, decoded: decoded}})  }
-    //     });
-    // }
+
 })

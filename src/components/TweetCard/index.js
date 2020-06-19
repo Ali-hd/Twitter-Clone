@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useContext, useState, useRef, useEffect } from 'react'
 import './style.scss'
 import moment from 'moment'
 import { StoreContext } from '../../store/store'
@@ -15,7 +15,8 @@ const TweetCard = (props) => {
     const {account, user} = state
 
     let info
-    const likeTweet = (id) => {
+    const likeTweet = (e,id) => {
+        e.stopPropagation()
         if(props.history.location.pathname.slice(1,5) == 'home'){
             info = { dest: "home", id }
         }else if(props.history.location.pathname.slice(1,5) == 'prof'){
@@ -24,7 +25,8 @@ const TweetCard = (props) => {
         actions.likeTweet(info)
     }
 
-    const bookmarkTweet = (id) => {
+    const bookmarkTweet = (e,id) => {
+        e.stopPropagation()
         if(props.history.location.pathname.slice(1,5) == 'home'){
             info = { dest: "home", id }
         }else if(props.history.location.pathname.slice(1,5) == 'prof'){
@@ -33,7 +35,8 @@ const TweetCard = (props) => {
         actions.bookmarkTweet(info)
     }
 
-    const retweet = (id) => {
+    const retweet = (e,id) => {
+        e.stopPropagation()
         if(props.history.location.pathname.slice(1,5) == 'home'){
             info = { dest: "home", id }
         }else if(props.history.location.pathname.slice(1,5) == 'prof'){
@@ -42,7 +45,8 @@ const TweetCard = (props) => {
         actions.retweet(info)
     }
 
-    const deleteTweet = (id) => {
+    const deleteTweet = (e,id) => {
+        e.stopPropagation()
         actions.deleteTweet(id)
     }
 
@@ -94,7 +98,9 @@ const TweetCard = (props) => {
         setReplyText(tweetT.current)
     };
 
-
+    useEffect(() => {
+        document.getElementsByTagName("body")[0].style.overflow = modalOpen? "hidden" : "visible";
+      }, [modalOpen])
 
 
     const replyTweet = (type) => {
@@ -111,12 +117,31 @@ const TweetCard = (props) => {
         setReplyImg(null)
     }
 
+    moment.locale('en', {
+        relativeTime: {
+          future: 'in %s',
+          past: '%s ago',
+          s:  'few seconds ago',
+          ss: '%ss',
+          m:  '1m',
+          mm: '%dm',
+          h:  '1h',
+          hh: '%dh',
+          d:  'a day',
+          dd: '%dd',
+          M:  'a month',
+          MM: '%dM',
+          y:  'a year',
+          yy: '%dY'
+        }
+      });
+
     return (
         <div>
             {props.parent ?  
             <div onClick={()=>goToTweet(props.parent._id)} key={props.parent._id} style={{borderBottom: '0px'}} className="Tweet-card-wrapper">   
                 <div className="card-userPic-wrapper">
-                    <Link to={`/profile/${props.parent.user.username}`}>
+                    <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.parent.user.username}`}>
                         <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={props.parent.user.profileImg}/>
                     </Link>
                 </div>
@@ -124,15 +149,15 @@ const TweetCard = (props) => {
                     <div className="card-content-header">
                         <div className="card-header-detail">
                             <span className="card-header-user">
-                                <Link to={`/profile/${props.parent.user.username}`}>{props.parent.user.name}</Link>     
+                                <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.parent.user.username}`}>{props.parent.user.name}</Link>     
                             </span>
                             <span className="card-header-username">
-                                <Link to={`/profile/${props.parent.user.username}`}>{'@'+ props.parent.user.username}</Link>
+                                <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.parent.user.username}`}>{'@'+ props.parent.user.username}</Link>
                             </span>
                             <span className="card-header-dot">·</span>
                             <span className="card-header-date">
                                 {/* <Link to={`/profile/${props.parent.user.username}`}> */}
-                                        {moment(props.parent.createdAt).fromNow(true).replace(' ','').replace('an','1').replace('minutes','m').replace('hour','h').replace('hs','h')}
+                                        {moment(props.parent.createdAt).fromNow(true)}
                                 {/* </Link> */}
                             </span>
                         </div>
@@ -158,7 +183,7 @@ const TweetCard = (props) => {
                                 {props.parent.replies.length > 0 && props.parent.replies.length}
                             </div>
                         </div>
-                        <div onClick={()=>retweet(props.parent._id)} className="card-button-wrap retweet-wrap">
+                        <div onClick={(e)=>retweet(e, props.parent._id)} className="card-button-wrap retweet-wrap">
                             <div className="card-icon retweet-icon">
                                 <ICON_RETWEET styles={account.retweets.includes(props.parent._id) ? {stroke: 'rgb(23, 191, 99)'} : {fill:'rgb(101, 119, 134)'}}/>
                             </div>
@@ -166,7 +191,7 @@ const TweetCard = (props) => {
                                 {props.parent.retweets.length}
                             </div>
                         </div>
-                        <div onClick={()=>likeTweet(props.parent._id)} className="card-button-wrap heart-wrap">
+                        <div onClick={(e)=>likeTweet(e, props.parent._id)} className="card-button-wrap heart-wrap">
                             <div className="card-icon heart-icon">
                                 {state.account.likes.includes(props.parent._id) ? 
                                 <ICON_HEARTFULL styles={{fill:'rgb(224, 36, 94)'}}/> :
@@ -176,7 +201,7 @@ const TweetCard = (props) => {
                                 {props.parent.likes.length}  
                             </div>
                         </div>
-                        <div onClick={()=>state.account.username === props.parent.user.username ? deleteTweet(props.parent._id): bookmarkTweet(props.parent._id)} className="card-button-wrap">
+                        <div onClick={(e)=>state.account.username === props.parent.user.username ? deleteTweet(e, props.parent._id): bookmarkTweet(e, props.parent._id)} className="card-button-wrap">
                             <div className={state.account && state.account.username === props.parent.user.username ? "card-icon delete-icon" :"card-icon share-icon"}>
                                 {state.account && state.account.username === props.parent.user.username ? 
                                 <ICON_DELETE styles={{fill:'rgb(101, 119, 134)'}} /> : state.account.bookmarks.includes(props.parent._id) ?
@@ -190,10 +215,10 @@ const TweetCard = (props) => {
             </div> : null }
 
             {/* ///////////////////////////parent\\\\\\\\\\\\\\\\\\\\\\\\ */}
-
+          {props.user ? 
             <div onClick={()=>goToTweet(props.id)} key={props.id} className="Tweet-card-wrapper">   
                 <div className="card-userPic-wrapper">
-                    <Link to={`/profile/${props.user.username}`}>
+                    <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.user.username}`}>
                         <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={props.user.profileImg}/>
                     </Link>
                 </div>
@@ -201,15 +226,16 @@ const TweetCard = (props) => {
                     <div className="card-content-header">
                         <div className="card-header-detail">
                             <span className="card-header-user">
-                                <Link to={`/profile/${props.user.username}`}>{props.user.name}</Link>     
+                                <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.user.username}`}>{props.user.name}</Link>     
                             </span>
                             <span className="card-header-username">
-                                <Link to={`/profile/${props.user.username}`}>{'@'+ props.user.username}</Link>
+                                <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.user.username}`}>{'@'+ props.user.username}</Link>
                             </span>
                             <span className="card-header-dot">·</span>
                             <span className="card-header-date">
-                                {/* <Link to={`/profile/${props.user.username}`}> */}
-                                        {moment(props.createdAt).fromNow(true).replace(' ','').replace('an','1').replace('minutes','m').replace('hour','h').replace('hs','h')}
+                                {/* <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.user.username}`}> */}
+                                        {/* {moment(props.createdAt).fromNow(true).replace(' ','').replace('an','1').replace('minutes','m').replace('hour','h').replace('hs','h')} */}
+                                        {moment(props.createdAt).fromNow(true)}
                                 {/* </Link> */}
                             </span>
                         </div>
@@ -235,7 +261,7 @@ const TweetCard = (props) => {
                                 {props.replies.length > 0 && props.replies.length}
                             </div>
                         </div>
-                        <div onClick={()=>retweet(props.id)} className="card-button-wrap retweet-wrap">
+                        <div onClick={(e)=>retweet(e,props.id)} className="card-button-wrap retweet-wrap">
                             <div className="card-icon retweet-icon">
                                 <ICON_RETWEET styles={account.retweets.includes(props.id) ? {stroke: 'rgb(23, 191, 99)'} : {fill:'rgb(101, 119, 134)'}}/>
                             </div>
@@ -243,7 +269,7 @@ const TweetCard = (props) => {
                                 {props.retweets.length}
                             </div>
                         </div>
-                        <div onClick={()=>likeTweet(props.id)} className="card-button-wrap heart-wrap">
+                        <div onClick={(e)=>likeTweet(e,props.id)} className="card-button-wrap heart-wrap">
                             <div className="card-icon heart-icon">
                                 {state.account.likes.includes(props.id) ? 
                                 <ICON_HEARTFULL styles={{fill:'rgb(224, 36, 94)'}}/> :
@@ -253,7 +279,7 @@ const TweetCard = (props) => {
                                 {props.likes.length}  
                             </div>
                         </div>
-                        <div onClick={()=>state.account.username === props.user.username ? deleteTweet(props.id): bookmarkTweet(props.id)} className="card-button-wrap">
+                        <div onClick={(e)=>state.account.username === props.user.username ? deleteTweet(e,props.id): bookmarkTweet(e,props.id)} className="card-button-wrap">
                             <div className={state.account && state.account.username === props.user.username ? "card-icon delete-icon" :"card-icon share-icon"}>
                                 {state.account && state.account.username === props.user.username ? 
                                 <ICON_DELETE styles={{fill:'rgb(101, 119, 134)'}} /> : state.account.bookmarks.includes(props.id) ?
@@ -264,8 +290,9 @@ const TweetCard = (props) => {
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div> : null}
 
+        {props.parent || props.user ? 
             <div onClick={()=>toggleModal()} style={{display: modalOpen ? 'block' : 'none'}} className="modal-edit">
             <div style={{minHeight: '379px', height: 'initial'}} onClick={(e)=>handleModalClick(e)} className="modal-content">
                 <div className="modal-header">
@@ -279,7 +306,7 @@ const TweetCard = (props) => {
                 <div style={{marginTop:'5px'}} className="modal-body">
                     <div className="reply-content-wrapper">   
                         <div className="card-userPic-wrapper">
-                            <Link to={`/profile/${parent? props.parent.user.username:props.user.username}`}>
+                            <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${parent? props.parent.user.username:props.user.username}`}>
                                 <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={parent? props.parent.user.profileImg : props.user.profileImg}/>
                             </Link>
                         </div>
@@ -287,15 +314,16 @@ const TweetCard = (props) => {
                             <div className="card-content-header">
                                 <div className="card-header-detail">
                                     <span className="card-header-user">
-                                        <Link to={`/profile/${parent? props.parent.user.username:props.user.username}`}>{parent? props.parent.user.name : props.user.name}</Link>     
+                                        <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${parent? props.parent.user.username:props.user.username}`}>{parent? props.parent.user.name : props.user.name}</Link>     
                                     </span>
                                     <span className="card-header-username">
-                                        <Link to={`/profile/${parent? props.parent.user.username : props.user.username}`}>{parent? '@'+props.parent.user.username : '@'+props.user.username}</Link>
+                                        <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${parent? props.parent.user.username : props.user.username}`}>{parent? '@'+props.parent.user.username : '@'+props.user.username}</Link>
                                     </span>
                                     <span className="card-header-dot">·</span>
                                     <span className="card-header-date">
-                                        {/* <Link to={`/profile/${props.user.username}`}> */}
-                                                {moment(parent? props.parent.createdAt : props.createdAt).fromNow(true).replace(' ','').replace('an','1').replace('minutes','m').replace('hour','h').replace('hs','h')}
+                                        {/* <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.user.username}`}> */}
+                                                {/* {moment(parent? props.parent.createdAt : props.createdAt).fromNow(true).replace(' ','').replace('an','1').replace('minutes','m').replace('hour','h').replace('hs','h')} */}
+                                                {moment(parent? props.parent.createdAt : props.createdAt).fromNow()}
                                         {/* </Link> */}
                                     </span>
                                 </div>
@@ -342,7 +370,7 @@ const TweetCard = (props) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> : null}
         </div>
     )
 }

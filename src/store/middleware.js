@@ -46,10 +46,12 @@ export const applyMiddleware = dispatch => action => {
             return axios.get(`${API_URL}/auth/user`, headers)
             .then(res=>dispatch({ type: types.GET_ACCOUNT, payload: res.data }))
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+            
         case types.BOOKMARK:
             return axios.post(`${API_URL}/tweet/${action.payload.id}/bookmark`, action.payload, headers)
             .then(res=>dispatch({ type: types.BOOKMARK, payload: res.data, data: action.payload }))
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
         case types.GET_USER:
             return axios.get(`${API_URL}/user/${action.payload}/tweets`, headers)
             .then(res=>dispatch({ type: types.GET_USER, payload: res.data }))
@@ -91,13 +93,38 @@ export const applyMiddleware = dispatch => action => {
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
         case types.DELETE_LIST:
-            return axios.delete(`${API_URL}/lists/${action.payload}/delete`, action.payload, headers)
+            return axios.delete(`${API_URL}/lists/${action.payload}/delete`, headers)
             .then(res=>dispatch({ type: types.DELETE_LIST, payload: res.data, data: action.payload }))
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
         case types.GET_LISTS:
             return axios.get(`${API_URL}/user/i/lists`, headers)
             .then(res=>dispatch({ type: types.GET_LISTS, payload: res.data, data: action.payload }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        case types.GET_LIST:
+            return axios.get(`${API_URL}/lists/${action.payload}`, headers )
+            .then(res=>dispatch({ type: types.GET_LIST, payload: res.data }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        case types.GET_TREND:
+            return axios.get(`${API_URL}/trend`)
+            .then(res=>dispatch({ type: types.GET_TREND, payload: res.data }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        case types.SEARCH:
+            return axios.post(`${API_URL}/user`, action.payload)
+            .then(res=>dispatch({ type: types.SEARCH, payload: res.data }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        case types.TREND_TWEETS:
+            return axios.get(`${API_URL}/trend/${action.payload}`)
+            .then(res=>dispatch({ type: types.TREND_TWEETS, payload: res.data }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        case types.ADD_TO_LIST:
+            return axios.post(`${API_URL}/lists/${action.payload.username}/${action.payload.id}`, action.payload, headers)
+            .then(res=>dispatch({ type: types.ADD_TO_LIST, payload: res.data, data: action.payload }))
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
         default: dispatch(action)

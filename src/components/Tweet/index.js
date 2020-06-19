@@ -1,22 +1,42 @@
 import React , { useEffect, useState, useContext, useRef } from 'react'
 import { StoreContext } from '../../store/store'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import './style.scss'
 import moment from 'moment'
 import Loader from '../Loader'
-import { ICON_ARROWBACK, ICON_HEART, ICON_REPLY, ICON_RETWEET, ICON_SHARE } from '../../Icons'
+import { ICON_ARROWBACK, ICON_HEART, ICON_REPLY, ICON_RETWEET, ICON_SHARE, ICON_HEARTFULL, ICON_BOOKMARK,
+ICON_DELETE, ICON_BOOKMARKFILL } from '../../Icons'
 
 const TweetPage = (props) => {
     const { state, actions } = useContext(StoreContext)
-    const {tweet} = state
+    const {tweet, account} = state
 
     useEffect(()=>{
         actions.getTweet(props.match.params.id)
     }, [])
     var image = new Image()
+
+    let info
+    const likeTweet = (id) => {
+        info = { dest: "tweet", id }
+        actions.likeTweet(info)
+    }
+    const retweet = (id) => {
+        info = { dest: "tweet", id }
+        actions.retweet(info)
+    }
+    const bookmarkTweet = (id) => {
+        info = { dest: "tweet", id }
+        actions.bookmarkTweet(info)
+    }
+    const deleteTweet = (id) => {
+        actions.deleteTweet(id)
+    }
+
+    
     return(
         <div>
-            {tweet ? 
+            {tweet && account ? 
             <div className="tweet-wrapper">
             <div className="tweet-header-wrapper">
                 <div className="profile-header-back">
@@ -62,14 +82,22 @@ const TweetPage = (props) => {
                     <div className="tweet-int-icon">
                         <div className="card-icon reply-icon"> <ICON_REPLY /> </div>
                     </div>
-                    <div className="tweet-int-icon">
-                        <div className="card-icon retweet-icon"> <ICON_RETWEET/> </div>
+                    <div onClick={()=>retweet(tweet._id)} className="tweet-int-icon">
+                        <div className="card-icon retweet-icon">
+                             <ICON_RETWEET styles={account.retweets.includes(tweet._id) ? {stroke: 'rgb(23, 191, 99)'} : {fill:'rgb(101, 119, 134)'}}/> 
+                        </div>
                     </div>
-                    <div className="tweet-int-icon">
-                        <div className="card-icon heart-icon"> <ICON_HEART/> </div>
+                    <div onClick={()=>likeTweet(tweet._id)} className="tweet-int-icon">
+                        <div className="card-icon heart-icon">
+                        {account.likes.includes(tweet._id) ? <ICON_HEARTFULL styles={{fill:'rgb(224, 36, 94)'}}
+                         /> : <ICON_HEART/>} </div>
                     </div>
-                    <div className="tweet-int-icon">
-                        <div className="card-icon share-icon"> <ICON_SHARE/> </div>
+                    <div onClick={()=>account.username === tweet.user.username ? deleteTweet(tweet._id) : bookmarkTweet(tweet._id)} className="tweet-int-icon">
+                        <div className={account.username === tweet.user.username ? "card-icon delete-icon" :"card-icon share-icon"}>
+                            {account.username === tweet.user.username ? 
+                                <ICON_DELETE styles={{fill:'rgb(101, 119, 134)'}} /> : account.bookmarks.includes(tweet._id) ? <ICON_BOOKMARKFILL styles={{fill:'rgb(10, 113, 176)'}}/> :
+                                <ICON_BOOKMARK styles={{fill:'rgb(101, 119, 134)'}}/>}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import moment from 'moment'
 
 const initialState = {
     session: true,
+    loggedin: false,
     user: {
         _id: ""
     },
@@ -13,7 +14,11 @@ const initialState = {
     user: null,
     bookmarks: [],
     recent_tweets: [],
-    lists: []
+    lists: [],
+    list: null,
+    trends: [],
+    result: [],
+    tagTweets: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -30,8 +35,7 @@ const reducer = (state = initialState, action) => {
 
         case type.LOGIN:
             localStorage.setItem("Twittertoken", action.payload.token)
-            console.log(action.payload)
-            return {...state, ...action.payload, loading: false, error: false}
+            return {...state, ...action.payload, loggedin: true, loading: false, error: false}
 
         case type.REGISTER:
             alert('registreed')
@@ -133,12 +137,19 @@ const reducer = (state = initialState, action) => {
         case type.DELETE_TWEET:
             let userTweetsD = state.user
             let homeTweetsD = state.tweets
-            userTweetsD.tweets = userTweetsD && userTweetsD.tweets.filter((x=>{
-                return x._id !== action.data })) 
+            let singleTweet = state.tweet
+            if(userTweetsD){
+                userTweetsD.tweets = userTweetsD && userTweetsD.tweets.filter((x=>{
+                    return x._id !== action.data })) 
+            }
+            if(singleTweet && action.data === singleTweet._id){
+                window.location.replace('/home')
+                singleTweet = null
+            }
             homeTweetsD = homeTweetsD.filter((x)=>{
                 return x._id !== action.data
             })
-            return {...state, ...{user: userTweetsD}, ...{tweets: homeTweetsD}}
+            return {...state, ...{user: userTweetsD}, ...{tweets: homeTweetsD}, ...{tweet: singleTweet}}
 
         case type.FOLLOW_USER: 
             let accountF = state.account
@@ -150,13 +161,17 @@ const reducer = (state = initialState, action) => {
             }
             return {...state, ...{account: accountF}}
 
+        case type.GET_LIST: 
+            return {...state, ...action.payload}
+
         case type.EDIT_LIST: 
             ////
             return state
 
         case type.CREATE_LIST: 
-            ////
-            return state
+            let add_list = state.lists
+            add_list.unshift(action.payload.list)
+            return {...state, ...{lists: add_list}}
 
         case type.DELETE_LIST: 
             ////
@@ -165,6 +180,26 @@ const reducer = (state = initialState, action) => {
         case type.GET_LISTS: 
         console.log(action.payload)
             return {...state, ...action.payload}
+
+        case type.GET_TREND: 
+            console.log(action.payload)
+            return {...state, ...action.payload}
+
+        case type.SEARCH: 
+            return {...state, ...action.payload}
+
+        case type.TREND_TWEETS: 
+        let t_tweets = action.payload.tagTweets.tweets
+            return {...state, ...{tagTweets: t_tweets}}
+
+        case type.ADD_TO_LIST: 
+            let added_list = state.list
+            if(action.payload.msg === 'user removed'){
+                add_list.users.filter(x=>x !== action.data.userId)
+            }else{
+                added_list.users.push(action.data.userId)
+            }
+                return {...state, ...{list: added_list}}
         default:
             return state
     }

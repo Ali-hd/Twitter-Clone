@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { StoreContext } from '../../store/store'
 import './style.scss'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { ICON_LOGO } from '../../Icons'
 
 const LoginPage = () => {
@@ -23,6 +23,7 @@ const LoginPage = () => {
 
     return(
         <div className="login-wrapper">
+            {state.loggedin && <Redirect to="/home" />}
             <ICON_LOGO/>
             <h1 className="login-header">
                 Log in to Twitter

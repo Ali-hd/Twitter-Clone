@@ -35,7 +35,7 @@ return(
         {/* add loader for bookmarks when empty using dispatch */}
         {bookmarks.map(t=>{
             console.log(t)
-            return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
+            return <TweetCard username={t.username} name={t.name} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
         })}
     </div>
     )

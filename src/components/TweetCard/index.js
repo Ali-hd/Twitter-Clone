@@ -9,39 +9,34 @@ import axios from 'axios'
 import {API_URL} from '../../config'
 import ContentEditable from 'react-contenteditable'
 
+ 
 
-const TweetCard = (props) => {
+const TweetCard = React.memo(function TweetCard(props) {
     const { state, actions } = useContext(StoreContext)
     const {account, user} = state
 
     let info
     const likeTweet = (e,id) => {
         e.stopPropagation()
-        if(props.history.location.pathname.slice(1,5) == 'home'){
-            info = { dest: "home", id }
-        }else if(props.history.location.pathname.slice(1,5) == 'prof'){
+        if(props.history.location.pathname.slice(1,5) == 'prof'){
             info = { dest: "profile", id }
-        }else{return}
+        }else{ info = { id } }
         actions.likeTweet(info)
     }
 
     const bookmarkTweet = (e,id) => {
         e.stopPropagation()
-        if(props.history.location.pathname.slice(1,5) == 'home'){
-            info = { dest: "home", id }
-        }else if(props.history.location.pathname.slice(1,5) == 'prof'){
+        if(props.history.location.pathname.slice(1,5) == 'prof'){
             info = { dest: "profile", id }
-        }else{return}
+        }else{ info = { id } }
         actions.bookmarkTweet(info)
     }
 
     const retweet = (e,id) => {
         e.stopPropagation()
-        if(props.history.location.pathname.slice(1,5) == 'home'){
-            info = { dest: "home", id }
-        }else if(props.history.location.pathname.slice(1,5) == 'prof'){
+        if(props.history.location.pathname.slice(1,5) == 'prof'){
             info = { dest: "profile", id }
-        }else{return}
+        }else{ info = { id } }
         actions.retweet(info)
     }
 
@@ -51,6 +46,7 @@ const TweetCard = (props) => {
     }
 
     const goToTweet = (id) => {
+        if(props.replyTo){ actions.getTweet(id) }
         props.history.push(`/tweet/${props.user.username}/${id}`)      
     } 
 
@@ -99,7 +95,9 @@ const TweetCard = (props) => {
     };
 
     useEffect(() => {
-        document.getElementsByTagName("body")[0].style.overflow = modalOpen? "hidden" : "visible";
+        document.getElementsByTagName("body")[0].style.cssText = modalOpen && "position:fixed; overflow-y: scroll;"
+        if(document.getElementById("replyBox")) 
+        document.getElementById("replyBox").focus();
       }, [modalOpen])
 
 
@@ -118,22 +116,9 @@ const TweetCard = (props) => {
     }
 
     moment.locale('en', {
-        relativeTime: {
-          future: 'in %s',
-          past: '%s ago',
-          s:  'few seconds ago',
-          ss: '%ss',
-          m:  '1m',
-          mm: '%dm',
-          h:  '1h',
-          hh: '%dh',
-          d:  'a day',
-          dd: '%dd',
-          M:  'a month',
-          MM: '%dM',
-          y:  'a year',
-          yy: '%dY'
-        }
+        relativeTime: { future: 'in %s', past: '%s ago', s:  'few seconds ago', ss: '%ss',
+          m:  '1m', mm: '%dm', h:  '1h', hh: '%dh', d:  'a day', dd: '%dd', M:  'a month',
+          MM: '%dM', y:  'a year', yy: '%dY' }
       });
 
     return (
@@ -214,15 +199,22 @@ const TweetCard = (props) => {
                 </div>
             </div> : null }
 
-            {/* ///////////////////////////parent\\\\\\\\\\\\\\\\\\\\\\\\ */}
+            {/* ///////////////////////////parent up\\\\\\\\\\\\\\\\\\\\\\\\ */}
+            
           {props.user ? 
             <div onClick={()=>goToTweet(props.id)} key={props.id} className="Tweet-card-wrapper">   
                 <div className="card-userPic-wrapper">
+                    {/* <div className="user-retweet-icon">
+                        <ICON_RETWEET />
+                    </div> */}
                     <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.user.username}`}>
                         <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={props.user.profileImg}/>
                     </Link>
                 </div>
                 <div className="card-content-wrapper">
+                    {/* {props.username === account.username && props.retweets.includes(account._id) ? 
+                    <div className="user-retweeted"> You Retweeted </div> :
+                    props.username !== account.username &&  */}
                     <div className="card-content-header">
                         <div className="card-header-detail">
                             <span className="card-header-user">
@@ -233,16 +225,22 @@ const TweetCard = (props) => {
                             </span>
                             <span className="card-header-dot">·</span>
                             <span className="card-header-date">
-                                {/* <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.user.username}`}> */}
-                                        {/* {moment(props.createdAt).fromNow(true).replace(' ','').replace('an','1').replace('minutes','m').replace('hour','h').replace('hs','h')} */}
-                                        {moment(props.createdAt).fromNow(true)}
-                                {/* </Link> */}
+                                    {moment(props.createdAt).fromNow(true)}
                             </span>
                         </div>
                         <div className="card-header-more">
                         
                         </div>
                     </div>
+                    {props.replyTo ? 
+                    <div className="replyTo-wrapper">
+                        <span className="reply-tweet-username">
+                                Replying to 
+                            </span>
+                            <span className="main-tweet-user">
+                                @{props.replyTo}
+                            </span>
+                    </div> : null }
                     <div className="card-content-info">
                     {props.description}
                     </div>
@@ -285,15 +283,14 @@ const TweetCard = (props) => {
                                 <ICON_DELETE styles={{fill:'rgb(101, 119, 134)'}} /> : state.account.bookmarks.includes(props.id) ?
                                 <ICON_BOOKMARKFILL styles={{fill:'rgb(10, 113, 176)'}}/> :
                                 <ICON_BOOKMARK styles={{fill:'rgb(101, 119, 134)'}}/>}
-                                {/* <ICON_SHARE /> */}
                             </div>
                         </div>
                     </div>
                 </div>
             </div> : null}
-
         {props.parent || props.user ? 
             <div onClick={()=>toggleModal()} style={{display: modalOpen ? 'block' : 'none'}} className="modal-edit">
+            {modalOpen ?
             <div style={{minHeight: '379px', height: 'initial'}} onClick={(e)=>handleModalClick(e)} className="modal-content">
                 <div className="modal-header">
                     <div className="modal-closeIcon">
@@ -321,10 +318,7 @@ const TweetCard = (props) => {
                                     </span>
                                     <span className="card-header-dot">·</span>
                                     <span className="card-header-date">
-                                        {/* <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.user.username}`}> */}
-                                                {/* {moment(parent? props.parent.createdAt : props.createdAt).fromNow(true).replace(' ','').replace('an','1').replace('minutes','m').replace('hour','h').replace('hs','h')} */}
                                                 {moment(parent? props.parent.createdAt : props.createdAt).fromNow()}
-                                        {/* </Link> */}
                                     </span>
                                 </div>
                             </div>
@@ -349,7 +343,7 @@ const TweetCard = (props) => {
                         </div>
                         <div className="Tweet-input-side">
                             <div className="inner-input-box">
-                                <ContentEditable style={{minHeight: '120px'}} className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
+                                <ContentEditable id="replyBox" style={{minHeight: '120px'}} className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
                             </div>
                             {replyImage && <div className="inner-image-box">
                                 <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={replyImage} alt="tweet image" />
@@ -369,10 +363,10 @@ const TweetCard = (props) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> : null}
         </div> : null}
         </div>
     )
-}
+});
 
 export default withRouter(TweetCard)

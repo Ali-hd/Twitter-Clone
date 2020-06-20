@@ -86,6 +86,7 @@
 }
 
 .card-buttons-wrapper{
+    margin-left: -5px;
     margin-top: 5px;
     max-width: 425px;
     display: flex;
@@ -185,3 +186,26 @@
 //     height: 100%;
 //     width: 100%;
 // }
+
+
+.replyTo-wrapper{
+    margin-bottom: 2px;
+}
+
+.user-retweet-icon{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5px;
+}
+
+.user-retweet-icon svg{
+    width: 13px;
+    height: 18.75px;
+    fill: rgb(101, 119, 134);   
+}
+
+.user-retweeted{
+    color: rgb(101, 119, 134);
+    font-size: 13px;
+    margin-bottom: 5px;
+}

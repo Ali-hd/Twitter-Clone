@@ -89,6 +89,18 @@ export const useActions = (state, dispatch) => ({
     },
     addToList: data => {
         dispatch({type: types.ADD_TO_LIST, payload: data})
+    },
+    getFollowers: data => {
+        dispatch({type: types.GET_FOLLOWERS, payload: data})
+    },
+    getFollowing: data => {
+        dispatch({type: types.GET_FOLLOWING, payload: data})
+    },
+    searchUsers: data => {
+        dispatch({type: types.SEARCH_USERS, payload: data})
+    },
+    whoToFollow: data => {
+        dispatch({type: types.WHO_TO_FOLLOW, payload: data})
     }
 
 })

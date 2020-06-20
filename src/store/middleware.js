@@ -113,8 +113,13 @@ export const applyMiddleware = dispatch => action => {
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
         case types.SEARCH:
-            return axios.post(`${API_URL}/user`, action.payload)
+            return axios.post(`${API_URL}/trend`, action.payload)
             .then(res=>dispatch({ type: types.SEARCH, payload: res.data }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        case types.SEARCH_USERS:
+            return axios.post(`${API_URL}/user`, action.payload)
+            .then(res=>dispatch({ type: types.SEARCH_USERS, payload: res.data }))
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
         case types.TREND_TWEETS:
@@ -125,6 +130,21 @@ export const applyMiddleware = dispatch => action => {
         case types.ADD_TO_LIST:
             return axios.post(`${API_URL}/lists/${action.payload.username}/${action.payload.id}`, action.payload, headers)
             .then(res=>dispatch({ type: types.ADD_TO_LIST, payload: res.data, data: action.payload }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        case types.GET_FOLLOWERS:
+            return axios.get(`${API_URL}/user/i/followers`, headers)
+            .then(res=>dispatch({ type: types.GET_FOLLOWERS, payload: res.data, data: action.payload }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        // case types.GET_FOLLOWING:
+        //     return axios.get(`${API_URL}/lists/i/following`, action.payload, headers)
+        //     .then(res=>dispatch({ type: types.GET_FOLLOWING, payload: res.data, data: action.payload }))
+        //     .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        case types.WHO_TO_FOLLOW: 
+            return axios.get(`${API_URL}/user/i/suggestions`, headers)
+            .then(res=>dispatch({ type: types.WHO_TO_FOLLOW, payload: res.data, data: action.payload }))
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
         default: dispatch(action)

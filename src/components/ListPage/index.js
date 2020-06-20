@@ -21,7 +21,7 @@ const [saved, setSaved] = useState(false)
 const [memOpen, setMemOpen] = useState(false)
 const [tab, setTab] = useState('Members')
 
-const {account, list, listTweets, result} = state
+const {account, list, listTweets, resultUsers} = state
 
 const editList = () => {
     let values = {
@@ -74,13 +74,13 @@ const goToUser = (id) => {
 
 const searchOnChange = (param) => {
     if(param.length>0){
-        actions.search({username: param})
+        actions.searchUsers({username: param})
     }
 }
 
-const addToList = (e,username,userId) => {
+const addToList = (e,username,userId, profileImg,name) => {
     e.stopPropagation()
-    let values = {id: props.match.params.id, username, userId}
+    let values = {id: props.match.params.id, username, userId, profileImg,name}
     actions.addToList(values)
 }
 
@@ -124,7 +124,7 @@ return(
              </div>
         </div>
         {listTweets && listTweets.map(t=>{
-            return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
+            return <TweetCard username={t.username} name={t.name} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
         })}
     </div>
     <div onClick={()=>toggleModal()} style={{display: modalOpen ? 'block' : 'none'}} className="modal-edit">
@@ -153,26 +153,29 @@ return(
                     </div>
                 </div>
                 {tab === 'Members' ? 
-                <div onClick={()=>goToUser(account.username)} key={account._id} className="search-result-wapper">
+                list.users.map(u=>{
+                return <div onClick={()=>goToUser(u.username)} key={u._id} className="search-result-wapper">
                     <div className="search-userPic-wrapper">
-                            <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={account.profileImg}/>
+                            <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={u.profileImg}/>
                     </div>
                     <div className="search-user-details">
                         <div className="search-user-warp">
                             <div className="search-user-info">
-                                <div className="search-user-name">{account.name}</div>
-                                <div className="search-user-username">@{account.username}</div>
+                                <div className="search-user-name">{u.name}</div>
+                                <div className="search-user-username">@{u.username}</div>
                             </div>
-                            {account._id === account._id ? null :
-                            <div className={account.following.includes(account._id) ?"follow-btn-wrap unfollow-switch":"follow-btn-wrap"}>
-                                <span><span>{ account.following.includes(account._id) ? 'Following' : 'Follow'}</span></span>
+                            {u._id === account._id ? null :
+                            <div onClick={(e)=>addToList(e,u.username,u._id,u.profileImg,u.name)} className={list.users.some(x => x._id === u._id) ? "follow-btn-wrap Remove-switch":"follow-btn-wrap"}>
+                                <span><span>{list.users.some(x => x._id === u._id) ? 'Remove' : 'Add'}</span></span>
                             </div>}
                         </div>
                         <div className="search-user-bio">
                             {/* {account.description.substring(0,160)} */}
                         </div>
                     </div>
-                </div> :
+                </div>
+                })
+                 :
                 <div>
                 <div style={{borderRadius:'0'}} className="explore-search-wrapper">
                     <div className="explore-search-icon">
@@ -182,7 +185,7 @@ return(
                         <input onChange={(e)=>searchOnChange(e.target.value)} placeholder="Search People" type="text" name="search"/>
                     </div>
                 </div>
-                {result.length ? result.map(u=>{
+                {resultUsers.length ? resultUsers.map(u=>{
                     return <div onClick={()=>goToUser(u.username)} key={u._id} className="search-result-wapper">
                     <div className="search-userPic-wrapper">
                             <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={u.profileImg}/>
@@ -194,8 +197,8 @@ return(
                                 <div className="search-user-username">@{u.username}</div>
                             </div>
                             {u._id === account._id ? null :
-                            <div onClick={(e)=>addToList(e,u.username,u._id)} className={list.users.some(x => x._id === u.id) ? "follow-btn-wrap Remove-switch":"follow-btn-wrap"}>
-                                <span><span>{ list.users.some(x => x._id === u.id) ? 'Remove' : 'Add'}</span></span>
+                            <div onClick={(e)=>addToList(e,u.username,u._id, u.profileImg,u.name)} className={list.users.some(x => x._id === u._id) ? "follow-btn-wrap Remove-switch":"follow-btn-wrap"}>
+                                <span><span>{list.users.some(x => x._id === u._id) ? 'Remove' : 'Add'}</span></span>
                             </div>}
                         </div>
                         <div className="search-user-bio">

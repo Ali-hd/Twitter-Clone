@@ -13,6 +13,8 @@ import Lists from './components/Lists'
 import ListPage from './components/ListPage'
 import Explore from './components/Explore'
 import Feed from './components/Feed'
+import Notifications from './components/Notifications'
+import Messages from './components/Messages'
 
 const Home = lazy(() => import('./components/Home'))
 const Profile = lazy(() => import('./components/Profile'))
@@ -47,6 +49,12 @@ const DefaultContainer = () => {
         </Route>
         <Route path="/explore" exact>
           <Explore/>
+        </Route>
+        <Route path="/notifications" exact>
+          <Notifications/>
+        </Route>
+        <Route path="/messages" exact>
+          <Messages/>
         </Route>
       </div>
       <div className="right-section">

@@ -188,16 +188,25 @@
 .profile-social-box{
     display: flex;
     margin-top: 7px;
+    div{
+        display: flex;
+        cursor: pointer;
+        &:hover{
+            text-decoration: underline;
+        }
+    }
 }
 
 .follow-num{
     font-weight: bold;
     margin-right: 3px;
+    cursor: pointer;
 }
 
 .follow-text{
     color: rgb(101, 119, 134);
     margin-right: 20px;
+    cursor: pointer;
 }
 
 .profile-nav-menu{
@@ -208,6 +217,8 @@
 }
 
 .profile-nav-item{
+    white-space: nowrap;
+    overflow: hidden;
     padding: 15px;
     width: 100%;
     text-align: center;

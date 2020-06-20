@@ -3,7 +3,7 @@ import { StoreContext } from '../../store/store'
 import { Link, withRouter, Redirect } from 'react-router-dom'
 import './style.scss'
 import { ICON_LOGO, ICON_HOME, ICON_HASH, ICON_BELL, ICON_INBOX
-,ICON_BOOKMARK, ICON_LIST, ICON_USER, ICON_SETTINGS, ICON_HOMEFILL, ICON_HASHFILL, ICON_BELLFILL, ICON_BOOKMARKFILL, ICON_LISTFILL, ICON_USERFILL, ICON_FEATHER, ICON_CLOSE,ICON_IMGUPLOAD } from '../../Icons'
+,ICON_BOOKMARK, ICON_LIST, ICON_USER, ICON_SETTINGS, ICON_HOMEFILL, ICON_HASHFILL, ICON_BELLFILL, ICON_BOOKMARKFILL, ICON_LISTFILL, ICON_USERFILL, ICON_FEATHER, ICON_CLOSE,ICON_IMGUPLOAD, ICON_INBOXFILL } from '../../Icons'
 import axios from 'axios'
 import {API_URL} from '../../config'
 import ContentEditable from 'react-contenteditable'
@@ -94,14 +94,14 @@ const Nav = ({history}) => {
     }
 
     return(
-        <div>
+        <div style={{position: 'relative'}}>
         <div className="Nav-width">
             <div className="Nav">
             <div className="Nav-Content">
-                <Link to={`/home`} className="logo-wrapper">
-                    <ICON_LOGO styles={{fill:"rgb(29,161,242)", width:'47px', height:"30px"}}/>
-                </Link>
                 <nav className="Nav-wrapper">
+                    <Link to={`/home`} className="logo-wrapper">
+                        <ICON_LOGO styles={{fill:"rgb(29,161,242)", width:'47px', height:"30px"}}/>
+                    </Link>
                     <Link className="Nav-link" to={`/home`}>
                         <div className={path === '/home' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
                             {path === '/home' ? <ICON_HOMEFILL /> : <ICON_HOME />}
@@ -114,18 +114,18 @@ const Nav = ({history}) => {
                             <div className="Nav-item">Explore</div>
                         </div>
                     </Link>
-                    <a href="#" className="Nav-link">
+                    <Link to="/notifications" className="Nav-link">
                         <div className={path === '/notifications' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
                             {path === '/notifications' ? <ICON_BELLFILL /> : <ICON_BELL />}
                             <div className="Nav-item">Notifications</div>
                         </div>
-                    </a>
-                    <a href="#" className="Nav-link">
-                        <div className={path === '/Messages' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
-                            <ICON_INBOX />
+                    </Link>
+                    <Link to="/messages" className="Nav-link">
+                        <div className={path === '/messages' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
+                            {path === '/messages' ?   <ICON_INBOXFILL /> :<ICON_INBOX />}
                             <div className="Nav-item">Messages</div>
                         </div>
-                    </a>
+                    </Link>
                     <Link className="Nav-link" to={`/bookmarks`}>
                         <div className={path === '/bookmarks' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
                             {path === '/bookmarks' ? <ICON_BOOKMARKFILL /> : <ICON_BOOKMARK />}
@@ -167,13 +167,19 @@ const Nav = ({history}) => {
             </div>
             </div>
         </div>
+
         <div onClick={()=>openMore()} style={{display: moreMenu ? 'block' : 'none'}} className="more-menu-background">
-            <div onClick={(e)=>handleMenuClick(e)} className="more-menu-content">
+        </div>
+
+        {moreMenu ? 
+        <div onClick={(e)=>handleMenuClick(e)} className="more-menu-content">
                 <div onClick={()=>actions.logout()} className="more-menu-item">
                     Log out @{account && account.username}
                 </div>
-            </div>
-        </div>
+                <div className="more-menu-item">
+                    Change Theme
+                </div>
+        </div> : null }
 
         {account && 
         <div onClick={()=>toggleModal()} style={{display: modalOpen ? 'block' : 'none'}} className="modal-edit">

@@ -6,7 +6,6 @@ import ContentEditable from 'react-contenteditable'
 import { ICON_IMGUPLOAD} from '../../Icons'
 import {API_URL} from '../../config'
 import Loader from '../Loader'
-import moment from 'moment'
 import TweetCard from '../TweetCard'
 
 const Home = () => {
@@ -20,6 +19,7 @@ const Home = () => {
     //used for contenteditable divs on react hooks
     const tweetT = useRef('');
     const handleChange = evt => {
+        console.log(tweetText)
         tweetT.current = evt.target.value; 
         setTweetText(tweetT.current)
     };
@@ -45,7 +45,6 @@ const Home = () => {
 
     const onchangefile = () => {
         let file = document.getElementById('file').files[0];
-        let filename = file.name
 
         let bodyFormData = new FormData()
         bodyFormData.append('image', file)
@@ -60,6 +59,14 @@ const Home = () => {
         document.getElementById('file').value = "";
         setTweetImage(null)
         setImageLoaded(false)
+    }
+
+    const handleNewLine = (e) => {
+        // if(e.keyCode === 13){
+        //     // setTweetText(tweetText + '/n')
+        //     document.execCommand('insertHTML', false, '');
+        //     return false;
+        // }
     }
 
     return(
@@ -77,7 +84,7 @@ const Home = () => {
                 </div>
                 <div className="Tweet-input-side">
                     <div className="inner-input-box">
-                        <ContentEditable className={tweetText.length ? 'tweet-input-active' : null} placeholder="What's happening?" html={tweetT.current} onChange={handleChange} />
+                        <ContentEditable onKeyDown={(e)=>handleNewLine(e)} className={tweetText.length ? 'tweet-input-active' : null} placeholder="What's happening?" html={tweetT.current} onChange={handleChange} />
                     </div>
                     {tweetImage && <div className="inner-image-box">
                          <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={tweetImage} alt="tweet image" />
@@ -106,7 +113,7 @@ const Home = () => {
             {/* { state.account && <TweetCard parent={t.parent} key={'1'} id={'1'} user={'1'} createdAt={'2019'} description={'t.description'}
                 images={'t.images'} replies={[]} retweets={[]} likes={[]} style={{height:'0'}} />} */}
             {account && state.tweets.length> 0 ? state.tweets.map(t=>{
-                return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                return <TweetCard username={t.username} name={t.name} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  /> 
             }): <Loader/>}
         </div>

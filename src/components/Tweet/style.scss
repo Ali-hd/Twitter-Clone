@@ -156,29 +156,6 @@
     }
 }
 
-.reply-tweet-body{
-    width: 100%;
-}
-
-.reply-user-pic{
-    flex-basis: 49px;
-    margin-right: 10px;
-}
-
-.reply-header-username{
-    margin-left: 5px;
-    color: rgb(101, 119, 134)
-}
-
-.reply-header-dot{
-    padding: 0 5px;
-    color: rgb(101, 119, 134)
-}
-
-.reply-header-date{
-    color: rgb(101, 119, 134)
-
-}
 
 .reply-tweet-username{
     font-size: 15.5px;
@@ -189,26 +166,6 @@
 .main-tweet-user{
     color: rgb(27, 149, 224);
     &:hover{ text-decoration: underline;}
-}
-
-.reply-tweet-content{
-
-
-}
-
-.reply-tweet-interactions{
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 5px;
-    margin-bottom: 2px;
-}
-
-.reply-int-icon{
-    min-height: 19px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
 }
 
 .card-icon{

@@ -17,7 +17,7 @@ const Explore = (props) => {
     const searchOnChange = (param) => {
         if(tab !== 'Search'){setTab('Search')}
         if(param.length>0){
-            actions.search({username: param})
+            actions.search({description: param})
         }
     }
 
@@ -84,27 +84,8 @@ const Explore = (props) => {
                             </div>
                     }) : <Loader/>
                 : 
-                result.length ? result.map(u=>{
-                    return <div onClick={()=>goToUser(u.username)} key={u._id} className="search-result-wapper">
-                    <div className="search-userPic-wrapper">
-                            <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={u.profileImg}/>
-                    </div>
-                    <div className="search-user-details">
-                        <div className="search-user-warp">
-                            <div className="search-user-info">
-                                <div className="search-user-name">{u.name}</div>
-                                <div className="search-user-username">@{u.username}</div>
-                            </div>
-                            {u._id === account._id ? null :
-                            <div onClick={(e)=>followUser(e, u._id)} className={account.following.includes(u._id) ?"follow-btn-wrap unfollow-switch":"follow-btn-wrap"}>
-                                <span><span>{ account.following.includes(u._id) ? 'Following' : 'Follow'}</span></span>
-                            </div>}
-                        </div>
-                        <div className="search-user-bio">
-                            {u.description.substring(0,160)}
-                        </div>
-                    </div>
-                </div>
+                result.length ? result.map(r=>{
+                    return <TweetCard username={r.username} name={r.name} username={r.username} name={r.name} parent={r.parent} key={r._id} id={r._id} user={r.user} createdAt={r.createdAt} description={r.description} images={r.images} replies={r.replies} retweets={r.retweets} likes={r.likes} />
                 }) : <div className="try-searching">
                         Nothing to see here ..
                         <div/>
@@ -114,7 +95,7 @@ const Explore = (props) => {
                 }
             </div> : <div>
             {tagTweets.length>0 && tagTweets.map(t=>{
-            return <TweetCard parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
+            return <TweetCard username={t.username} name={t.name} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
                 })}
             </div>}
         </div>

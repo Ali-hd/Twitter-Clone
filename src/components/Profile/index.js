@@ -20,6 +20,8 @@ const Profile = (props) => {
     const [banner, setBanner] = useState('')
     const [avatar, setAvatar] = useState('')
     const [saved, setSaved] = useState(false)
+    const [memOpen, setMemOpen] = useState(false)
+    const [tab, setTab] = useState('Followers')   
     
     const {account, user} = state
     const userParam = props.match.params.username
@@ -40,20 +42,24 @@ const Profile = (props) => {
         setSaved(true)
         toggleModal()
     }
-    // const mounted = useRef()
 
     useEffect(() => {
-        console.log('mounted')
         window.scrollTo(0, 0)
         actions.getUser(props.match.params.username)
     }, [])
 
     useEffect(() => {
-        document.getElementsByTagName("body")[0].style.overflow = modalOpen? "hidden" : "visible";
+        document.getElementsByTagName("body")[0].style.cssText = modalOpen && "position:fixed; overflow-y: scroll;"
       }, [modalOpen])
 
-    const toggleModal = (param) => {
+    const toggleModal = (param, type) => {
         if(param === 'edit'){setSaved(false)}
+        if(type){setTab(type)}
+        if(param === 'members'){
+            setMemOpen(true)
+            actions.getFollowers()
+        }
+        if(memOpen){setMemOpen(false)}
         setModalOpen(!modalOpen)
     }
 
@@ -61,8 +67,9 @@ const Profile = (props) => {
         e.stopPropagation()
     }
 
-    const followUser = () => {
-        actions.followUser(user._id)
+    const followUser = (e,id) => {
+        e.stopPropagation()
+        actions.followUser(id)
     }
 
     const uploadImage = (file,type) => {
@@ -82,6 +89,10 @@ const Profile = (props) => {
         uploadImage(file, 'avatar')
     }
 
+    const goToUser = (id) => {
+        props.history.push(`/profile/${id}`)      
+    } 
+
     
     return(
         <div>
@@ -99,9 +110,9 @@ const Profile = (props) => {
                     <div className="profile-header-name">
                             {account.username === userParam ? account.username : user.username}
                     </div>
-                    <div className="profile-header-tweets">
+                    {/* <div className="profile-header-tweets">
                             82 Tweets
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="profile-banner-wrapper">
@@ -112,7 +123,7 @@ const Profile = (props) => {
                     <div className="profile-image-wrapper">
                         <img src={avatar.length > 0 && saved ? avatar : user.profileImg}/>
                     </div>
-                    <div onClick={()=>account.username === userParam ? toggleModal('edit'): followUser( user._id)} 
+                    <div onClick={(e)=>account.username === userParam ? toggleModal('edit'): followUser(e,user._id)} 
                      className={account.following.includes(user._id) ? 'unfollow-switch profile-edit-button' : 'profile-edit-button'}>
                         {account.username === userParam?
                         <span>Edit profile</span> :
@@ -134,10 +145,14 @@ const Profile = (props) => {
                     </div>
                 </div>
                 <div className="profile-social-box">
-                        <div className="follow-num"> {user.following.length} </div>
-                        <div className="follow-text"> Following </div>
-                        <div className="follow-num"> {user.followers.length} </div>
-                        <div className="follow-text"> Followers </div>
+                        <div onClick={()=>toggleModal('members','Following')}>
+                            <p className="follow-num"> {user.following.length} </p>
+                            <p className="follow-text"> Following </p>
+                        </div>
+                        <div onClick={()=>toggleModal('members', 'Followers')}>
+                            <p className="follow-num"> {user.followers.length} </p>
+                            <p className="follow-text"> Followers </p>
+                        </div>
                 </div>
             </div>
             <div className="profile-nav-menu">
@@ -157,40 +172,97 @@ const Profile = (props) => {
             {activeTab === 'Tweets' ? 
             user.tweets.map(t=>{
                 if(!t.parent)
-                return <TweetCard key={'tweets'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
+                return <TweetCard username={t.username} name={t.name} key={'tweets'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
             }): activeTab === 'Tweets&Replies' ? 
             user.tweets.map(t=>{
                 if(t.parent)
-                return <TweetCard key={'replies'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                return <TweetCard username={t.username} name={t.name} key={'replies'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
              }) :
             activeTab === 'Likes' ? 
             user.likes.map(t=>{
-                return <TweetCard key={'likes'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                return <TweetCard username={t.username} name={t.name} key={'likes'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
             }): activeTab === 'Media' ? 
             user.tweets.map(t=>{
                 if(t.images[0])
-                return <TweetCard key={'tweets'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                return <TweetCard username={t.username} name={t.name} key={'tweets'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
              }):null}
             </div>
             <div onClick={()=>toggleModal()} style={{display: modalOpen ? 'block' : 'none'}} className="modal-edit">
                 <div onClick={(e)=>handleModalClick(e)} className="modal-content">
-                    <div className="modal-header">
+                    <div className={memOpen ? "modal-header no-b-border" : "modal-header"}>
                         <div className="modal-closeIcon">
                             <div onClick={()=>toggleModal()} className="modal-closeIcon-wrap">
                                 <ICON_CLOSE />
                             </div>
                         </div>
-                        <p className="modal-title">Edit Profile</p>
+                        <p className="modal-title">{memOpen ? null : 'Edit Profile'}</p>
+                        {memOpen ? null : 
                         <div className="save-modal-wrapper">
                             <div onClick={editProfile} className="save-modal-btn">
                                 Save
                             </div>
+                        </div>}
+                    </div>
+                    {memOpen ? <div className="modal-body">
+                    <div className="explore-nav-menu">
+                        <div onClick={()=>setTab('Followers')} className={tab =='Followers' ? `explore-nav-item activeTab` : `explore-nav-item`}>
+                            Followers 
+                        </div>
+                        <div onClick={()=>setTab('Following')} className={tab =='Following' ? `explore-nav-item activeTab` : `explore-nav-item`}>
+                            Following
                         </div>
                     </div>
-
+                    {tab === 'Followers' ? 
+                     state.followers.map(f=>{
+                         return <div onClick={()=>goToUser(f.username)} key={f._id} className="search-result-wapper">
+                         <div className="search-userPic-wrapper">
+                                 <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={f.profileImg}/>
+                         </div>
+                         <div className="search-user-details">
+                             <div className="search-user-warp">
+                                 <div className="search-user-info">
+                                     <div className="search-user-name">{f.name}</div>
+                                     <div className="search-user-username">@{f.username}</div>
+                                 </div>
+                                 {f._id === account._id ? null :
+                                 <div onClick={(e)=>followUser(e,f._id)} className={account.following.includes(f._id) ? "follow-btn-wrap unfollow-switch":"follow-btn-wrap"}>
+                                     <span><span>{account.following.includes(f._id) ? 'Following' : 'Follow'}</span></span>
+                                 </div>}
+                             </div>
+                             <div className="search-user-bio">
+                                 {f.description.substring(0,160)}
+                             </div>
+                         </div>
+                     </div>
+                     }) 
+                     :
+                     state.following.map(f=>{
+                         return <div onClick={()=>goToUser(f.username)} key={f._id} className="search-result-wapper">
+                         <div className="search-userPic-wrapper">
+                                 <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={f.profileImg}/>
+                         </div>
+                         <div className="search-user-details">
+                             <div className="search-user-warp">
+                                 <div className="search-user-info">
+                                     <div className="search-user-name">{f.name}</div>
+                                     <div className="search-user-username">@{f.username}</div>
+                                 </div>
+                                 {f._id === account._id ? null :
+                                 <div onClick={(e)=>followUser(e,f._id)} className={account.following.includes(f._id) ? "follow-btn-wrap unfollow-switch":"follow-btn-wrap"}>
+                                     <span><span>{account.following.includes(f._id) ? 'Following' : 'Follow'}</span></span>
+                                 </div>}
+                             </div>
+                             <div className="search-user-bio">
+                                 {f.description.substring(0,160)}
+                             </div>
+                         </div>
+                     </div>
+                     })
+                     }
+                    </div> : 
                     <div className="modal-body">
                         <div className="modal-banner">
                             <img src={banner.length > 0 ? banner : user.banner} alt="modal-banner" />
@@ -228,7 +300,7 @@ const Profile = (props) => {
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div>}
                 </div>
             </div>
             </div>: <div className="profile-wrapper"><Loader/> </div> }

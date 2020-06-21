@@ -85,7 +85,7 @@ const Explore = (props) => {
                     }) : <Loader/>
                 : 
                 result.length ? result.map(r=>{
-                    return <TweetCard username={r.username} name={r.name} username={r.username} name={r.name} parent={r.parent} key={r._id} id={r._id} user={r.user} createdAt={r.createdAt} description={r.description} images={r.images} replies={r.replies} retweets={r.retweets} likes={r.likes} />
+                    return <TweetCard retweet={r.retweet} username={r.username} name={r.name} username={r.username} name={r.name} parent={r.parent} key={r._id} id={r._id} user={r.user} createdAt={r.createdAt} description={r.description} images={r.images} replies={r.replies} retweets={r.retweets} likes={r.likes} />
                 }) : <div className="try-searching">
                         Nothing to see here ..
                         <div/>
@@ -95,7 +95,7 @@ const Explore = (props) => {
                 }
             </div> : <div>
             {tagTweets.length>0 && tagTweets.map(t=>{
-            return <TweetCard username={t.username} name={t.name} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
+            return <TweetCard retweet={t.retweet} username={t.username} name={t.name} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
                 })}
             </div>}
         </div>

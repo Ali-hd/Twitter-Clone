@@ -66,7 +66,7 @@ const DefaultContainer = () => {
 
 function App() {
   return (
-    <div>
+    <div className="dark-mode">
       <StoreProvider>
         <BrowserRouter>
           <Suspense fallback={<Loader />}>

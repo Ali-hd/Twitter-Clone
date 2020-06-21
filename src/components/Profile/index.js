@@ -172,21 +172,21 @@ const Profile = (props) => {
             {activeTab === 'Tweets' ? 
             user.tweets.map(t=>{
                 if(!t.parent)
-                return <TweetCard username={t.username} name={t.name} key={'tweets'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
+                return <TweetCard retweet={t.retweet} username={t.username} name={t.name} key={'tweets'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
             }): activeTab === 'Tweets&Replies' ? 
             user.tweets.map(t=>{
                 if(t.parent)
-                return <TweetCard username={t.username} name={t.name} key={'replies'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                return <TweetCard retweet={t.retweet} username={t.username} name={t.name} key={'replies'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
              }) :
             activeTab === 'Likes' ? 
             user.likes.map(t=>{
-                return <TweetCard username={t.username} name={t.name} key={'likes'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                return <TweetCard retweet={t.retweet} username={t.username} name={t.name} key={'likes'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
             }): activeTab === 'Media' ? 
             user.tweets.map(t=>{
                 if(t.images[0])
-                return <TweetCard username={t.username} name={t.name} key={'tweets'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
+                return <TweetCard retweet={t.retweet} username={t.username} name={t.name} key={'tweets'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
              }):null}
             </div>

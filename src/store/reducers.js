@@ -25,7 +25,6 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
-    console.log('running reducer')
     switch (action.type) {
         case type.SET_STATE:
             console.log('set state')
@@ -41,7 +40,7 @@ const reducer = (state = initialState, action) => {
             return {...state, ...action.payload, loggedin: true, loading: false, error: false}
 
         case type.REGISTER:
-            alert('registreed')
+            setTimeout(()=>{action.data.func()},250)
             return {...state, ...action.payload, loading: false, error: false}
 
         case type.TWEET:

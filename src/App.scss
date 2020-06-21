@@ -1,3 +1,7 @@
+$primary-color: rgb(29, 161, 242);
+$border-color: rgb(230, 236, 240);
+
+
 .body-wrap{
     display: flex;
     flex-direction: row;
@@ -116,7 +120,7 @@
 }
 
 .modal-closeIcon-wrap svg{
-    fill: rgb(29, 161, 242);
+    fill: $primary-color;
     height: 22.5px;
 }
 
@@ -406,7 +410,7 @@
     margin: 10px 0 0 10px;
     min-height: 39px;
     min-width: calc(62.79px);
-    background-color: rgb(29, 161, 242);
+    background-color: $primary-color;
     padding: 0 1em;
     border: 1px solid rgba(0, 0, 0, 0);
     border-radius: 9999px;
@@ -431,7 +435,7 @@
 .Tweet-input-divider{
     min-height: 10px;
     height: 10px;
-    background-color: rgb(230, 236, 240);
+    background-color: $border-color;
     content: '';
 }
 
@@ -492,7 +496,7 @@
 
   .workInProgress{
     max-width: 600px;
-    border-right: 1px solid rgb(230, 236, 240);
+    border-right: 1px solid $border-color;
     width: 100%;
     font-weight: bold;
     font-size: 17px;
@@ -501,3 +505,7 @@
     color: #657786;
     min-height: 2000px;
   }
+
+//   .dark-mode{
+//       background-color: #1a1919 !important;
+//   }

@@ -19,7 +19,7 @@ export const applyMiddleware = dispatch => action => {
 
         case types.REGISTER:
             return axios.post(`${API_URL}/auth/register`, action.payload)
-            .then(res=>dispatch({ type: types.REGISTER, payload: res.data })) 
+            .then(res=>dispatch({ type: types.REGISTER, payload: res.data, data: action.payload })) 
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
         case types.TWEET:

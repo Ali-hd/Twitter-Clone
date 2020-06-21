@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { StoreContext } from '../../store/store'
 import './style.scss'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { ICON_LOGO } from '../../Icons'
 
-const SignUpPage = () => {
+const SignUpPage = (props) => {
     const { state, actions } = useContext(StoreContext)
 
     const [name, setName] = useState('')
@@ -19,10 +19,15 @@ const SignUpPage = () => {
                 name,
                 username,
                 email,
-                password
+                password,
+                func: Redirect
             }
             actions.signup(values)
         }
+    }
+
+    const Redirect = () => {
+        props.history.push('/login')
     }
 
     return(
@@ -69,4 +74,4 @@ const SignUpPage = () => {
     )
 }
 
-export default SignUpPage
+export default withRouter(SignUpPage)

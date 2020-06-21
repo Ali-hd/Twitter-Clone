@@ -171,7 +171,7 @@ const TweetPage = (props) => {
             </div>
 
             {tweet.replies.map(r=>{
-                return <TweetCard username={r.username} name={r.name} replyTo={tweet.user.username} key={r._id} id={r._id} user={r.user} createdAt={r.createdAt} description={r.description}
+                return <TweetCard retweet={r.retweet} username={r.username} name={r.name} replyTo={tweet.user.username} key={r._id} id={r._id} user={r.user} createdAt={r.createdAt} description={r.description}
                 images={r.images} replies={r.replies} retweets={r.retweets} likes={r.likes}  /> 
             })}
         

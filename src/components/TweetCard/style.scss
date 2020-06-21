@@ -12,7 +12,9 @@
 
 .card-userPic-wrapper{
     flex-basis: 49px;
-    margin-right: 10px;   
+    margin-right: 10px;  
+    display: flex;
+    flex-direction: column;
 }
 
 .card-content-wrapper{
@@ -208,4 +210,14 @@
     color: rgb(101, 119, 134);
     font-size: 13px;
     margin-bottom: 5px;
+}
+
+.tweet-reply-thread{
+    margin-top: 2px;
+    width: 2px;
+    background-color: rgb(204, 214, 221);
+    margin: 0 auto;
+    height: 100%;
+    margin-top: -5px;
+    margin-bottom: -20px;
 }

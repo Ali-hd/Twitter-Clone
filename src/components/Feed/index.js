@@ -38,7 +38,7 @@ return(
                 <div>{t.count} Tweets</div>
             </div>
             }) : <Loader/>}
-            <div className="feed-more">
+            <div onClick={()=>props.history.push(`/explore`)} className="feed-more">
                 Show more
             </div>
         </div>
@@ -48,8 +48,8 @@ return(
             {suggestions.length > 0  ? 
             suggestions.map(s=>{
                 if(s.username !== account.username) {
-                    return <div className="feed-card-trend">
-                    <div onClick={()=>goToUser(s.username)} key={s._id} className="sugg-result-wapper">
+                    return <div key={s._id} className="feed-card-trend">
+                    <div onClick={()=>goToUser(s.username)} className="sugg-result-wapper">
                         <div className="search-userPic-wrapper">
                                 <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={s.profileImg}/>
                         </div>

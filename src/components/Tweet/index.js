@@ -84,11 +84,13 @@ const TweetPage = (props) => {
 
     const replyTweet = (type) => {
         toggleModal()
+        let hashtags = replyText.match(/#(\w+)/g)
         if(!replyText.length){return}
         const values = {
             description: replyText,
             images: [replyImage],
             parent: props.match.params.id,
+            hashtags
         }
         actions.tweet(values)
         tweetT.current = ''
@@ -233,7 +235,7 @@ const TweetPage = (props) => {
                         </div>
                         <div className="Tweet-input-side">
                             <div className="inner-input-box">
-                                <ContentEditable id="replyBox" style={{minHeight: '120px'}} className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
+                                <ContentEditable onPaste={(e)=>e.preventDefault()} id="replyBox" style={{minHeight: '120px'}} className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
                             </div>
                             {replyImage && <div className="inner-image-box">
                                 <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={replyImage} alt="tweet image" />

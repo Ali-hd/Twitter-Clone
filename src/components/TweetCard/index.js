@@ -103,11 +103,14 @@ const TweetCard = React.memo(function TweetCard(props) {
 
     const replyTweet = (type) => {
         toggleModal()
+
+        let hashtags = replyText.match(/#(\w+)/g)
         if(!replyText.length){return}
         const values = {
             description: replyText,
             images: [replyImage],
-            parent: type === 'parent' ? props.parent._id : props.id
+            parent: type === 'parent' ? props.parent._id : props.id,
+            hashtags
         }
         actions.tweet(values)
         tweetT.current = ''
@@ -124,11 +127,12 @@ const TweetCard = React.memo(function TweetCard(props) {
     return (
         <div>
             {props.parent ?  
-            <div onClick={()=>goToTweet(props.parent._id)} key={props.parent._id} style={{borderBottom: '0px'}} className="Tweet-card-wrapper">   
-                <div className="card-userPic-wrapper">
+            <div onClick={()=>goToTweet(props.parent._id)} key={props.parent._id} style={{borderBottom: '0px'}} className="Tweet-card-wrapper">  
+                <div style={{display:'flex', flexDirection:'column'}} className="card-userPic-wrapper">
                     <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.parent.user.username}`}>
                         <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={props.parent.user.profileImg}/>
                     </Link>
+                    <div className="tweet-reply-thread"></div>
                 </div>
                 <div className="card-content-wrapper">
                     <div className="card-content-header">
@@ -343,7 +347,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                         </div>
                         <div className="Tweet-input-side">
                             <div className="inner-input-box">
-                                <ContentEditable id="replyBox" style={{minHeight: '120px'}} className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
+                                <ContentEditable onPaste={(e)=>e.preventDefault()} id="replyBox" style={{minHeight: '120px'}} className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
                             </div>
                             {replyImage && <div className="inner-image-box">
                                 <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={replyImage} alt="tweet image" />

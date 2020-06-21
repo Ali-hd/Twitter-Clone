@@ -81,11 +81,14 @@ const Nav = ({history}) => {
     };
 
     const submitTweet = (type) => {
+
+        let hashtags = tweetText.match(/#(\w+)/g)
         toggleModal()
         if(!tweetText.length){return}
         const values = {
             description: tweetText,
             images: [tweetImage],
+            hashtags
         }
         actions.tweet(values)
         tweetT.current = ''
@@ -201,7 +204,7 @@ const Nav = ({history}) => {
                         </div>
                         <div className="Tweet-input-side">
                             <div className="inner-input-box">
-                                <ContentEditable style={{minHeight: '120px'}} className={tweetText.length ? 'tweet-input-active' : null} placeholder="What's happening" html={tweetT.current} onChange={handleChange} />
+                                <ContentEditable onPaste={(e)=>e.preventDefault()} style={{minHeight: '120px'}} className={tweetText.length ? 'tweet-input-active' : null} placeholder="What's happening" html={tweetT.current} onChange={handleChange} />
                             </div>
                             {tweetImage && <div className="inner-image-box">
                                 <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={tweetImage} alt="tweet image" />

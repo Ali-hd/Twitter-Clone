@@ -19,7 +19,6 @@ const Home = () => {
     //used for contenteditable divs on react hooks
     const tweetT = useRef('');
     const handleChange = evt => {
-        console.log(tweetText)
         tweetT.current = evt.target.value; 
         setTweetText(tweetT.current)
     };
@@ -61,14 +60,6 @@ const Home = () => {
         setImageLoaded(false)
     }
 
-    const handleNewLine = (e) => {
-        // if(e.keyCode === 13){
-        //     // setTweetText(tweetText + '/n')
-        //     document.execCommand('insertHTML', false, '');
-        //     return false;
-        // }
-    }
-
     return(
         <div className="Home-wrapper">
             <div className="Home-header-wrapper">
@@ -84,7 +75,7 @@ const Home = () => {
                 </div>
                 <div className="Tweet-input-side">
                     <div className="inner-input-box">
-                        <ContentEditable onKeyDown={(e)=>handleNewLine(e)} className={tweetText.length ? 'tweet-input-active' : null} placeholder="What's happening?" html={tweetT.current} onChange={handleChange} />
+                        <ContentEditable onPaste={(e)=>e.preventDefault()} className={tweetText.length ? 'tweet-input-active' : null} placeholder="What's happening?" html={tweetT.current} onChange={handleChange} />
                     </div>
                     {tweetImage && <div className="inner-image-box">
                          <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={tweetImage} alt="tweet image" />

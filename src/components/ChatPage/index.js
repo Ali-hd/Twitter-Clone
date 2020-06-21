@@ -1,18 +1,18 @@
 import React, {useEffect} from 'react'
 import './style.scss'
 
-const Messages = () => {
+const ChatPage = () => {
 
     useEffect(() => {
         document.getElementsByTagName("body")[0].style.cssText = "position:fixed; overflow-y: scroll;"
     },[])
     
     return(
-        <div className="messages-wrapper">
-            <div className="messages-header-wrapper">
-                Messages
+        <div className="chat-wrapper">
+            <div className="chat-header-wrapper">
+                Ali hd
             </div>
-            <div className="messages-body">
+            {/* <div className="messages-body">
                 <div className="recent-messages-wrapper">
                     <div className="message-box">
                             <div className="message-avatar">
@@ -29,9 +29,9 @@ const Messages = () => {
                             </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
 
-export default Messages
+export default ChatPage

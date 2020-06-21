@@ -52,6 +52,7 @@
     }
 }
 .Nav-item-hover{
+    svg{fill: rgb(16, 17, 17)}
     display: flex;
     align-items: center;
     padding: 10px;
@@ -186,12 +187,17 @@
     padding: 15px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     transition: 0.2 ease-in-out;
     cursor: pointer;
     &:hover{
         background-color: rgb(245, 248, 250);
     }
+    
+}
+
+.more-menu-item svg{
+    width: 16px;
 }
 
 

@@ -51,6 +51,11 @@ const TweetCard = React.memo(function TweetCard(props) {
         if(props.replyTo){ actions.getTweet(id) }
         props.history.push(`/tweet/${props.user.username}/${id}`)      
     } 
+    const goToReply = (e,id) => {
+        e.stopPropagation()
+        if(props.replyTo){ actions.getTweet(id) }
+        props.history.push(`/tweet/${props.user.username}/${id}`)      
+    } 
 
     const [modalOpen, setModalOpen] = useState(false)
     const [replyText, setReplyText] = useState('')
@@ -131,12 +136,14 @@ const TweetCard = React.memo(function TweetCard(props) {
             {props.parent ?  
             <div onClick={()=>goToTweet(props.parent._id)} key={props.parent._id} style={{borderBottom: '0px'}} className="Tweet-card-wrapper">  
                 <div style={{display:'flex', flexDirection:'column'}} className="card-userPic-wrapper">
+                {props.parent.parent ? <div style={{marginTop: '17px'}}></div> : null} 
                     <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.parent.user.username}`}>
                         <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={props.parent.user.profileImg}/>
                     </Link>
                     <div className="tweet-reply-thread"></div>
                 </div>
                 <div className="card-content-wrapper">
+                {props.parent.parent ? <div onClick={(e)=>goToReply(e,props.parent.parent._id)} className="user-replied">Replying to @{props.parent.parent.username}</div> : null} 
                     <div className="card-content-header">
                         <div className="card-header-detail">
                             <span className="card-header-user">

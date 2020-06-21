@@ -221,3 +221,12 @@
     margin-top: -5px;
     margin-bottom: -20px;
 }
+
+.user-replied{
+    color: rgb(101, 119, 134);
+    font-size: 13px;
+    margin-bottom: 5px;
+    &:hover{
+        text-decoration: underline;
+    }
+}

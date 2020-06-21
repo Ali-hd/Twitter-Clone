@@ -147,6 +147,7 @@ export const applyMiddleware = dispatch => action => {
             .then(res=>dispatch({ type: types.WHO_TO_FOLLOW, payload: res.data, data: action.payload }))
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
+
         default: dispatch(action)
     }
 }

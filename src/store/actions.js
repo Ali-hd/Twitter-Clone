@@ -101,6 +101,5 @@ export const useActions = (state, dispatch) => ({
     },
     whoToFollow: data => {
         dispatch({type: types.WHO_TO_FOLLOW, payload: data})
-    }
-
+    },
 })

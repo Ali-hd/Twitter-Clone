@@ -3,16 +3,25 @@ import { StoreContext } from '../../store/store'
 import { Link, withRouter, Redirect } from 'react-router-dom'
 import './style.scss'
 import { ICON_LOGO, ICON_HOME, ICON_HASH, ICON_BELL, ICON_INBOX
-,ICON_BOOKMARK, ICON_LIST, ICON_USER, ICON_SETTINGS, ICON_HOMEFILL, ICON_HASHFILL, ICON_BELLFILL, ICON_BOOKMARKFILL, ICON_LISTFILL, ICON_USERFILL, ICON_FEATHER, ICON_CLOSE,ICON_IMGUPLOAD, ICON_INBOXFILL } from '../../Icons'
+,ICON_BOOKMARK, ICON_LIST, ICON_USER, ICON_SETTINGS, ICON_HOMEFILL, ICON_HASHFILL,
+ICON_BELLFILL, ICON_BOOKMARKFILL, ICON_LISTFILL, ICON_USERFILL, ICON_FEATHER, 
+ICON_CLOSE,ICON_IMGUPLOAD, ICON_INBOXFILL, ICON_LIGHT, ICON_DARK } from '../../Icons'
 import axios from 'axios'
 import {API_URL} from '../../config'
 import ContentEditable from 'react-contenteditable'
+import {
+    enable as enableDarkMode,
+    disable as disableDarkMode,
+    auto as followSystemColorScheme,
+    setFetchMethod 
+} from 'darkreader';
 
 const Nav = ({history}) => {
     const { state, actions } = useContext(StoreContext)
 
     const { account, session } = state
     const [moreMenu, setMoreMenu] = useState(false)
+    const [theme, setTheme] = useState(true)
 
     const [modalOpen, setModalOpen] = useState(false)
     const [tweetText, setTweetText] = useState('')
@@ -29,6 +38,11 @@ const Nav = ({history}) => {
           state.account == null ? actions.verifyToken('get account') : actions.verifyToken()
         });
         !ran && state.account == null ? actions.verifyToken('get account') : actions.verifyToken()
+        if(localStorage.getItem('Theme')=='dark'){
+            setTheme('dark')
+            setFetchMethod(window.fetch)
+            enableDarkMode();
+        }
       }, [])
 
       if(!session){
@@ -65,8 +79,6 @@ const Nav = ({history}) => {
 
     const toggleModal = (e, type) => {
         if(e){ e.stopPropagation() }
-        // if(param === 'edit'){setSaved(false)}
-        // if(type === 'parent'){setParent(true)}else{setParent(false)}
         setModalOpen(!modalOpen)
     }
 
@@ -94,6 +106,17 @@ const Nav = ({history}) => {
         tweetT.current = ''
         setTweetText('')
         setTweetImage(null)
+    }
+
+    const changeTheme = () => {
+        if(localStorage.getItem('Theme') === 'dark'){
+            disableDarkMode()
+            localStorage.setItem('Theme', 'light')
+        }else if(localStorage.getItem('Theme') === 'light'){
+            localStorage.setItem('Theme', 'dark')
+            setFetchMethod(window.fetch)
+            enableDarkMode();
+        }
     }
 
     return(
@@ -179,8 +202,9 @@ const Nav = ({history}) => {
                 <div onClick={()=>actions.logout()} className="more-menu-item">
                     Log out @{account && account.username}
                 </div>
-                <div className="more-menu-item">
-                    Change Theme
+                <div onClick={changeTheme} className="more-menu-item">
+                    <span>Change Theme</span>
+                    <span>{theme ? <ICON_DARK/> : <ICON_LIGHT />}</span>
                 </div>
         </div> : null }
 

@@ -2,9 +2,9 @@ import React, { useContext, useState, useRef, useEffect } from 'react'
 import './style.scss'
 import moment from 'moment'
 import { StoreContext } from '../../store/store'
-import { Link, withRouter, Redirect, NavLink } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { ICON_REPLY, ICON_RETWEET,
-    ICON_HEART, ICON_SHARE, ICON_BOOKMARK, ICON_HEARTFULL, ICON_BOOKMARKFILL, ICON_DELETE, ICON_ARROWBACK, ICON_UPLOAD, ICON_CLOSE,ICON_IMGUPLOAD} from '../../Icons'
+    ICON_HEART, ICON_BOOKMARK, ICON_HEARTFULL, ICON_BOOKMARKFILL, ICON_DELETE, ICON_CLOSE,ICON_IMGUPLOAD} from '../../Icons'
 import axios from 'axios'
 import {API_URL} from '../../config'
 import ContentEditable from 'react-contenteditable'
@@ -13,12 +13,12 @@ import ContentEditable from 'react-contenteditable'
 
 const TweetCard = React.memo(function TweetCard(props) {
     const { state, actions } = useContext(StoreContext)
-    const {account, user} = state
+    const {account} = state
 
     let info
     const likeTweet = (e,id) => {
         e.stopPropagation()
-        if(props.history.location.pathname.slice(1,5) == 'prof'){
+        if(props.history.location.pathname.slice(1,5) === 'prof'){
             info = { dest: "profile", id }
         }else{ info = { id } }
         actions.likeTweet(info)
@@ -26,7 +26,7 @@ const TweetCard = React.memo(function TweetCard(props) {
 
     const bookmarkTweet = (e,id) => {
         e.stopPropagation()
-        if(props.history.location.pathname.slice(1,5) == 'prof'){
+        if(props.history.location.pathname.slice(1,5) === 'prof'){
             info = { dest: "profile", id }
         }else{ info = { id } }
         actions.bookmarkTweet(info)
@@ -35,7 +35,7 @@ const TweetCard = React.memo(function TweetCard(props) {
     const retweet = (e,id, retweetId) => {
         e.stopPropagation()
         console.log(id,retweetId)
-        if(props.history.location.pathname.slice(1,5) == 'prof'){
+        if(props.history.location.pathname.slice(1,5) === 'prof'){
             info = { dest: "profile", id, retweetId }
         }else{ info = { id, retweetId } }
         console.log(info)
@@ -62,7 +62,6 @@ const TweetCard = React.memo(function TweetCard(props) {
     const [replyImage, setReplyImg] = useState(null)
     const [imageLoaded, setImageLoaded] = useState(false)
     const [parent, setParent] = useState(false)
-    const [saved, setSaved] = useState(false)
 
     const uploadImage = (file) => {
         let bodyFormData = new FormData()
@@ -124,8 +123,8 @@ const TweetCard = React.memo(function TweetCard(props) {
         setReplyText('')
         setReplyImg(null)
     }
-
-    moment.locale('en', {
+    
+    moment.updateLocale('en', {
         relativeTime: { future: 'in %s', past: '%s ago', s:  'few seconds ago', ss: '%ss',
           m:  '1m', mm: '%dm', h:  '1h', hh: '%dh', d:  'a day', dd: '%dd', M:  'a month',
           MM: '%dM', y:  'a year', yy: '%dY' }
@@ -138,7 +137,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                 <div style={{display:'flex', flexDirection:'column'}} className="card-userPic-wrapper">
                 {props.parent.parent ? <div style={{marginTop: '17px'}}></div> : null} 
                     <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.parent.user.username}`}>
-                        <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={props.parent.user.profileImg}/>
+                        <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={props.parent.user.profileImg}/>
                     </Link>
                     <div className="tweet-reply-thread"></div>
                 </div>
@@ -169,7 +168,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                     {props.parent.images[0] && 
                     <div className="card-content-images">
                         <div className="card-image-link">
-                            <img src={props.parent.images[0]}/>
+                            <img alt="" src={props.parent.images[0]}/>
                         </div>
                     </div> }
                     <div className="card-buttons-wrapper">
@@ -221,7 +220,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                         <ICON_RETWEET />
                     </div>
                     <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.retweet.user.username}`}>
-                        <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={props.retweet.user.profileImg}/>
+                        <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={props.retweet.user.profileImg}/>
                     </Link>
                 </div>
                 <div className="card-content-wrapper">
@@ -260,7 +259,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                     {props.retweet.images[0] && 
                     <div className="card-content-images">
                         <div className="card-image-link">
-                            <img src={props.retweet.images[0]}/>
+                            <img alt="" src={props.retweet.images[0]}/>
                         </div>
                     </div> }
                     <div className="card-buttons-wrapper">
@@ -307,7 +306,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                     <ICON_RETWEET />
                 </div> */}
                 <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${props.user.username}`}>
-                    <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={props.user.profileImg}/>
+                    <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={props.user.profileImg}/>
                 </Link>
             </div>
             <div className="card-content-wrapper">
@@ -346,7 +345,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                 {props.images[0] && 
                 <div className="card-content-images">
                     <div className="card-image-link">
-                        <img src={props.images[0]}/>
+                        <img alt="" src={props.images[0]}/>
                     </div>
                 </div> }
                 <div className="card-buttons-wrapper">
@@ -405,7 +404,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                     <div className="reply-content-wrapper">   
                         <div className="card-userPic-wrapper">
                             <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${parent? props.parent.user.username:props.user.username}`}>
-                                <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={parent? props.parent.user.profileImg : props.user.profileImg}/>
+                                <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={parent? props.parent.user.profileImg : props.user.profileImg}/>
                             </Link>
                         </div>
                         <div className="card-content-wrapper">
@@ -439,7 +438,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                     <div style={{position: 'relative'}} className="Tweet-input-wrapper">
                         <div className="Tweet-profile-wrapper">
                             <div>
-                                <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={account.profileImg}/>
+                                <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={account.profileImg}/>
                             </div>
                         </div>
                         <div className="Tweet-input-side">
@@ -447,7 +446,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                                 <ContentEditable onPaste={(e)=>e.preventDefault()} id="replyBox" style={{minHeight: '120px'}} className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
                             </div>
                             {replyImage && <div className="inner-image-box">
-                                <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={replyImage} alt="tweet image" />
+                                <img alt="" onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={replyImage} alt="tweet image" />
                                 {imageLoaded && <span onClick={removeImage} className="cancel-image">x</span>}
                             </div>}
                             <div className="inner-input-links">

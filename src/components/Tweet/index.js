@@ -4,7 +4,7 @@ import { withRouter, useHistory , Link } from 'react-router-dom'
 import './style.scss'
 import moment from 'moment'
 import Loader from '../Loader'
-import { ICON_ARROWBACK, ICON_HEART, ICON_REPLY, ICON_RETWEET, ICON_SHARE, ICON_HEARTFULL, ICON_BOOKMARK,
+import { ICON_ARROWBACK, ICON_HEART, ICON_REPLY, ICON_RETWEET, ICON_HEARTFULL, ICON_BOOKMARK,
 ICON_DELETE, ICON_BOOKMARKFILL, ICON_IMGUPLOAD, ICON_CLOSE } from '../../Icons'
 import axios from 'axios'
 import {API_URL} from '../../config'
@@ -117,9 +117,9 @@ const TweetPage = (props) => {
             <div className="tweet-body-wrapper">
                 <div className="tweet-header-content">
                     <div className="tweet-user-pic">
-                        <a href="#">
-                            <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={tweet.user.profileImg}/>
-                        </a>
+                        <Link to={`/profile/${tweet.user.username}`}>
+                            <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={tweet.user.profileImg}/>
+                        </Link>
                     </div>
                     <div className="tweet-user-wrap">
                         <div className="tweet-user-name">
@@ -193,7 +193,7 @@ const TweetPage = (props) => {
                     <div className="reply-content-wrapper">   
                         <div className="card-userPic-wrapper">
                             <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${tweet.user.username}`}>
-                                <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={tweet.user.profileImg}/>
+                                <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={tweet.user.profileImg}/>
                             </Link>
                         </div>
                         <div className="card-content-wrapper">
@@ -230,7 +230,7 @@ const TweetPage = (props) => {
                     <div style={{position: 'relative'}} className="Tweet-input-wrapper">
                         <div className="Tweet-profile-wrapper">
                             <div>
-                                <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={account.profileImg}/>
+                                <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={account.profileImg}/>
                             </div>
                         </div>
                         <div className="Tweet-input-side">
@@ -238,7 +238,7 @@ const TweetPage = (props) => {
                                 <ContentEditable onPaste={(e)=>e.preventDefault()} id="replyBox" style={{minHeight: '120px'}} className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
                             </div>
                             {replyImage && <div className="inner-image-box">
-                                <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={replyImage} alt="tweet image" />
+                                <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={replyImage} alt="tweet" />
                                 {imageLoaded && <span onClick={removeImage} className="cancel-image">x</span>}
                             </div>}
                             <div className="inner-input-links">

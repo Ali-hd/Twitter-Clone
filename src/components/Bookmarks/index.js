@@ -1,9 +1,7 @@
-import React , { useEffect, useState, useContext } from 'react'
+import React , { useEffect, useContext } from 'react'
 import './style.scss'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { StoreContext } from '../../store/store'
-import Loader from '../Loader'
-import moment from 'moment'
 import TweetCard from '../TweetCard'
 
 const Bookmarks = (props) => {

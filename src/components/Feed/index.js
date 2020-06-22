@@ -1,6 +1,6 @@
-import React , { useEffect, useState, useContext } from 'react'
+import React , { useEffect, useContext } from 'react'
 import './style.scss'
-import { Link, withRouter } from 'react-router-dom'
+import {  withRouter } from 'react-router-dom'
 import { StoreContext } from '../../store/store'
 import Loader from '../Loader'
 
@@ -51,7 +51,7 @@ return(
                     return <div key={s._id} className="feed-card-trend">
                     <div onClick={()=>goToUser(s.username)} className="sugg-result-wapper">
                         <div className="search-userPic-wrapper">
-                                <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={s.profileImg}/>
+                                <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={s.profileImg}/>
                         </div>
                         <div className="search-user-details">
                             <div className="search-user-warp">

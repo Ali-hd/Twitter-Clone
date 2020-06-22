@@ -12,7 +12,7 @@ import ContentEditable from 'react-contenteditable'
 import {
     enable as enableDarkMode,
     disable as disableDarkMode,
-    auto as followSystemColorScheme,
+    // auto as followSystemColorScheme,
     setFetchMethod 
 } from 'darkreader';
 

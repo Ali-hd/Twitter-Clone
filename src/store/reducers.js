@@ -3,10 +3,6 @@ import type from './typeActions'
 const initialState = {
     session: true,
     loggedin: false,
-    user: {
-        _id: ""
-    },
-    account: null,
     tweets: [],
     tweet: null,
     account: null,
@@ -27,7 +23,6 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case type.SET_STATE:
-            console.log('set state')
             return {...state, ...action.payload }
 
         case type.ERROR:
@@ -63,7 +58,7 @@ const reducer = (state = initialState, action) => {
                 account_likes.likes.push(action.data.id)
                 tweet_likes.length && tweet_likes.find(x=>x._id === action.data.id).likes.push(account_likes._id)
 
-                if(action.data.dest == 'profile'){
+                if(action.data.dest === 'profile'){
                     user_likes.tweets.find(x=>x._id === action.data.id).likes.push(action.data.id)
                     user_likes.likes = user_likes.tweets.filter(x=>x._id === action.data.id).concat(user_likes.likes)
                     console.log(user_likes.likes, user_likes.tweets.find(x=>x._id === action.data.id))
@@ -81,7 +76,7 @@ const reducer = (state = initialState, action) => {
                 let likeIndex = account_likes.likes.indexOf(action.data.id)
                 likeIndex > -1 && account_likes.likes.splice(likeIndex, 1)
 
-                if(action.data.dest == 'profile'){
+                if(action.data.dest === 'profile'){
                     user_likes.tweets.find(x=>x._id === action.data.id).likes.pop()
                     user_likes.likes = user_likes.likes.filter((x)=>{
                        return x._id !== action.data.id
@@ -134,7 +129,7 @@ const reducer = (state = initialState, action) => {
                 acc_retweets.retweets.push(action.data.id)
                 console.log(t_retweets.find(x=>x._id === action.data.id))
                 for(let i = 0; i < t_retweets.length; i++){
-                    if(t_retweets[i]._id == action.data.id){
+                    if(t_retweets[i]._id === action.data.id){
                         t_retweets[i].retweets.push(state.account._id)
                     }
                 }
@@ -151,7 +146,7 @@ const reducer = (state = initialState, action) => {
                         return x._id !== action.data.id})
                 }
                 for(let i = 0; i < t_retweets.length; i++){
-                    if(t_retweets[i]._id == action.data.id){
+                    if(t_retweets[i]._id === action.data.id){
                         t_retweets[i].retweets = t_retweets[i].retweets.filter((x)=>{
                             return x !== state.account._id})
                         }
@@ -187,7 +182,7 @@ const reducer = (state = initialState, action) => {
                 user_followers = user_followers.filter(f=>{
                     return f._id !== action.data })
             }
-            return {...state, ...{account: accountF}}
+            return {...state, ...{account: accountF}, ...{followers: user_followers}}
 
         case type.GET_LIST: 
             return {...state, ...action.payload}

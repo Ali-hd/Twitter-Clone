@@ -1,7 +1,7 @@
-import React , { useEffect, useState, useContext, useRef } from 'react'
+import React , { useEffect, useState, useContext} from 'react'
 import './style.scss'
 import { ICON_ARROWBACK, ICON_MARKDOWN, ICON_DATE, ICON_CLOSE, ICON_UPLOAD } from '../../Icons'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { StoreContext } from '../../store/store'
 import Loader from '../Loader'
 import moment from 'moment'
@@ -116,12 +116,12 @@ const Profile = (props) => {
                 </div>
             </div>
             <div className="profile-banner-wrapper">
-                <img src={banner.length > 0 && saved ? banner : user.banner}/>
+                <img src={banner.length > 0 && saved ? banner : user.banner} alt=""/>
             </div>
             <div className="profile-details-wrapper">
                 <div className="profile-options">
                     <div className="profile-image-wrapper">
-                        <img src={avatar.length > 0 && saved ? avatar : user.profileImg}/>
+                        <img src={avatar.length > 0 && saved ? avatar : user.profileImg} alt=""/>
                     </div>
                     <div onClick={(e)=>account.username === userParam ? toggleModal('edit'): followUser(e,user._id)} 
                      className={account.following.includes(user._id) ? 'unfollow-switch profile-edit-button' : 'profile-edit-button'}>
@@ -156,16 +156,16 @@ const Profile = (props) => {
                 </div>
             </div>
             <div className="profile-nav-menu">
-                <div key={'tweets'} onClick={()=>changeTab('Tweets')} className={activeTab =='Tweets' ? `profile-nav-item activeTab` : `profile-nav-item`}>
+                <div key={'tweets'} onClick={()=>changeTab('Tweets')} className={activeTab ==='Tweets' ? `profile-nav-item activeTab` : `profile-nav-item`}>
                     Tweets
                 </div>
-                <div key={'replies'} onClick={()=>changeTab('Tweets&Replies')} className={activeTab =='Tweets&Replies' ? `profile-nav-item activeTab` : `profile-nav-item`}>
+                <div key={'replies'} onClick={()=>changeTab('Tweets&Replies')} className={activeTab ==='Tweets&Replies' ? `profile-nav-item activeTab` : `profile-nav-item`}>
                     Tweets & replies
                 </div>
-                <div key={'media'} onClick={()=>changeTab('Media')} className={activeTab =='Media' ? `profile-nav-item activeTab` : `profile-nav-item`}>
+                <div key={'media'} onClick={()=>changeTab('Media')} className={activeTab ==='Media' ? `profile-nav-item activeTab` : `profile-nav-item`}>
                     Media
                 </div>
-                <div key={'likes'} onClick={()=>changeTab('Likes')} className={activeTab =='Likes' ? `profile-nav-item activeTab` : `profile-nav-item`}>
+                <div key={'likes'} onClick={()=>changeTab('Likes')} className={activeTab ==='Likes' ? `profile-nav-item activeTab` : `profile-nav-item`}>
                     Likes
                 </div>
             </div>
@@ -188,7 +188,7 @@ const Profile = (props) => {
                 if(t.images[0])
                 return <TweetCard retweet={t.retweet} username={t.username} name={t.name} key={'tweets'} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description}
                 images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
-             }):null}
+             }): null}
             </div>
             <div onClick={()=>toggleModal()} style={{display: modalOpen ? 'block' : 'none'}} className="modal-edit">
                 <div onClick={(e)=>handleModalClick(e)} className="modal-content">

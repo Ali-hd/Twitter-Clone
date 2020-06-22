@@ -4,6 +4,7 @@ import './style.scss'
 import axios from 'axios'
 import ContentEditable from 'react-contenteditable'
 import { ICON_IMGUPLOAD} from '../../Icons'
+import {Link} from 'react-router-dom'
 import {API_URL} from '../../config'
 import Loader from '../Loader'
 import TweetCard from '../TweetCard'
@@ -14,7 +15,7 @@ const Home = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
         actions.getTweets()
-    }, [])
+    },[])
 
     //used for contenteditable divs on react hooks
     const tweetT = useRef('');
@@ -69,16 +70,16 @@ const Home = () => {
             </div>
             <div className="Tweet-input-wrapper">
                 <div className="Tweet-profile-wrapper">
-                    <a href="#">
-                        {account &&<img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={account.profileImg}/>}
-                    </a>
+                    <Link to={`/profile/${account && account.username}`}>
+                        {account &&<img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={account.profileImg}/>}
+                    </Link>
                 </div>
                 <div className="Tweet-input-side">
                     <div className="inner-input-box">
                         <ContentEditable onPaste={(e)=>e.preventDefault()} className={tweetText.length ? 'tweet-input-active' : null} placeholder="What's happening?" html={tweetT.current} onChange={handleChange} />
                     </div>
                     {tweetImage && <div className="inner-image-box">
-                         <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={tweetImage} alt="tweet image" />
+                         <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={tweetImage} alt="tweet" />
                          {imageLoaded && <span onClick={removeImage} className="cancel-image">x</span>}
                     </div>}
                     <div className="inner-input-links">

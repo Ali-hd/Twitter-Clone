@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { StoreContext } from '../../store/store'
 import './style.scss'
-import { Link, withRouter } from 'react-router-dom'
-import { ICON_LOGO, ICON_SEARCH, ICON_ARROWBACK } from '../../Icons'
+import { withRouter } from 'react-router-dom'
+import { ICON_SEARCH, ICON_ARROWBACK } from '../../Icons'
 import Loader from '../Loader'
 import TweetCard from '../TweetCard'
 
 
 const Explore = (props) => {
     const { state, actions } = useContext(StoreContext)
-    const {account, trends, result, tagTweets} = state
+    const { trends, result, tagTweets} = state
     const [tab, setTab] = useState('Trends')
     const [trendOpen, setTrendOpen] = useState(false)
 
@@ -30,14 +30,14 @@ const Explore = (props) => {
         // }
     }, [])
 
-    const followUser = (e, id) => {
-        e.stopPropagation()
-        actions.followUser(id)
-    }
+    // const followUser = (e, id) => {
+    //     e.stopPropagation()
+    //     actions.followUser(id)
+    // }
 
-    const goToUser = (id) => {
-        props.history.push(`/profile/${id}`)      
-    } 
+    // const goToUser = (id) => {
+    //     props.history.push(`/profile/${id}`)      
+    // } 
 
     const goToTrend = (hash) => {
         setTrendOpen(true)
@@ -67,10 +67,10 @@ const Explore = (props) => {
             {!trendOpen ?
             <div>
                 <div className="explore-nav-menu">
-                    <div onClick={()=>setTab('Trends')} className={tab =='Trends' ? `explore-nav-item activeTab` : `explore-nav-item`}>
+                    <div onClick={()=>setTab('Trends')} className={tab === 'Trends' ? `explore-nav-item activeTab` : `explore-nav-item`}>
                         Trending 
                     </div>
-                    <div onClick={()=>setTab('Search')} className={tab =='Search' ? `explore-nav-item activeTab` : `explore-nav-item`}>
+                    <div onClick={()=>setTab('Search')} className={tab === 'Search' ? `explore-nav-item activeTab` : `explore-nav-item`}>
                         Search
                     </div>
                 </div>
@@ -85,7 +85,7 @@ const Explore = (props) => {
                     }) : <Loader/>
                 : 
                 result.length ? result.map(r=>{
-                    return <TweetCard retweet={r.retweet} username={r.username} name={r.name} username={r.username} name={r.name} parent={r.parent} key={r._id} id={r._id} user={r.user} createdAt={r.createdAt} description={r.description} images={r.images} replies={r.replies} retweets={r.retweets} likes={r.likes} />
+                    return <TweetCard retweet={r.retweet} username={r.username} name={r.name} parent={r.parent} key={r._id} id={r._id} user={r.user} createdAt={r.createdAt} description={r.description} images={r.images} replies={r.replies} retweets={r.retweets} likes={r.likes} />
                 }) : <div className="try-searching">
                         Nothing to see here ..
                         <div/>

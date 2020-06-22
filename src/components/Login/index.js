@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { StoreContext } from '../../store/store'
 import './style.scss'
 import { Link, Redirect } from 'react-router-dom'

@@ -35,7 +35,7 @@ export const useActions = (state, dispatch) => ({
             if (err) { dispatch({type: types.SET_STATE, payload: {session: false, decoded: decoded }})  }
             else {  
                 if(data == 'get account'){ dispatch({type: types.GET_ACCOUNT}) }
-                console.log('verifying token')
+                console.log('verifying user')
                 dispatch({type: types.SET_STATE, payload: {session: true, decoded: decoded}})  }
         });
     },

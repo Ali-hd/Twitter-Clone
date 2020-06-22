@@ -216,11 +216,11 @@
 
 .unfollow-switch{
     background-color: rgb(29, 161, 242);
-    span{color: #fff;}
+    span{color: #fff !important;}
 }
 
 .unfollow-switch:hover{
-    background-color: rgb(202,32,85);
+    background-color: rgb(202,32,85) !important;
     border: 1px solid transparent;
     span{
         color: #fff;

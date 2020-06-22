@@ -26,6 +26,7 @@ const Home = () => {
     const [tweetText, setTweetText] = useState('')
     const [tweetImage, setTweetImage] = useState(null)
     const [imageLoaded, setImageLoaded] = useState(false)
+    const [imageLoading, setImageLoading] = useState(false)
     
     const submitTweet = () => {
         if(!tweetText.length){return}
@@ -44,6 +45,7 @@ const Home = () => {
     }
 
     const onchangefile = () => {
+        setImageLoading(true)
         let file = document.getElementById('file').files[0];
 
         let bodyFormData = new FormData()
@@ -51,6 +53,7 @@ const Home = () => {
         axios.post(`${API_URL}/tweet/upload`, bodyFormData, { headers: { Authorization: `Bearer ${localStorage.getItem('Twittertoken')}`}})
             .then(res=>{   
                 setTweetImage(res.data.imageUrl)
+                setImageLoading(false)
             })
             .catch(err=>alert('error uploading image'))
     }
@@ -77,6 +80,9 @@ const Home = () => {
                 <div className="Tweet-input-side">
                     <div className="inner-input-box">
                         <ContentEditable onPaste={(e)=>e.preventDefault()} className={tweetText.length ? 'tweet-input-active' : null} placeholder="What's happening?" html={tweetT.current} onChange={handleChange} />
+                    </div>
+                    <div>
+                         {imageLoading ? <Loader/> : null}
                     </div>
                     {tweetImage && <div className="inner-image-box">
                          <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={tweetImage} alt="tweet" />

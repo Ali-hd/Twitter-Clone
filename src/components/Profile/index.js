@@ -1,6 +1,6 @@
 import React , { useEffect, useState, useContext} from 'react'
 import './style.scss'
-import { ICON_ARROWBACK, ICON_MARKDOWN, ICON_DATE, ICON_CLOSE, ICON_UPLOAD } from '../../Icons'
+import { ICON_ARROWBACK, ICON_MARKDOWN, ICON_DATE, ICON_CLOSE, ICON_UPLOAD, ICON_NEWMSG } from '../../Icons'
 import { withRouter } from 'react-router-dom'
 import { StoreContext } from '../../store/store'
 import Loader from '../Loader'
@@ -22,7 +22,8 @@ const Profile = (props) => {
     const [saved, setSaved] = useState(false)
     const [memOpen, setMemOpen] = useState(false)
     const [tab, setTab] = useState('Followers')   
-    
+    const [loadingAvatar, setLoadingAvatar] = useState(false)
+    const [loadingBanner, setLoadingBanner] = useState(false)
     const {account, user} = state
     const userParam = props.match.params.username
 
@@ -46,7 +47,9 @@ const Profile = (props) => {
     useEffect(() => {
         window.scrollTo(0, 0)
         actions.getUser(props.match.params.username)
-    }, [])
+        // setMemOpen(false)
+        // setModalOpen(false)
+    }, [props.match.params.username])
 
     useEffect(() => {
         document.getElementsByTagName("body")[0].style.cssText = modalOpen && "position:fixed; overflow-y: scroll;"
@@ -57,7 +60,7 @@ const Profile = (props) => {
         if(type){setTab(type)}
         if(param === 'members'){
             setMemOpen(true)
-            actions.getFollowers()
+            actions.getFollowers(props.match.params.username)
         }
         if(memOpen){setMemOpen(false)}
         setModalOpen(!modalOpen)
@@ -76,15 +79,20 @@ const Profile = (props) => {
         let bodyFormData = new FormData()
         bodyFormData.append('image', file)
         axios.post(`${API_URL}/tweet/upload`, bodyFormData, { headers: { Authorization: `Bearer ${localStorage.getItem('Twittertoken')}`}})
-            .then(res=>{ type === 'banner' ? setBanner(res.data.imageUrl) : setAvatar(res.data.imageUrl)})
-            .catch(err=>alert('error uploading image'))
+            .then(res=>{
+                type === 'banner' ? setBanner(res.data.imageUrl) : setAvatar(res.data.imageUrl)
+                type === 'banner' ? setLoadingBanner(false) : setLoadingAvatar(false)
+            })
+            .catch(err=>actions.alert('error uploading image'))
     }
 
     const changeBanner = () => {
+        setLoadingBanner(true)
         let file = document.getElementById('banner').files[0];
         uploadImage(file, 'banner')
     }
     const changeAvatar = () => {
+        setLoadingAvatar(true)
         let file = document.getElementById('avatar').files[0];
         uploadImage(file, 'avatar')
     }
@@ -93,10 +101,17 @@ const Profile = (props) => {
         props.history.push(`/profile/${id}`)      
     } 
 
+    const startChat = () => {
+        actions.startChat({id:user._id, func: goToMsg})
+    }
+
+    const goToMsg = () => {
+        props.history.push(`/messages`)
+    }
+
     
     return(
         <div>
-            {console.log(state)}
             {user && account ? 
             <div>
             <div className="profile-wrapper">
@@ -123,6 +138,7 @@ const Profile = (props) => {
                     <div className="profile-image-wrapper">
                         <img src={avatar.length > 0 && saved ? avatar : user.profileImg} alt=""/>
                     </div>
+                    {account.username === userParam? null : <span onClick={()=>startChat()} className="new-msg"><ICON_NEWMSG/></span>}
                     <div onClick={(e)=>account.username === userParam ? toggleModal('edit'): followUser(e,user._id)} 
                      className={account.following.includes(user._id) ? 'unfollow-switch profile-edit-button' : 'profile-edit-button'}>
                         {account.username === userParam?
@@ -265,7 +281,7 @@ const Profile = (props) => {
                     </div> : 
                     <div className="modal-body">
                         <div className="modal-banner">
-                            <img src={banner.length > 0 ? banner : user.banner} alt="modal-banner" />
+                            <img src={loadingBanner? "https://i.imgur.com/62jOROc.gif" : banner.length > 0 ? banner : user.banner} alt="modal-banner" />
                             <div>
                                 <ICON_UPLOAD/>
                                 <input onChange={()=>changeBanner()} title=" " id="banner" style={{opacity:'0'}} type="file"/>
@@ -273,7 +289,7 @@ const Profile = (props) => {
                         </div>
                         <div className="modal-profile-pic">
                             <div className="modal-back-pic">
-                                <img src={avatar.length > 0 ? avatar : user.profileImg} alt="profile" />
+                                <img src={loadingAvatar? "https://i.imgur.com/62jOROc.gif" : avatar.length > 0 ? avatar : user.profileImg} alt="profile" />
                                 <div>
                                     <ICON_UPLOAD/>
                                     <input onChange={()=>changeAvatar()} title=" " id="avatar" style={{opacity:'0'}} type="file"/>

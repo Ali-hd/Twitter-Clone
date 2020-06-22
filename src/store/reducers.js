@@ -17,7 +17,11 @@ const initialState = {
     followers: [],
     following: [],
     resultUsers: [],
-    suggestions: []
+    suggestions: [],
+    top: '-100px',
+    msg: '',
+    conversations: null,
+    conversation: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -39,9 +43,12 @@ const reducer = (state = initialState, action) => {
             return {...state, ...action.payload, loading: false, error: false}
 
         case type.TWEET:
-            console.log(action.payload)
             let recentT = state.tweets
+            let s_tweet = state.tweet
             recentT.unshift(action.payload.tweet)
+            if(s_tweet && s_tweet._id === action.data.parent){
+                s_tweet.replies.unshift(action.payload.tweet)
+            }
             return {...state, loading: false, error: false}
 
         case type.LIKE_TWEET:
@@ -234,6 +241,17 @@ const reducer = (state = initialState, action) => {
             return {...state, ...action.payload}
 
         case type.WHO_TO_FOLLOW:
+            return {...state, ...action.payload}
+
+        case type.GET_CONVERSATIONS:
+            console.log(action.payload)
+            return {...state, ...action.payload}
+        case type.START_CHAT:
+            setTimeout(()=>{action.data.func()},250)
+            return {...state, ...action.payload}
+        case type.GET_SINGLE_CONVERSATION:
+            console.log(action.payload)
+            setTimeout(()=>{action.data.func(action.payload.conversation.messages)},250)
             return {...state, ...action.payload}
 
         default:

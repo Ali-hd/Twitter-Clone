@@ -112,7 +112,7 @@
 
 .profile-edit-button{
     min-height: 39px;
-    min-width: 98px;
+    min-width: 98.8px;
     transition: 0.2s ease-in-out;
     cursor: pointer;
     border: 1px solid rgb(29, 161, 242);
@@ -120,6 +120,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 7px;
     padding-left: 1em;
     padding-right: 1em;
     span{
@@ -135,11 +136,11 @@
 
 .unfollow-switch{
     background-color: rgb(29, 161, 242);
-    span{color: #fff;}
+    span{color: #fff !important;}
 }
 
 .unfollow-switch:hover{
-    background-color: rgb(202,32,85);
+    background-color: rgb(202,32,85) !important;
     border: 1px solid transparent;
     span{
         color: #fff;
@@ -506,4 +507,27 @@
         font-size: 19px;
         padding: 2px 10px 5px 10px;
     }
+}
+
+.new-msg{
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    transition: 0.2s ease-in-out;
+    &:hover{
+        background-color: rgba(29, 161, 242, 0.1);
+        svg{fill: rgb(29, 161, 242)}
+    }
+    cursor: pointer;
+}
+
+.new-msg svg{
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    fill: #000;
+    transition: 0.2s ease-in-out;
 }

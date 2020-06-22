@@ -1,37 +1,151 @@
-import React, {useEffect} from 'react'
+import React, {useContext, useState, useEffect, useRef} from 'react'
+import { StoreContext } from '../../store/store'
 import './style.scss'
+import {API_URL} from '../../config'
+import { withRouter, Link } from 'react-router-dom';
+import { token } from '../../store/middleware'
+import io from 'socket.io-client'
+import moment from 'moment'
 
-const ChatPage = () => {
+let socket = io.connect(API_URL,{
+    query: {token: token()}
+})
+
+const ChatPage = (props) => {
+
+    const { state, actions } = useContext(StoreContext)
+    const [room, setRoom] = useState(null)
+    const [conversation, setConversation] = useState([])
+    const [text, setText] = useState('')
+    const mounted = useRef()
+    const roomRef = useRef()
+    
+    const {account} = state
+    useEffect(() => {
+        getConversation(props.history.location.pathname.slice(10))
+        //check when component unmounts
+        return () => {
+            if(roomRef.current){ socket.emit('leaveRoom', roomRef.current) } }
+      }, [props.history.location.pathname])
+    
 
     useEffect(() => {
-        document.getElementsByTagName("body")[0].style.cssText = "position:fixed; overflow-y: scroll;"
-    },[])
+        if(!mounted.current){
+            // state.account && actions.getConversations()
+            mounted.current = true
+        }else{
+            console.log('refresh')
+            // form.setFieldsValue({
+            //     content: '',
+            //   });
+            socket.on('output', msg => {
+                console.log('socket received',msg)
+                let currConversation = conversation
+                currConversation.push(msg)
+                setConversation(currConversation)
+                setText('')
+                let messageBody = document.querySelector('#messageBody');
+                messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+              })
+              
+        }
+    }, [conversation])
+
+    const fillConversation = params => {
+        setConversation(params)
+     }
+
+     const sendMsg = values => {
+        let id = state.conversation.participants[0] !== state.account._id ? state.conversation.participants[0] : state.conversation.participants[1]
+        socket.emit('chat', { room: room, id, content: text })
+    }
+
+    const getConversation = (id) => {
+        if(room){ socket.emit('leaveRoom', room) }
+        socket.emit('subscribe', id);
+        setRoom(id)
+        roomRef.current = id
+        actions.getSingleConversation({id:id, func: fillConversation})
+     }
+
+    const handleInputChange = (e) => {
+        setText(e.target.value)
+    }
+
+    const handleKeyDown = (e) => {
+        console.log(conversation)
+        if(e.keyCode === 13 && text.length>0){
+            document.getElementById('chat').value = "";
+            sendMsg()
+        }
+        
+    }
+
+
     
     return(
         <div className="chat-wrapper">
+        {account ? 
+         <div className="chat-height" >
             <div className="chat-header-wrapper">
-                Ali hd
+                <h4>
+                     Ali hd
+                </h4>
+                <span>
+                    @alihd
+                </span>
             </div>
-            {/* <div className="messages-body">
-                <div className="recent-messages-wrapper">
-                    <div className="message-box">
-                            <div className="message-avatar">
-                                <img width="100%" height="100" src="https://i.imgur.com/iV7Sdgm.jpg" alt="" />
-                            </div>
-                            <div className="message-details">
-                                <div className="message-info">
-                                    <div>{('Ali hddwdwdwdwd').slice(0,10)}<span>@alihd</span></div>
-                                    <span>Sep 25, 2019</span>
-                                </div>
-                                <div>
-                                    remember me?
-                                </div>
-                            </div>
-                    </div>
+            {/* <div className="not-selected-msg">
+                <div>
+                    You dont have a message selected
                 </div>
+                <p>Choose one from your existing messages, on the left.</p>
             </div> */}
+            <div className="conv-div">
+                <div id="messageBody" className="conversation-wrapper">
+                {room ? 
+                conversation.map(msg => {
+                return <div key={msg._id}>
+                        {msg.sender.username === account.username ? 
+                            <div className="users-box">
+                                <div className="users-msg">
+                                    <div className="users-content">
+                                        {msg.content}
+                                    </div>
+                                </div>
+                                <div className="users-date">
+                                    {moment(msg.createdAt).format("MMM D, YYYY, h:mm A")}
+                                </div>
+                            </div>
+                        :
+                        <div className="sender-box">
+                            <div className="sender-msg">
+                                <div className="sender-content">
+                                    {msg.content}
+                                </div>
+                            </div>
+                            <div className="sender-date">
+                                {moment(msg.createdAt).format("MMM D, YYYY, h:mm A")}
+                            </div>
+                        </div>}
+                    </div>
+                }) : 
+                <div className="not-selected-msg">
+                    <div>
+                        You dont have a message selected
+                    </div>
+                    <p>Choose one from your existing messages, on the left.</p>
+                </div>  }          
+                </div>
+            </div>
+            <div className="chat-bottom-wrapper">
+                <div className="chat-input-container active">
+                <input onKeyDown={(e)=>handleKeyDown(e)} onChange={(e)=>handleInputChange(e)} placeholder="Start a new message" id="chat" type="text" name="message" />
+                </div>
+            </div>
+            </div> : null }
         </div>
     )
 }
 
-export default ChatPage
+export default withRouter(ChatPage)

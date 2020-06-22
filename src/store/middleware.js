@@ -24,7 +24,7 @@ export const applyMiddleware = dispatch => action => {
 
         case types.TWEET:
             return axios.post(`${API_URL}/tweet/create`, action.payload, headers)
-            .then(res=>dispatch({ type: types.TWEET, payload: res.data }))
+            .then(res=>dispatch({ type: types.TWEET, payload: res.data, data: action.payload }))
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
         case types.LIKE_TWEET:
@@ -133,7 +133,7 @@ export const applyMiddleware = dispatch => action => {
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
         case types.GET_FOLLOWERS:
-            return axios.get(`${API_URL}/user/i/followers`, headers)
+            return axios.get(`${API_URL}/user/${action.payload}/followers`, headers)
             .then(res=>dispatch({ type: types.GET_FOLLOWERS, payload: res.data, data: action.payload }))
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
@@ -146,7 +146,22 @@ export const applyMiddleware = dispatch => action => {
             return axios.get(`${API_URL}/user/i/suggestions`, headers)
             .then(res=>dispatch({ type: types.WHO_TO_FOLLOW, payload: res.data, data: action.payload }))
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+            
+        
+        case types.GET_CONVERSATIONS: 
+            return axios.get(`${API_URL}/chat/conversations`, headers)
+            .then(res=>dispatch({ type: types.GET_CONVERSATIONS, payload: res.data }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
+        case types.START_CHAT: 
+            return axios.post(`${API_URL}/chat/conversation`, action.payload, headers)
+            .then(res=>dispatch({ type: types.START_CHAT, payload: res.data, data: action.payload }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
+
+        case types.GET_SINGLE_CONVERSATION: 
+            return axios.get(`${API_URL}/chat/conversation?id=${action.payload.id}`, headers)
+            .then(res=>dispatch({ type: types.GET_SINGLE_CONVERSATION, payload: res.data, data: action.payload }))
+            .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
         default: dispatch(action)
     }

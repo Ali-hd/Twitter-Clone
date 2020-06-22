@@ -122,6 +122,7 @@ const TweetCard = React.memo(function TweetCard(props) {
         tweetT.current = ''
         setReplyText('')
         setReplyImg(null)
+        actions.alert('Tweet sent!')
     }
     
     moment.updateLocale('en', {

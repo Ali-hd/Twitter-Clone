@@ -38,8 +38,11 @@
   }
 
   .middle-section{
-      width: 100%;
       max-width: 600px;
+  }
+
+  .ms-width{
+      width: 100%;
   }
 
   .right-section{
@@ -506,3 +509,9 @@
 //   .dark-mode{
 //       background-color: #1a1919 !important;
 //   }
+
+.alert-wrapper{
+    position: fixed;
+    top: 0;
+    
+}

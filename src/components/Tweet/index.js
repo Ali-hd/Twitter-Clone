@@ -90,12 +90,13 @@ const TweetPage = (props) => {
             description: replyText,
             images: [replyImage],
             parent: props.match.params.id,
-            hashtags
+            hashtags,
         }
         actions.tweet(values)
         tweetT.current = ''
         setReplyText('')
         setReplyImg(null)
+        actions.alert('Tweet sent!')
     }
 
     const goBack = () => {

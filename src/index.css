@@ -7,7 +7,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* for scroll bar shift effect when hidding */
     width: calc(100vw - 17px);
-    
 }
 
 code {

@@ -14,12 +14,12 @@ const {account, bookmarks} = state
 useEffect(() => {
     window.scrollTo(0, 0)
     actions.getBookmarks()
+    // actions.startChat({id: '5eee5f050cc0ae0017ed2fb2', content: 'hi there buddy'})
 }, [])
 
 
 return(
     <div className="bookmarks-wrapper">
-        {console.log(state)}
         <div className="bookmarks-header-wrapper">
             <div className="bookmarks-header-content">
                 <div className="bookmarks-header-name">

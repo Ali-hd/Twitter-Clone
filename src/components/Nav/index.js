@@ -42,6 +42,8 @@ const Nav = ({history}) => {
             setTheme('dark')
             setFetchMethod(window.fetch)
             enableDarkMode();
+        }else if(!localStorage.getItem('Theme')){
+            localStorage.setItem('Theme', 'light')
         }
       }, [])
 

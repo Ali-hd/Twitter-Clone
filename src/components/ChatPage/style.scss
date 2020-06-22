@@ -17,12 +17,150 @@
     align-items: center;
     height: 53px;
     min-height: 53px;
-    padding-left: 15px;
-    padding-right: 15px;
-    max-width: 320px;
-    margin: 0 auto;
+    padding: 3px 15px;
+    max-width: 100%;
     width: 100%;
-    font-weight: 800;
     font-size: 19px;
-    color: #14171a;
+    h4{
+        color: #000;
+    }
+
+    span{
+        font-weight: 400;
+        color: rgb(101, 119, 134);
+        margin-left: 5px;
+    }
+}
+
+
+.chat-height{
+    height: 100%;
+}
+
+.conv-div{
+    position: relative;
+    height: 100%;
+}
+
+.conversation-wrapper{
+    padding: 20px 15px 0 15px;
+    margin: 0 auto;
+    height: calc(100% - 110px);
+    overflow-y: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+.users-box{
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.users-msg{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.users-content{
+    padding: 10px 15px;
+    background-color: rgb(29, 161, 242);
+    color: #fff;
+    max-width: 100%;
+    border-radius: 30px 30px 0 30px;
+    margin-bottom: 3px;
+}
+
+.users-date{
+    display: flex;
+    justify-content: flex-end;;
+    font-size: 13px;
+}
+
+.sender-box{
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sender-msg{
+    display: flex;
+}
+
+.sender-content{
+    padding: 10px 15px;
+    background-color: rgb(230, 236, 240);
+    color: #000;
+    max-width: 100%;
+    border-radius: 30px 30px 30px 0px;
+    margin-bottom: 3px;
+}
+
+.sender-date{
+    display: flex;
+    font-size: 13px;
+}
+
+.chat-bottom-wrapper{
+    height: 53px;
+    width: 100%;
+    max-height: 53px;
+    bottom: 0;
+    position: sticky;
+    padding: 0px 15px;
+    border-top: 1px solid rgb(230, 236, 240);
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+}
+
+.chat-input-container{
+    background-color: #e6ecf0;
+    border: 1px solid transparent;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    min-height: 38px;
+    width: 100%;
+
+    input{
+        background-color: inherit;
+        border: inherit;
+        width: 100%;
+        font-size: 15px;
+        color: #657786;
+        outline: none;
+        padding: 6px 10px;
+        border-radius: 9999px;
+    }
+}
+
+.active{
+    background-color: #fff;
+    input{
+        border: 1px solid rgb(29, 161, 242);
+    }
+}
+
+.not-selected-msg{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: -53px;
+    div{
+        font-size: 19px;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 10px;
+    }
+    p{
+        font-size: 16px;
+        color: rgb(101, 119, 134);
+    }
 }

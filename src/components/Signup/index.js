@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { ICON_LOGO } from '../../Icons'
 
 const SignUpPage = (props) => {
-    const { state, actions } = useContext(StoreContext)
+    const { actions } = useContext(StoreContext)
 
     const [name, setName] = useState('')
     const [username, setUsername] = useState('')

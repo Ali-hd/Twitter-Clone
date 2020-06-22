@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react'
-import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom'
+import { Route, Switch, BrowserRouter, Redirect, withRouter } from 'react-router-dom'
 import { StoreProvider } from './store/store'
 import 'dotenv/config'
 import './App.scss'
@@ -15,17 +15,19 @@ import Explore from './components/Explore'
 import Feed from './components/Feed'
 import Notifications from './components/Notifications'
 import Messages from './components/Messages'
+import Alerts from './components/Alerts'
+import ChatPage from './components/ChatPage'
 
 const Home = lazy(() => import('./components/Home'))
 const Profile = lazy(() => import('./components/Profile'))
 
-const DefaultContainer = () => {
+const DefaultContainer = withRouter(({ history }) => { 
   return (<div className="body-wrap">
     <header className="header">
       <Nav />
     </header>
     <main className="main">
-      <div className="middle-section">
+      <div className={history.location.pathname.slice(0,9) !== '/messages' ? "middle-section ms-width" : "middle-section"}>
         <Route path="/" exact>
           <Redirect to="/home" />
         </Route>
@@ -53,16 +55,21 @@ const DefaultContainer = () => {
         <Route path="/notifications" exact>
           <Notifications/>
         </Route>
-        <Route path="/messages" exact>
+        <Route path="/messages">
           <Messages/>
         </Route>
       </div>
-      <div className="right-section">
-        <Feed/>
-      </div>
+        <Route path="/messages" >
+            <ChatPage/>
+        </Route>
+        {history.location.pathname.slice(0,9) !== '/messages' &&
+        <div className="right-section">
+          <Feed/>
+        </div>
+         }
     </main>
   </div>)
-}
+});
 
 function App() {
   return (
@@ -70,6 +77,7 @@ function App() {
       <StoreProvider>
         <BrowserRouter>
           <Suspense fallback={<Loader />}>
+            <Alerts />
             <Switch>
               <Route path="/login" exact>
                 <Login />

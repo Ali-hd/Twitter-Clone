@@ -19,7 +19,7 @@ const [banner, setBanner] = useState('')
 const [saved, setSaved] = useState(false)
 const [memOpen, setMemOpen] = useState(false)
 const [tab, setTab] = useState('Members')
-
+const [bannerLoading, setBannerLoading] = useState(false)
 const {account, list, listTweets, resultUsers} = state
 
 const editList = () => {
@@ -48,11 +48,15 @@ const uploadImage = (file) => {
     let bodyFormData = new FormData()
     bodyFormData.append('image', file)
     axios.post(`${API_URL}/tweet/upload`, bodyFormData, { headers: { Authorization: `Bearer ${localStorage.getItem('Twittertoken')}`}})
-        .then(res=>{setBanner(res.data.imageUrl)})
+        .then(res=>{
+            setBanner(res.data.imageUrl)
+            setBannerLoading(false)
+        })
         .catch(err=>alert('error uploading image'))
 }
 
 const changeBanner = () => {
+    setBannerLoading(true)
     let file = document.getElementById('banner').files[0];
     uploadImage(file)
 }
@@ -211,7 +215,7 @@ return(
                 :
                 <div className="modal-body">
                     <div className="modal-banner">
-                        {list.banner.length>0 || banner.length> 0 ?<img src={banner.length>0 ? banner : list.banner} alt="modal-banner" />: null}
+                        {list.banner.length>0 || banner.length> 0 ?<img src={ bannerLoading? "https://i.imgur.com/62jOROc.gif" : banner.length>0 ? banner : list.banner} alt="modal-banner" />: null}
                         <div>
                             <ICON_UPLOAD/>
                             <input onChange={()=>changeBanner()} title=" " id="banner" style={{opacity:'0'}} type="file"/>

@@ -102,4 +102,18 @@ export const useActions = (state, dispatch) => ({
     whoToFollow: data => {
         dispatch({type: types.WHO_TO_FOLLOW, payload: data})
     },
+    alert: data => {
+        dispatch({type: types.SET_STATE, payload: {top: '16px', msg: data}})
+        setTimeout(() => { dispatch({type: types.SET_STATE, payload: {top: '-100px'}}) }, 2700)
+    },
+    getConversations: data => {
+        dispatch({type: types.GET_CONVERSATIONS, payload: data})
+    },
+    startChat: data => {
+        dispatch({type: types.SET_STATE, payload: {startingChat: true}})
+        dispatch({type: types.START_CHAT, payload: data})
+    },
+    getSingleConversation: data =>{
+        dispatch({type: types.GET_SINGLE_CONVERSATION, payload: data})
+    }
 })

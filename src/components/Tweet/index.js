@@ -134,10 +134,11 @@ const TweetPage = (props) => {
                 <div className="tweet-content">
                     {tweet.description}
                 </div>
+                {tweet.images[0] ? 
                 <div className="tweet-image-wrapper">
                     <div style={{backgroundImage: `url(${tweet.images[0]})`,
                      paddingBottom: `${image.src = tweet.images[0], 100/(image.width/image.height)}%`}}></div>
-                </div>
+                </div> : null }
                 <div className="tweet-date">
                     {moment(tweet.createdAt).format("h:mm A · MMM D, YYYY")}
                 </div>

@@ -111,6 +111,9 @@
 .search-userPic-wrapper{
     flex-basis: 49px;
     margin-right: 10px;   
+    img{
+        object-fit: cover;
+    }
 }
 
 .search-user-details{

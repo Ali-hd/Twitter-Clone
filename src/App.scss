@@ -37,6 +37,79 @@
     //flex grow
   }
 
+  @media only screen and (max-width: 600px){
+
+    .header{
+        position: fixed;
+        width: 100vw;
+        bottom: 0;
+        height: 53px;
+    }    
+
+    .Nav-component{
+        width: 100vw;
+    }
+
+    .Nav-width{
+        width: 100vw !important;
+        height: 53px;
+    }
+
+    .Nav{
+        top: auto !important;
+        width: 100vw;
+        position: relative;
+    }
+
+    .Nav-Content{
+        width: 100% !important;
+        display: block;
+        padding: 0;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .Nav-wrapper{
+        background-color: #fff;
+        border-top: 2px solid rgb(245, 248, 250);
+        display: flex;
+        align-content: center;
+        flex-direction: row !important;
+        margin: 0;
+        justify-content: space-evenly;
+
+        .Nav-link{
+            padding: 0;
+        }
+
+        a:nth-child(1){
+            display: none;
+        }
+        a:nth-child(4){
+            display: none;
+        }
+        a:nth-child(5){
+            display: none;
+        }
+        a:nth-child(9){
+            display: none;
+        }
+    }
+
+    .Nav-tweet{
+        display: none !important;
+    }
+
+    .more-menu-content{
+        top: auto !important;
+        bottom: -5px !important;
+        left: 50% !important;        
+    }
+
+
+
+}
+
   .middle-section{
       max-width: 600px;
   }
@@ -67,11 +140,10 @@
 
 .modal-content{
     min-height: 400px;
-    max-width: 80vw;
     max-height: 90vh;
     height: 650px;
-    width: 600px;
-    min-width: 600px;
+    width: 100%;
+    max-width: 600px;
     border-radius: 14px;
     background-color: #fff;
     position: fixed;

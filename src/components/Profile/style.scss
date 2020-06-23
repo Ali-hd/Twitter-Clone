@@ -255,11 +255,10 @@
 
 .modal-content{
     min-height: 400px;
-    max-width: 80vw;
     max-height: 90vh;
     height: 650px;
-    width: 600px;
-    min-width: 600px;
+    max-width: 600px;
+    width: 100%;
     border-radius: 14px;
     background-color: #fff;
     position: fixed;

@@ -22,6 +22,7 @@ const ChatPage = (props) => {
     
     const {account} = state
     useEffect(() => {
+        if(props.history.location.pathname.slice(10).length === 24)
         getConversation(props.history.location.pathname.slice(10))
         //check when component unmounts
         return () => {
@@ -31,13 +32,10 @@ const ChatPage = (props) => {
 
     useEffect(() => {
         if(!mounted.current){
-            // state.account && actions.getConversations()
             mounted.current = true
         }else{
-            console.log('refresh')
-            // form.setFieldsValue({
-            //     content: '',
-            //   });
+            let messageBody = document.querySelector('#messageBody');
+            messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
             socket.on('output', msg => {
                 console.log('socket received',msg)
                 let currConversation = conversation
@@ -73,7 +71,6 @@ const ChatPage = (props) => {
     }
 
     const handleKeyDown = (e) => {
-        console.log(conversation)
         if(e.keyCode === 13 && text.length>0){
             document.getElementById('chat').value = "";
             sendMsg()
@@ -87,24 +84,18 @@ const ChatPage = (props) => {
         <div className="chat-wrapper">
         {account ? 
          <div className="chat-height" >
-            <div className="chat-header-wrapper">
-                <h4>
+            <div className="chat-header-wrapper">  
+                {/* <h4>
                      Ali hd
                 </h4>
                 <span>
                     @alihd
-                </span>
+                </span> */}
             </div>
-            {/* <div className="not-selected-msg">
-                <div>
-                    You dont have a message selected
-                </div>
-                <p>Choose one from your existing messages, on the left.</p>
-            </div> */}
             <div className="conv-div">
                 <div id="messageBody" className="conversation-wrapper">
                 {room ? 
-                conversation.map(msg => {
+                conversation.map((msg,i) => {
                 return <div key={msg._id}>
                         {msg.sender.username === account.username ? 
                             <div className="users-box">
@@ -113,9 +104,10 @@ const ChatPage = (props) => {
                                         {msg.content}
                                     </div>
                                 </div>
+                                {i>0 && moment.duration(moment(msg.createdAt).diff(moment(conversation[i-1].createdAt))).asMinutes() > 1  ? 
                                 <div className="users-date">
                                     {moment(msg.createdAt).format("MMM D, YYYY, h:mm A")}
-                                </div>
+                                </div> : <div style={{marginTop:'-20px'}}></div>}
                             </div>
                         :
                         <div className="sender-box">

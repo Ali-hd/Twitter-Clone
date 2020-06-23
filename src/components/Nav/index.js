@@ -122,7 +122,7 @@ const Nav = ({history}) => {
     }
 
     return(
-        <div style={{position: 'relative'}}>
+        <div className="Nav-component">
         <div className="Nav-width">
             <div className="Nav">
             <div className="Nav-Content">

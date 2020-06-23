@@ -23,7 +23,8 @@ const Messages = (props) => {
                 {state.conversations && state.conversations.conversations.length > 0 ? state.conversations.conversations.map(con=>{
                     return <div key={con._id} onClick={()=>props.history.push(`/messages/${con._id}`)} className="message-box">
                                 <div className="message-avatar">
-                                    <img width="100%" height="100" src="https://i.imgur.com/iV7Sdgm.jpg" alt="" />
+                                    <img width="100%" height="100" src={con.participants[0].username !== account.username ?
+                                         con.participants[0].profileImg : con.participants[1].profileImg} alt="" />
                                 </div>
                                 {account && 
                                 <div className="message-details">

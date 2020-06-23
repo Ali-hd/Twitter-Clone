@@ -1,7 +1,9 @@
 .alert-wrapper{
     position: fixed;
     top: 100px;
-    width: 100%;
+    width: 150px;
+    left: 50%;
+    transform: translate(-50%, 0);
     text-align: center;
     z-index: 1000;
     position: fixed;

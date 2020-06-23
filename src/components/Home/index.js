@@ -22,8 +22,9 @@ const Home = () => {
     const handleChange = evt => {
         tweetT.current = evt.target.value; 
         setTweetText(tweetT.current)
+        // document.getElementById('tweet-box').innerHTML = document.getElementById('tweet-box').innerHTML.replace(/(\#\w+)/g, '<span class="blue">$1</span>')
     };
-    const [tweetText, setTweetText] = useState('')
+    const [tweetText, setTweetText] = useState("")
     const [tweetImage, setTweetImage] = useState(null)
     const [imageLoaded, setImageLoaded] = useState(false)
     const [imageLoading, setImageLoading] = useState(false)
@@ -79,7 +80,7 @@ const Home = () => {
                 </div>
                 <div className="Tweet-input-side">
                     <div className="inner-input-box">
-                        <ContentEditable onPaste={(e)=>e.preventDefault()} className={tweetText.length ? 'tweet-input-active' : null} placeholder="What's happening?" html={tweetT.current} onChange={handleChange} />
+                        <ContentEditable onPaste={(e)=>e.preventDefault()} id="tweet-box" className={tweetText.length ? 'tweet-input-active' : null} placeholder="What's happening?" html={tweetT.current} onChange={handleChange} />
                     </div>
                     <div>
                          {imageLoading ? <Loader/> : null}

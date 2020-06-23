@@ -102,8 +102,9 @@
 
     .more-menu-content{
         top: auto !important;
-        bottom: -5px !important;
-        left: 50% !important;        
+        bottom: 46px !important;
+        left: 60% !important;  
+        overflow: hidden;      
     }
 
 
@@ -406,10 +407,14 @@
     flex-basis: 49px;
     padding-top: 5px;
     margin-right: 10px;
+    img{
+        object-fit: cover;
+    }
 }
 .Tweet-input-side{
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     position: static;
     width: calc(100% - 49px);
     border: 2px solid rgba(0, 0, 0, 0);

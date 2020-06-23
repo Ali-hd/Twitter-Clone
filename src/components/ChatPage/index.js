@@ -116,9 +116,10 @@ const ChatPage = (props) => {
                                     {msg.content}
                                 </div>
                             </div>
-                            <div className="sender-date">
-                                {moment(msg.createdAt).format("MMM D, YYYY, h:mm A")}
-                            </div>
+                            {i>0 && moment.duration(moment(msg.createdAt).diff(moment(conversation[i-1].createdAt))).asMinutes() > 1  ? 
+                                <div className="sender-date">
+                                    {moment(msg.createdAt).format("MMM D, YYYY, h:mm A")}
+                                </div> : <div style={{marginTop:'-20px'}}></div>}
                         </div>}
                     </div>
                 }) : 

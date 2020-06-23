@@ -15,6 +15,9 @@
     margin-right: 10px;  
     display: flex;
     flex-direction: column;
+    img{
+        object-fit: cover;
+    }
 }
 
 .card-content-wrapper{
@@ -210,6 +213,9 @@
     color: rgb(101, 119, 134);
     font-size: 13px;
     margin-bottom: 5px;
+    &:hover{
+        text-decoration: underline;
+    }
 }
 
 .tweet-reply-thread{

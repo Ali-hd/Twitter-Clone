@@ -30,7 +30,7 @@ const Nav = ({history}) => {
 
     const tweetT = useRef('');
 
-
+    // window.onresize = document.getElementById('moreMenu') ? console.log(document.getElementById('moreMenu').offset().top) : null
 
     useEffect(()=>{  
         let ran = false
@@ -121,6 +121,11 @@ const Nav = ({history}) => {
         }
     }
 
+    window.addEventListener('scroll', function(ev) {
+        var morePopUp = document.getElementById('moremenu');
+        var distanceToTop = morePopUp.getBoundingClientRect().top.toString()
+     });
+
     return(
         <div className="Nav-component">
         <div className="Nav-width">
@@ -172,10 +177,24 @@ const Nav = ({history}) => {
                             <div className="Nav-item">Profile</div>
                         </div>
                     </Link>
-                    <div onClick={openMore} className="Nav-link">
+                    <div id="moremenu" onClick={openMore} className="Nav-link">
                         <div className={"Nav-item-hover"}>
-                            <ICON_SETTINGS />
+                            <ICON_SETTINGS  />
                             <div className="Nav-item">More</div>
+                        </div>
+                        <div onClick={()=>openMore()} style={{display: moreMenu ? 'block' : 'none'}} className="more-menu-background">
+                        <div className="more-modal-wrapper">
+                            {moreMenu ? 
+                            <div style={{top: `${document.getElementById('moremenu').getBoundingClientRect().top - 40}px`, left: `${document.getElementById('moremenu').getBoundingClientRect().left}px`}} onClick={(e)=>handleMenuClick(e)} className="more-menu-content">
+                                    <div onClick={()=>actions.logout()} className="more-menu-item">
+                                        Log out @{account && account.username}
+                                    </div>
+                                    <div onClick={changeTheme} className="more-menu-item">
+                                        <span>Change Theme</span>
+                                        <span>{theme ? <ICON_DARK/> : <ICON_LIGHT />}</span>
+                                    </div>
+                            </div> : null }
+                        </div>
                         </div>
                     </div>
                     <div className="Nav-tweet">   
@@ -195,20 +214,6 @@ const Nav = ({history}) => {
             </div>
             </div>
         </div>
-
-        <div onClick={()=>openMore()} style={{display: moreMenu ? 'block' : 'none'}} className="more-menu-background">
-        </div>
-
-        {moreMenu ? 
-        <div onClick={(e)=>handleMenuClick(e)} className="more-menu-content">
-                <div onClick={()=>actions.logout()} className="more-menu-item">
-                    Log out @{account && account.username}
-                </div>
-                <div onClick={changeTheme} className="more-menu-item">
-                    <span>Change Theme</span>
-                    <span>{theme ? <ICON_DARK/> : <ICON_LIGHT />}</span>
-                </div>
-        </div> : null }
 
         {account && 
         <div onClick={()=>toggleModal()} style={{display: modalOpen ? 'block' : 'none'}} className="modal-edit">

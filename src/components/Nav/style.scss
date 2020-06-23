@@ -166,6 +166,12 @@
     overflow: auto; 
 }
 
+.more-modal-wrapper{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 .more-menu-content{
     min-height: 100px;
     max-width: 40vw;
@@ -176,10 +182,10 @@
     border-radius: 14px;
     background-color: #fff;
     position: absolute;
-    top: 52vh;
-    left: 116px;
-    z-index: 50;
-    transform: translate(-50%, -50%);
+    // top: 46.5%;
+    // left: 26%;
+    z-index: 1000;
+    // transform: translate(-50%, -50%);
     overflow: hidden;
     box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
     display: flex;

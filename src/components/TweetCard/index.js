@@ -73,12 +73,12 @@ const TweetCard = React.memo(function TweetCard(props) {
 
     
     const onchangeImage = () => {
-        let file = document.getElementById('image').files[0];
+        let file = document.getElementById('img').files[0];
         uploadImage(file)
     }
 
     const removeImage = () => {
-        document.getElementById('image').value = "";
+        document.getElementById('img').value = "";
         setReplyImg(null)
         setImageLoaded(false)
     }
@@ -123,6 +123,11 @@ const TweetCard = React.memo(function TweetCard(props) {
         setReplyText('')
         setReplyImg(null)
         actions.alert('Tweet sent!')
+    }
+
+    const goToUser = (e,username) => {
+        e.stopPropagation()
+        props.history.push(`/profile/${username}`)      
     }
     
     moment.updateLocale('en', {
@@ -226,8 +231,8 @@ const TweetCard = React.memo(function TweetCard(props) {
                 </div>
                 <div className="card-content-wrapper">
                     {props.user._id === account._id ? 
-                    <div className="user-retweeted"> You Retweeted </div> :
-                    <div className="user-retweeted"> {props.user.username} Retweeted </div>}
+                    <div onClick={(e)=>goToUser(e,account.username)} className="user-retweeted"> You Retweeted </div> :
+                    <div onClick={(e)=>goToUser(e,props.user.username)} className="user-retweeted"> {props.user.username} Retweeted </div>}
                     <div className="card-content-header">
                         <div className="card-header-detail">
                             <span className="card-header-user">
@@ -442,9 +447,9 @@ const TweetCard = React.memo(function TweetCard(props) {
                                 <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={account.profileImg}/>
                             </div>
                         </div>
-                        <div className="Tweet-input-side">
+                        <div style={{minHeight: '180px'}} className="Tweet-input-side">
                             <div className="inner-input-box">
-                                <ContentEditable onPaste={(e)=>e.preventDefault()} id="replyBox" style={{minHeight: '120px'}} className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
+                                <ContentEditable onPaste={(e)=>e.preventDefault()} id="replyBox" className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
                             </div>
                             {replyImage && <div className="inner-image-box">
                                 <img alt="" onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={replyImage} alt="tweet image" />
@@ -454,7 +459,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                                 <div className="input-links-side">
                                     <div style={{marginLeft:'-10px'}} className="input-attach-wrapper">
                                         <ICON_IMGUPLOAD styles={{fill:'rgb(29, 161, 242)'}}/>
-                                        <input title=" " id="image" style={{opacity:'0'}} type="file" onChange={()=>onchangeImage()} />
+                                        <input title=" " id="img" style={{opacity:'0'}} type="file" onChange={()=>onchangeImage()} />
                                     </div>
                                 </div>
                                 <div onClick={()=>replyTweet(parent? 'parent' : 'none')} className={replyText.length ? 'tweet-btn-side tweet-btn-active' : 'tweet-btn-side'}>

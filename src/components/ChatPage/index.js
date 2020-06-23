@@ -40,7 +40,7 @@ const ChatPage = (props) => {
                 let currConversation = conversation
                 currConversation.push(msg)
                 setConversation(currConversation)
-                setText('')
+                setText((text)=>[...text, ''])
                 let messageBody = document.querySelector('#messageBody');
                 messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
               })
@@ -53,6 +53,7 @@ const ChatPage = (props) => {
      }
 
      const sendMsg = values => {
+        
         let id = state.conversation.participants[0] !== state.account._id ? state.conversation.participants[0] : state.conversation.participants[1]
         socket.emit('chat', { room: room, id, content: text })
     }

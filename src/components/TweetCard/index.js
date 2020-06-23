@@ -34,11 +34,9 @@ const TweetCard = React.memo(function TweetCard(props) {
 
     const retweet = (e,id, retweetId) => {
         e.stopPropagation()
-        console.log(id,retweetId)
         if(props.history.location.pathname.slice(1,5) === 'prof'){
             info = { dest: "profile", id, retweetId }
         }else{ info = { id, retweetId } }
-        console.log(info)
         actions.retweet(info)
     }
 

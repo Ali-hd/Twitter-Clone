@@ -71,6 +71,9 @@
 .tweet-user-pic{
     flex-basis: 49px;
     margin-right: 10px;
+    img{
+        object-fit: cover;
+    }
 }
 
 .tweet-user-wrap{

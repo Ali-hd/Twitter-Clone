@@ -15,7 +15,6 @@ export const useActions = (state, dispatch) => ({
         dispatch({type: types.TWEET, payload: data})
     },
     likeTweet: data => {
-        console.log('like tweet', data)
         dispatch({type: types.LIKE_TWEET, payload: data})
     },
     getTweets: data => {
@@ -26,7 +25,6 @@ export const useActions = (state, dispatch) => ({
         dispatch({type: types.BOOKMARK, payload: data})
     },
     getTweet: data => {
-        console.log(data)
         dispatch({type: types.SET_STATE, payload: {loading: true}})
         dispatch({type: types.GET_TWEET, payload: data})
     },
@@ -35,7 +33,6 @@ export const useActions = (state, dispatch) => ({
             if (err) { dispatch({type: types.SET_STATE, payload: {session: false, decoded: decoded }})  }
             else {  
                 if(data == 'get account'){ dispatch({type: types.GET_ACCOUNT}) }
-                console.log('verifying user')
                 dispatch({type: types.SET_STATE, payload: {session: true, decoded: decoded}})  }
         });
     },

@@ -37,7 +37,6 @@ const ChatPage = (props) => {
             let messageBody = document.querySelector('#messageBody');
             messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
             socket.on('output', msg => {
-                console.log('socket received',msg)
                 let currConversation = conversation
                 currConversation.push(msg)
                 setConversation(currConversation)

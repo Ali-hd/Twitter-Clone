@@ -89,7 +89,6 @@ const addToList = (e,username,userId, profileImg,name) => {
 
 return(
     <div>
-        {console.log(state)}
         {list ? 
     <div>
       <div className="bookmarks-wrapper">

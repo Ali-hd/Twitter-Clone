@@ -31,7 +31,6 @@ const reducer = (state = initialState, action) => {
 
         case type.ERROR:
             // message.error(action.payload.msg? action.payload.msg : action.payload == 'Unauthorized' ? 'You need to sign in' : 'error');
-            console.log(action.payload)
             return {...state, loading: false, error: true, msg: action.payload.msg}
 
         case type.LOGIN:
@@ -68,7 +67,6 @@ const reducer = (state = initialState, action) => {
                 if(action.data.dest === 'profile'){
                     user_likes.tweets.find(x=>x._id === action.data.id).likes.push(action.data.id)
                     user_likes.likes = user_likes.tweets.filter(x=>x._id === action.data.id).concat(user_likes.likes)
-                    console.log(user_likes.likes, user_likes.tweets.find(x=>x._id === action.data.id))
                 }
             
             }else if(action.payload.msg === "unliked"){ 
@@ -93,15 +91,12 @@ const reducer = (state = initialState, action) => {
             return {...state, ...{account:account_likes}, ...{tweets:tweet_likes}, ...{user: user_likes}, ...{tweet: Stweet_likes}}
 
         case type.GET_TWEETS:
-            console.log(action.payload)
             return {...state, ...action.payload, loading: false, error: false}
 
         case type.GET_TWEET:
-            console.log(action.payload)
             return {...state, ...action.payload, loading: false, error: false}
 
         case type.GET_ACCOUNT:
-            console.log(action.payload)
             return {...state, ...action.payload}
             
         case type.BOOKMARK: 
@@ -121,9 +116,7 @@ const reducer = (state = initialState, action) => {
             
         case type.UPDATE_USER:
             Object.keys(action.data).forEach(key => action.data[key] === '' || action.data[key] === undefined ? delete action.data[key] : null)
-            console.log(action.data)
             let updateUser = {...state.user, ...action.data}
-            console.log(updateUser)
             return {...state, ...{user:updateUser}}
 
         case type.RETWEET: 
@@ -134,7 +127,6 @@ const reducer = (state = initialState, action) => {
             if(action.payload.msg === "retweeted"){
                 if(Stweet_retweets){ Stweet_retweets.retweets.push(action.data.id) }
                 acc_retweets.retweets.push(action.data.id)
-                console.log(t_retweets.find(x=>x._id === action.data.id))
                 for(let i = 0; i < t_retweets.length; i++){
                     if(t_retweets[i]._id === action.data.id){
                         t_retweets[i].retweets.push(state.account._id)
@@ -208,11 +200,9 @@ const reducer = (state = initialState, action) => {
             return state
 
         case type.GET_LISTS: 
-        console.log(action.payload)
             return {...state, ...action.payload}
 
         case type.GET_TREND: 
-            console.log(action.payload)
             return {...state, ...action.payload}
 
         case type.SEARCH: 
@@ -244,13 +234,11 @@ const reducer = (state = initialState, action) => {
             return {...state, ...action.payload}
 
         case type.GET_CONVERSATIONS:
-            console.log(action.payload)
             return {...state, ...action.payload}
         case type.START_CHAT:
             setTimeout(()=>{action.data.func()},250)
             return {...state, ...action.payload}
         case type.GET_SINGLE_CONVERSATION:
-            console.log(action.payload)
             setTimeout(()=>{action.data.func(action.payload.conversation.messages)},250)
             return {...state, ...action.payload}
 

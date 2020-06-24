@@ -9,7 +9,7 @@
     "axios": "^0.19.2",
     "darkreader": "^4.9.10",
     "dotenv": "^8.2.0",
-    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
     "moment": "^2.26.0",
     "node-sass": "^4.13.1",
     "react": "^16.13.1",

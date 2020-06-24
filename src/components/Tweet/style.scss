@@ -59,6 +59,7 @@
 .tweet-body-wrapper{
     padding: 0 15px;
     border-bottom: 1px solid rgb(230, 236, 240);
+    overflow: hidden;
 }
 
 .tweet-header-content{
@@ -101,6 +102,7 @@
     margin-top: 10px;
     font-size: 23px;
     margin-bottom: 10px;
+    word-break: break-word;
 }
 
 .tweet-date{

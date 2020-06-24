@@ -12,7 +12,6 @@ import ContentEditable from 'react-contenteditable'
 import {
     enable as enableDarkMode,
     disable as disableDarkMode,
-    // auto as followSystemColorScheme,
     setFetchMethod 
 } from 'darkreader';
 
@@ -30,7 +29,6 @@ const Nav = ({history}) => {
 
     const tweetT = useRef('');
 
-    // window.onresize = document.getElementById('moreMenu') ? console.log(document.getElementById('moreMenu').offset().top) : null
 
     useEffect(()=>{  
         let ran = false
@@ -51,7 +49,7 @@ const Nav = ({history}) => {
          return <Redirect to="/login" />
       }
       
-      let path = history.location.pathname
+      const path = history.location.pathname.slice(0,5)
 
       const openMore = () => { setMoreMenu(!moreMenu) }
 
@@ -90,8 +88,11 @@ const Nav = ({history}) => {
 
 
     const handleChange = evt => {
-        tweetT.current = evt.target.value; 
-        setTweetText(tweetT.current)
+        if(tweetT.current.trim().length <= 280 
+        && tweetT.current.split(/\r\n|\r|\n/).length <= 30){
+            tweetT.current = evt.target.value; 
+            setTweetText(tweetT.current)
+        }
     };
 
     const submitTweet = (type) => {
@@ -121,11 +122,6 @@ const Nav = ({history}) => {
         }
     }
 
-    window.addEventListener('scroll', function(ev) {
-        var morePopUp = document.getElementById('moremenu');
-        var distanceToTop = morePopUp.getBoundingClientRect().top.toString()
-     });
-
     return(
         <div className="Nav-component">
         <div className="Nav-width">
@@ -142,38 +138,38 @@ const Nav = ({history}) => {
                         </div>
                     </Link>
                     <Link to="/explore" className="Nav-link">
-                        <div className={path === '/explore' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
-                            {path === '/explore' ? <ICON_HASHFILL /> : <ICON_HASH />}
+                        <div className={path === '/expl' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
+                            {path === '/expl' ? <ICON_HASHFILL /> : <ICON_HASH />}
                             <div className="Nav-item">Explore</div>
                         </div>
                     </Link>
                     <Link to="/notifications" className="Nav-link">
-                        <div className={path === '/notifications' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
-                            {path === '/notifications' ? <ICON_BELLFILL /> : <ICON_BELL />}
+                        <div className={path === '/noti' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
+                            {path === '/noti' ? <ICON_BELLFILL /> : <ICON_BELL />}
                             <div className="Nav-item">Notifications</div>
                         </div>
                     </Link>
                     <Link to="/messages" className="Nav-link">
-                        <div className={path === '/messages' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
-                            {path === '/messages' ?   <ICON_INBOXFILL /> :<ICON_INBOX />}
+                        <div className={path === '/mess' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
+                            {path === '/mess' ?   <ICON_INBOXFILL /> :<ICON_INBOX />}
                             <div className="Nav-item">Messages</div>
                         </div>
                     </Link>
                     <Link className="Nav-link" to={`/bookmarks`}>
-                        <div className={path === '/bookmarks' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
-                            {path === '/bookmarks' ? <ICON_BOOKMARKFILL /> : <ICON_BOOKMARK />}
+                        <div className={path === '/book' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
+                            {path === '/book' ? <ICON_BOOKMARKFILL /> : <ICON_BOOKMARK />}
                             <div className="Nav-item">Bookmarks</div>
                         </div>
                     </Link>
                     <Link className="Nav-link" to={`/lists`}>
-                        <div className={path === '/lists' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
-                            {path === '/lists' ? <ICON_LISTFILL /> : <ICON_LIST />}
+                        <div className={path === '/list' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
+                            {path === '/list' ? <ICON_LISTFILL /> : <ICON_LIST />}
                             <div className="Nav-item">Lists</div>
                         </div>
                     </Link>
                     <Link className="Nav-link" to={`/profile/${account && account.username}`}>
-                        <div className={path.substring(0,8) === '/profile' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
-                            {path.substring(0,8) === '/profile' ? <ICON_USERFILL /> : <ICON_USER />}
+                        <div className={path === '/prof' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
+                            {path === '/prof' ? <ICON_USERFILL /> : <ICON_USER />}
                             <div className="Nav-item">Profile</div>
                         </div>
                     </Link>
@@ -233,9 +229,9 @@ const Nav = ({history}) => {
                                 <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={account.profileImg}/>
                             </div>
                         </div>
-                        <div className="Tweet-input-side">
+                        <div onClick={()=>document.getElementById('tweetPop').focus()} className="Tweet-input-side">
                             <div className="inner-input-box">
-                                <ContentEditable onPaste={(e)=>e.preventDefault()} style={{minHeight: '120px'}} className={tweetText.length ? 'tweet-input-active' : null} placeholder="What's happening" html={tweetT.current} onChange={handleChange} />
+                                <ContentEditable onKeyDown={(e)=>tweetT.current.length>279 ? e.keyCode !== 8 && e.preventDefault(): null} id="tweetPop" onPaste={(e)=>e.preventDefault()} style={{minHeight: '120px'}} className={tweetText.length ? 'tweet-input-active' : null} placeholder="What's happening" html={tweetT.current} onChange={handleChange} />
                             </div>
                             {tweetImage && <div className="inner-image-box">
                                 <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={tweetImage} alt="tweet image" />
@@ -248,8 +244,13 @@ const Nav = ({history}) => {
                                         <input title=" " id="image" style={{opacity:'0'}} type="file" onChange={()=>onchangeImage()} />
                                     </div>
                                 </div>
-                                <div onClick={()=>submitTweet('none')} className={tweetText.length ? 'tweet-btn-side tweet-btn-active' : 'tweet-btn-side'}>
+                                <div className="tweet-btn-holder">
+                                    <div style={{ fontSize: '13px', color: tweetText.length >= 280 ? 'red' : null }}>
+                                        {tweetText.length > 0 && tweetText.length + '/280'}
+                                    </div>
+                                    <div onClick={()=>submitTweet('none')} className={tweetText.length ? 'tweet-btn-side tweet-btn-active' : 'tweet-btn-side'}>
                                     Tweet
+                                    </div>
                                 </div>
                             </div>
                         </div>

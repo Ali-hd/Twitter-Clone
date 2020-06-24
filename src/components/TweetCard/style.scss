@@ -5,6 +5,7 @@
     will-change: background-color;
     cursor: pointer;
     padding: 10px 15px;
+    overflow: hidden;
     &:hover{
         background-color: rgb(245,248,250);
     }
@@ -21,6 +22,7 @@
 }
 
 .card-content-wrapper{
+    max-width: calc(100% - 60px);
     flex-basis: calc(100% - 49px);
 }
 

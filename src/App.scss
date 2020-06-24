@@ -421,6 +421,7 @@
     border-radius: 5px;
     padding-top: 5px;
     line-height: 1.3125;   
+    cursor: text;
 }
 
 .inner-input-box{
@@ -433,6 +434,7 @@
 .inner-input-box div{
     outline: none;
     white-space: pre-wrap;
+    max-width: 506px;
 }
 
 .inner-input-box div:focus{
@@ -484,7 +486,7 @@
 }
 
 .tweet-btn-side{
-    margin: 10px 0 0 10px;
+    margin-left: 10px;
     min-height: 39px;
     min-width: calc(62.79px);
     background-color: rgb(29, 161, 242);
@@ -531,7 +533,7 @@
   }
   
     .card-content-info{
-        white-space: pre-wrap;
+        word-wrap: break-word;
     }
 
   .tweet-input-active{
@@ -591,4 +593,10 @@
     position: fixed;
     top: 0;
     
+}
+
+.tweet-btn-holder{
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
 }

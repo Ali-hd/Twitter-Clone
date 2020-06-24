@@ -78,8 +78,11 @@ const TweetPage = (props) => {
 
     const tweetT = useRef('');
     const handleChange = evt => {
-        tweetT.current = evt.target.value; 
-        setReplyText(tweetT.current)
+        if(tweetT.current.trim().length <= 280 
+        && tweetT.current.split(/\r\n|\r|\n/).length <= 30){
+            tweetT.current = evt.target.value; 
+            setReplyText(tweetT.current)
+        }
     };
 
     const replyTweet = (type) => {
@@ -235,9 +238,9 @@ const TweetPage = (props) => {
                                 <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={account.profileImg}/>
                             </div>
                         </div>
-                        <div className="Tweet-input-side">
+                        <div onClick={()=>document.getElementById('replyBox').focus()} className="Tweet-input-side">
                             <div className="inner-input-box">
-                                <ContentEditable onPaste={(e)=>e.preventDefault()} id="replyBox" style={{minHeight: '120px'}} className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
+                                <ContentEditable onKeyDown={(e)=>tweetT.current.length>279 ? e.keyCode !== 8 && e.preventDefault(): null} id="replyBox" onPaste={(e)=>e.preventDefault()} id="replyBox" style={{minHeight: '120px'}} className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
                             </div>
                             {replyImage && <div className="inner-image-box">
                                 <img onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={replyImage} alt="tweet" />
@@ -250,8 +253,13 @@ const TweetPage = (props) => {
                                         <input title=" " id="image" style={{opacity:'0'}} type="file" onChange={()=>onchangeImage()} />
                                     </div>
                                 </div>
-                                <div onClick={()=>replyTweet('parent')} className={replyText.length ? 'tweet-btn-side tweet-btn-active' : 'tweet-btn-side'}>
-                                    Reply
+                                <div className="tweet-btn-holder">
+                                    <div style={{ fontSize: '13px', color: replyText.length >= 280 ? 'red' : null }}>
+                                        {replyText.length > 0 && replyText.length + '/280'}
+                                    </div>
+                                    <div onClick={()=>replyTweet('parent')} className={replyText.length ? 'tweet-btn-side tweet-btn-active' : 'tweet-btn-side'}>
+                                        Reply
+                                    </div>
                                 </div>
                             </div>
                         </div>

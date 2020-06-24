@@ -2,6 +2,8 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    position: sticky;
+    top: 5px;
 }
 
 .feed-trending-card{

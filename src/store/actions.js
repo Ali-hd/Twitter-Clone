@@ -1,5 +1,5 @@
 import types from './typeActions'
-import jwt from 'jsonwebtoken'
+import jwt_decode from 'jwt-decode'
 
 export const useActions = (state, dispatch) => ({
     login: data => {
@@ -29,12 +29,16 @@ export const useActions = (state, dispatch) => ({
         dispatch({type: types.GET_TWEET, payload: data})
     },
     verifyToken: data => {
-        jwt.verify(localStorage.getItem('Twittertoken'), process.env.REACT_APP_JWT_SECRET, function (err, decoded) {
-            if (err) { dispatch({type: types.SET_STATE, payload: {session: false, decoded: decoded }})  }
-            else {  
-                if(data == 'get account'){ dispatch({type: types.GET_ACCOUNT}) }
-                dispatch({type: types.SET_STATE, payload: {session: true, decoded: decoded}})  }
-        });
+        const jwt = jwt_decode(localStorage.getItem('Twittertoken'))
+        const current_time = new Date().getTime() / 1000;
+        if(current_time > jwt.exp){ 
+            dispatch({type: types.SET_STATE, payload: {session: false}}) 
+            localStorage.removeItem("Twittertoken")
+            window.location.reload()
+        }else{
+            if(data == 'get account'){ dispatch({type: types.GET_ACCOUNT}) }
+            dispatch({type: types.SET_STATE, payload: {session: true, decoded: jwt}})
+        }
     },
     getUser: data => {
         dispatch({type: types.SET_STATE, payload: {loading: true}})

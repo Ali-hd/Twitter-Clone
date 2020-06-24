@@ -94,8 +94,11 @@ const TweetCard = React.memo(function TweetCard(props) {
 
     const tweetT = useRef('');
     const handleChange = evt => {
-        tweetT.current = evt.target.value; 
-        setReplyText(tweetT.current)
+        if(tweetT.current.trim().length <= 280 
+        && tweetT.current.split(/\r\n|\r|\n/).length <= 30){
+            tweetT.current = evt.target.value; 
+            setReplyText(tweetT.current)
+        }
     };
 
     useEffect(() => {
@@ -445,9 +448,9 @@ const TweetCard = React.memo(function TweetCard(props) {
                                 <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={account.profileImg}/>
                             </div>
                         </div>
-                        <div style={{minHeight: '180px'}} className="Tweet-input-side">
+                        <div onClick={()=>document.getElementById('replyBox').focus()} style={{minHeight: '180px'}} className="Tweet-input-side">
                             <div className="inner-input-box">
-                                <ContentEditable onPaste={(e)=>e.preventDefault()} id="replyBox" className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
+                                <ContentEditable onKeyDown={(e)=>tweetT.current.length>279 ? e.keyCode !== 8 && e.preventDefault(): null} onPaste={(e)=>e.preventDefault()} id="replyBox" className={replyText.length ? 'tweet-input-active' : null} placeholder="Tweet your reply" html={tweetT.current} onChange={handleChange} />
                             </div>
                             {replyImage && <div className="inner-image-box">
                                 <img alt="" onLoad={() => setImageLoaded(true)} className="tweet-upload-image" src={replyImage} alt="tweet image" />
@@ -460,8 +463,13 @@ const TweetCard = React.memo(function TweetCard(props) {
                                         <input title=" " id="img" style={{opacity:'0'}} type="file" onChange={()=>onchangeImage()} />
                                     </div>
                                 </div>
-                                <div onClick={()=>replyTweet(parent? 'parent' : 'none')} className={replyText.length ? 'tweet-btn-side tweet-btn-active' : 'tweet-btn-side'}>
+                                <div className="tweet-btn-holder">
+                                    <div style={{ fontSize: '13px', color: replyText.length >= 280 ? 'red' : null }}>
+                                        {replyText.length > 0 && replyText.length + '/280'}
+                                    </div>
+                                    <div onClick={()=>replyTweet(parent? 'parent' : 'none')} className={replyText.length ? 'tweet-btn-side tweet-btn-active' : 'tweet-btn-side'}>
                                     Reply
+                                    </div>
                                 </div>
                             </div>
                         </div>

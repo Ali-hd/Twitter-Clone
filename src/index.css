@@ -20,6 +20,7 @@ code {
   padding: 0;
   font-family: 'Assistant', sans-serif;
   /* scroll-behavior: smooth; */
+  word-break: break-word;
 }
 a{
   text-decoration: none;

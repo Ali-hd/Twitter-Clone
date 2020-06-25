@@ -3,17 +3,25 @@ import { StoreContext } from '../../store/store'
 import {withRouter} from 'react-router-dom'
 import './style.scss'
 import moment from 'moment'
+import {useMediaQuery} from 'react-responsive'
+import Chat from '../ChatPage'
 
 const Messages = (props) => {
     const { state, actions } = useContext(StoreContext)
     const {account} = state
 
+    const path = props.history.location.pathname
+
     useEffect(() => {
         actions.getConversations()
         document.getElementsByTagName("body")[0].style.cssText = "position:fixed; overflow-y: scroll;"
-    },[])
-    
+    },[path])
+
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 888px)' })
     return(
+        <React.Fragment>
+        {isTabletOrMobile && path !== '/messages' ? 
+        <Chat res={true}/> :
         <div className="messages-wrapper">
             <div className="messages-header-wrapper">
                 Messages
@@ -42,7 +50,8 @@ const Messages = (props) => {
                         }): <h5 style={{ textAlign: 'center', margin: '10% auto', width:'100%' }}>You have no messages</h5>} 
                 </div>
             </div>
-        </div>
+        </div>}
+        </React.Fragment>
     )
 }
 

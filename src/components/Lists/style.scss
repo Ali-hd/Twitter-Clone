@@ -5,18 +5,7 @@
     align-items: flex-start;
 }
 
-.header-back-wrapper{
-    margin-left: -5px;
-    width: 39px;
-    height: 39px;
-    transition: 0.2s ease-in-out;
-    will-change: background-color;
-    border: 1px solid rgba(0, 0, 0, 0);
-    border-radius: 9999px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 .header-back-wrapper:hover{
     background-color: rgba(29,161,242,0.1);

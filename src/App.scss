@@ -37,10 +37,41 @@
     //flex grow
   }
 
-  @media only screen and (max-width: 600px){
+  @media only screen and (max-width: 888px){
+      .chat-right{
+          display: none;
+      }
+      .messages-wrapper{
+          width: 100% !important;
+      }
+      .messages-header-wrapper{
+          max-width: 100% !important;
+      }
+      .middle-section{
+          width: 100%;
+      }
+      .chat-height{
+          height: 100vh !important;
+      }
+  }
+
+  @media only screen and (max-width: 450px){
+
+    body{
+        overflow-y: auto !important;
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    .chat-height {
+        height: calc(100vh - 46px) !important;
+    }
+    .chat-bottom-wrapper{
+        bottom: 50px !important;
+    }
 
     .header{
-        position: fixed;
+        position: absolute;
         width: 100vw;
         bottom: 0;
         height: 53px;
@@ -64,7 +95,7 @@
     .Nav-Content{
         width: 100% !important;
         display: block;
-        padding: 0;
+        padding: 0 !important;
         height: auto;
         overflow: hidden;
     }
@@ -103,7 +134,7 @@
     .more-menu-content{
         top: auto !important;
         bottom: 46px !important;
-        left: 60% !important;  
+        left: 47% !important;  
         overflow: hidden;      
     }
 
@@ -206,7 +237,7 @@
 .save-modal-wrapper{
     margin-right: 8px;
     min-height: 39px;
-    min-width: 30px;
+    min-width: 66px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -599,4 +630,19 @@
     margin-left: 10px;
     display: flex;
     align-items: center;
+}
+
+
+.header-back-wrapper{
+    margin-left: -5px;
+    width: 39px;
+    height: 39px;
+    transition: 0.2s ease-in-out;
+    will-change: background-color;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 9999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }

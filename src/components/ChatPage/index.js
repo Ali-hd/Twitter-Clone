@@ -6,6 +6,8 @@ import { withRouter, Link } from 'react-router-dom';
 import { token } from '../../store/middleware'
 import io from 'socket.io-client'
 import moment from 'moment'
+// import {useMediaQuery} from 'react-responsive'
+import { ICON_ARROWBACK} from '../../Icons'
 
 let socket = io.connect(API_URL,{
     query: {token: token()}
@@ -78,13 +80,18 @@ const ChatPage = (props) => {
         
     }
 
-
+    // const isTabletOrMobile = useMediaQuery({ query: '(max-width: 888px)' })
     
     return(
-        <div className="chat-wrapper">
+        <div className={props.res ? "chat-wrapper" : "chat-wrapper chat-right"}>
         {account ? 
          <div className="chat-height" >
             <div className="chat-header-wrapper">  
+                {props.res && <div className="profile-header-back">
+                    <div onClick={()=>window.history.back()} className="header-back-wrapper">
+                        <ICON_ARROWBACK/>
+                    </div>
+                </div> }
                 {/* <h4>
                      Ali hd
                 </h4>

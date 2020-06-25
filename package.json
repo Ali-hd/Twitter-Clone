@@ -15,6 +15,7 @@
     "react": "^16.13.1",
     "react-contenteditable": "^3.3.4",
     "react-dom": "^16.13.1",
+    "react-responsive": "^8.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "serve": "^11.3.2",

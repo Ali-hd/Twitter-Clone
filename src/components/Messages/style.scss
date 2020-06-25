@@ -29,6 +29,8 @@
 .recent-messages-wrapper{
     display: flex;
     flex-direction: column;
+    overflow: auto;
+    height: calc(100vh - 53px);
 }
 
 .message-box{

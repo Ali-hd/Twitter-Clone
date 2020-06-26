@@ -116,7 +116,7 @@ const TweetCard = React.memo(function TweetCard(props) {
         const values = {
             description: replyText,
             images: [replyImage],
-            parent: type === 'parent' ? props.parent._id : props.id,
+            parent: type === 'parent' ? props.parent._id : type === 'retweet' ? props.retweet._id : props.id,
             hashtags
         }
         actions.tweet(values)
@@ -467,7 +467,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                                     <div style={{ fontSize: '13px', color: replyText.length >= 280 ? 'red' : null }}>
                                         {replyText.length > 0 && replyText.length + '/280'}
                                     </div>
-                                    <div onClick={()=>replyTweet(parent? 'parent' : 'none')} className={replyText.length ? 'tweet-btn-side tweet-btn-active' : 'tweet-btn-side'}>
+                                    <div onClick={()=>replyTweet(parent? 'parent' : props.retweet? 'retweet' : 'none')} className={replyText.length ? 'tweet-btn-side tweet-btn-active' : 'tweet-btn-side'}>
                                     Reply
                                     </div>
                                 </div>

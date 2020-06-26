@@ -23,9 +23,6 @@ const Profile = lazy(() => import('./components/Profile'))
 
 const DefaultContainer = withRouter(({ history }) => { 
   return (<div className="body-wrap">
-    <nav className="header">
-      <Nav />
-    </nav>
     <main className="main">
       <div className={history.location.pathname.slice(0,9) !== '/messages' ? "middle-section ms-width" : "middle-section"}>
         <Route path="/" exact>
@@ -68,6 +65,9 @@ const DefaultContainer = withRouter(({ history }) => {
         </div>
          }
     </main>
+    <nav className="header">
+      <Nav />
+    </nav>
   </div>)
 });
 

@@ -20,7 +20,7 @@ const Messages = (props) => {
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 888px)' })
     return(
         <React.Fragment>
-        {isTabletOrMobile && path !== '/messages' ? 
+        {isTabletOrMobile && path !== '/messages' && account ? 
         <Chat res={true}/> :
         <div className="messages-wrapper">
             <div className="messages-header-wrapper">

@@ -136,6 +136,19 @@
         padding: 6px 10px;
         border-radius: 9999px;
     }
+
+    div{
+        display: flex;
+        align-items: center;
+    }
+
+    svg{
+        height: 22.5px;
+        width: 22.5px;
+        margin-left: 10px;
+        fill: rgb(29, 161, 242);
+        cursor: pointer;
+    }
 }
 
 .active{

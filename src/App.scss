@@ -9,7 +9,8 @@
     display: flex;
     justify-content: flex-end;
     position: relative;
-
+    order: -1;
+    flex-wrap: wrap;
 }
 
 .main{
@@ -70,11 +71,16 @@
         bottom: 50px !important;
     }
 
+    .body-wrap{
+        flex-direction: column;
+    }
+
     .header{
-        position: absolute;
+        position: sticky;
         width: 100vw;
         bottom: 0;
         height: 53px;
+        order: 1;
     }    
 
     .Nav-component{
@@ -89,7 +95,7 @@
     .Nav{
         top: auto !important;
         width: 100vw;
-        position: relative;
+        position: relative !important;
     }
 
     .Nav-Content{

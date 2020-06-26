@@ -6,8 +6,8 @@ import { withRouter, Link } from 'react-router-dom';
 import { token } from '../../store/middleware'
 import io from 'socket.io-client'
 import moment from 'moment'
-// import {useMediaQuery} from 'react-responsive'
-import { ICON_ARROWBACK} from '../../Icons'
+import {useMediaQuery} from 'react-responsive'
+import { ICON_ARROWBACK, ICON_SEND} from '../../Icons'
 
 let socket = io.connect(API_URL,{
     query: {token: token()}
@@ -36,8 +36,10 @@ const ChatPage = (props) => {
         if(!mounted.current){
             mounted.current = true
         }else{
-            let messageBody = document.querySelector('#messageBody');
-            messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+            if(document.querySelector('#messageBody')){
+                let messageBody = document.querySelector('#messageBody');
+                messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+            }
             socket.on('output', msg => {
                 let currConversation = conversation
                 currConversation.push(msg)
@@ -54,10 +56,12 @@ const ChatPage = (props) => {
         setConversation(params)
      }
 
-     const sendMsg = values => {
-        
-        let id = state.conversation.participants[0] !== state.account._id ? state.conversation.participants[0] : state.conversation.participants[1]
-        socket.emit('chat', { room: room, id, content: text })
+     const sendMsg = () => {
+        if(text.length>0){
+            document.getElementById('chat').value = "";
+            let id = state.conversation.participants[0] !== state.account._id ? state.conversation.participants[0] : state.conversation.participants[1]
+            socket.emit('chat', { room: room, id, content: text })
+        }
     }
 
     const getConversation = (id) => {
@@ -73,18 +77,17 @@ const ChatPage = (props) => {
     }
 
     const handleKeyDown = (e) => {
-        if(e.keyCode === 13 && text.length>0){
-            document.getElementById('chat').value = "";
+        console.log(conversation)
+        if(e.keyCode === 13){
             sendMsg()
-        }
-        
+        } 
     }
 
-    // const isTabletOrMobile = useMediaQuery({ query: '(max-width: 888px)' })
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 888px)' })
     
     return(
         <div className={props.res ? "chat-wrapper" : "chat-wrapper chat-right"}>
-        {account ? 
+        {account && !isTabletOrMobile && !props.res ? 
          <div className="chat-height" >
             <div className="chat-header-wrapper">  
                 {props.res && <div className="profile-header-back">
@@ -139,8 +142,11 @@ const ChatPage = (props) => {
                 </div>
             </div>
             <div className="chat-bottom-wrapper">
-                <div className="chat-input-container active">
-                <input onKeyDown={(e)=>handleKeyDown(e)} onChange={(e)=>handleInputChange(e)} placeholder="Start a new message" id="chat" type="text" name="message" />
+                <div className={room? "chat-input-container active" : "chat-input-container"}>
+                <input disabled={!room} onKeyDown={(e)=>handleKeyDown(e)} onChange={(e)=>handleInputChange(e)} placeholder="Start a new message" id="chat" type="text" name="message" />
+                <div onClick={sendMsg}>
+                    <ICON_SEND />
+                </div>
                 </div>
             </div>
             </div> : null }

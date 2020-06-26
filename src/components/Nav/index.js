@@ -182,12 +182,16 @@ const Nav = ({history}) => {
                         <div className="more-modal-wrapper">
                             {moreMenu ? 
                             <div style={{top: `${document.getElementById('moremenu').getBoundingClientRect().top - 40}px`, left: `${document.getElementById('moremenu').getBoundingClientRect().left}px`}} onClick={(e)=>handleMenuClick(e)} className="more-menu-content">
-                                    <div onClick={()=>actions.logout()} className="more-menu-item">
-                                        Log out @{account && account.username}
-                                    </div>
                                     <div onClick={changeTheme} className="more-menu-item">
                                         <span>Change Theme</span>
                                         <span>{theme ? <ICON_DARK/> : <ICON_LIGHT />}</span>
+                                    </div>
+                                    <Link to={`/bookmarks`} className="more-menu-item more-item">
+                                        <span>Bookmarks</span>
+                                        <span><ICON_BOOKMARK/></span>
+                                    </Link>
+                                    <div onClick={()=>actions.logout()} className="more-menu-item">
+                                        Log out @{account && account.username}
                                     </div>
                             </div> : null }
                         </div>

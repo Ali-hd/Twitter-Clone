@@ -205,11 +205,19 @@
     &:hover{
         background-color: rgb(245, 248, 250);
     }
+    span{
+        display: flex;
+        align-items: center;
+    }
     
 }
 
 .more-menu-item svg{
     width: 16px;
+}
+
+.more-item{
+    display: none;
 }
 
 

@@ -102,7 +102,7 @@ const TweetCard = React.memo(function TweetCard(props) {
     };
 
     useEffect(() => {
-        document.getElementsByTagName("body")[0].style.cssText = modalOpen && "position:fixed; overflow-y: scroll;"
+        document.getElementsByTagName("body")[0].style.cssText = modalOpen && "overflow: auto;"
         if(document.getElementById("replyBox")) 
         document.getElementById("replyBox").focus();
       }, [modalOpen])
@@ -398,7 +398,7 @@ const TweetCard = React.memo(function TweetCard(props) {
         {props.parent || props.user ? 
             <div onClick={()=>toggleModal()} style={{display: modalOpen ? 'block' : 'none'}} className="modal-edit">
             {modalOpen ?
-            <div style={{minHeight: '379px', height: 'initial'}} onClick={(e)=>handleModalClick(e)} className="modal-content">
+            <div style={{minHeight: '350px', height: 'initial'}} onClick={(e)=>handleModalClick(e)} className="modal-content">
                 <div className="modal-header">
                     <div className="modal-closeIcon">
                         <div onClick={()=>toggleModal()} className="modal-closeIcon-wrap">
@@ -430,7 +430,7 @@ const TweetCard = React.memo(function TweetCard(props) {
                                 </div>
                             </div>
                             <div className="card-content-info">
-                            {parent? props.parent.description : props.description}
+                            {parent? props.parent.description : props.retweet? props.retweet.description : props.description}
                             </div>
                             <div className="reply-to-user">
                                 <span className="reply-tweet-username">

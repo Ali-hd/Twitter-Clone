@@ -8,8 +8,7 @@ import Chat from '../ChatPage'
 
 const Messages = (props) => {
     const { state, actions } = useContext(StoreContext)
-    const {account} = state
-
+    const {account, conversations} = state
     const path = props.history.location.pathname
 
     useEffect(() => {
@@ -28,7 +27,7 @@ const Messages = (props) => {
             </div>
             <div className="messages-body">
                 <div className="recent-messages-wrapper">
-                {state.conversations && state.conversations.conversations.length > 0 ? state.conversations.conversations.map(con=>{
+                {account && conversations && conversations.conversations.length>0 ? conversations.conversations.map(con=>{
                     return <div key={con._id} onClick={()=>props.history.push(`/messages/${con._id}`)} className="message-box">
                                 <div className="message-avatar">
                                     <img width="100%" height="100" src={con.participants[0].username !== account.username ?
@@ -43,7 +42,7 @@ const Messages = (props) => {
                                         <span>{moment(con.updatedAt).format("MMM D, YYYY")}</span>
                                     </div>
                                     <div>
-                                        {con.messages.length>0 && con.messages[0].content.slice(0,15)}
+                                        {con.messages.length>0 && con.messages[con.messages.length - 1].content.slice(0,15)}
                                     </div>
                                 </div>}
                             </div>

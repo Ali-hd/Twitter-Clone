@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect, useRef} from 'react'
 import { StoreContext } from '../../store/store'
 import './style.scss'
 import {API_URL} from '../../config'
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { token } from '../../store/middleware'
 import io from 'socket.io-client'
 import moment from 'moment'
@@ -87,7 +87,7 @@ const ChatPage = (props) => {
     
     return(
         <div className={props.res ? "chat-wrapper" : "chat-wrapper chat-right"}>
-        {account && !isTabletOrMobile && !props.res ? 
+        {account ? isTabletOrMobile && !props.res ? null : 
          <div className="chat-height" >
             <div className="chat-header-wrapper">  
                 {props.res && <div className="profile-header-back">

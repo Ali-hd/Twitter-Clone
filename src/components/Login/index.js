@@ -28,6 +28,7 @@ const LoginPage = () => {
             <h1 className="login-header">
                 Log in to Twitter
             </h1>
+            {state.error && <p className="login-error"> The username/email or password you entered is incorrect. </p>}
             <form id="loginForm" onSubmit={(e)=>Login(e)} className="login-form">
                 <div className="login-input-wrap">
                     <div className="login-input-content">

@@ -21,7 +21,8 @@ const initialState = {
     top: '-100px',
     msg: '',
     conversations: null,
-    conversation: null
+    conversation: null,
+    error: false
 }
 
 const reducer = (state = initialState, action) => {

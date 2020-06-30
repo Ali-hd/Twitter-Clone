@@ -60,6 +60,7 @@ const TweetCard = React.memo(function TweetCard(props) {
     const [replyImage, setReplyImg] = useState(null)
     const [imageLoaded, setImageLoaded] = useState(false)
     const [parent, setParent] = useState(false)
+    const [styleBody, setStyleBody] = useState(false)
 
     const uploadImage = (file) => {
         let bodyFormData = new FormData()
@@ -82,10 +83,10 @@ const TweetCard = React.memo(function TweetCard(props) {
     }
 
     const toggleModal = (e, type) => {
+        setStyleBody(!styleBody)
         if(e){ e.stopPropagation() }
-        // if(param === 'edit'){setSaved(false)}
         if(type === 'parent'){setParent(true)}else{setParent(false)}
-        setModalOpen(!modalOpen)
+        setTimeout(()=>{ setModalOpen(!modalOpen) },20)
     }
 
     const handleModalClick = (e) => {
@@ -101,10 +102,19 @@ const TweetCard = React.memo(function TweetCard(props) {
         }
     };
 
+    const isInitialMount = useRef(true);
+
     useEffect(() => {
-        document.getElementsByTagName("body")[0].style.cssText = modalOpen && "overflow: auto;"
-        if(document.getElementById("replyBox")) 
-        document.getElementById("replyBox").focus();
+        if (isInitialMount.current){ isInitialMount.current = false }
+        else { 
+            document.getElementsByTagName("body")[0].style.cssText = styleBody && "overflow-y: hidden; margin-right: 17px"
+        }
+      }, [styleBody])
+
+    useEffect(()=> {
+        if (isInitialMount.current){ isInitialMount.current = false;}
+        else if(document.getElementById("replyBox")) {
+          document.getElementById("replyBox").focus(); }
       }, [modalOpen])
 
 

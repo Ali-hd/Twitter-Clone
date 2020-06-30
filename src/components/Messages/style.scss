@@ -55,10 +55,6 @@
     }
 }
 
-.messages-body{
-    padding: 0 8.5px;
-}
-
 .message-details{
     display: flex;
     flex-direction: column;
@@ -71,7 +67,7 @@
     white-space: nowrap;
     overflow: hidden;
     div{
-        max-width: 130px;
+        max-width: 210px;
         overflow: hidden;
         font-weight: 800;
         color: #000;   

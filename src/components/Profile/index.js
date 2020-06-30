@@ -1,4 +1,4 @@
-import React , { useEffect, useState, useContext} from 'react'
+import React , { useEffect, useState, useContext, useRef} from 'react'
 import './style.scss'
 import { ICON_ARROWBACK, ICON_MARKDOWN, ICON_DATE, ICON_CLOSE, ICON_UPLOAD, ICON_NEWMSG } from '../../Icons'
 import { withRouter } from 'react-router-dom'
@@ -24,6 +24,7 @@ const Profile = (props) => {
     const [tab, setTab] = useState('Followers')   
     const [loadingAvatar, setLoadingAvatar] = useState(false)
     const [loadingBanner, setLoadingBanner] = useState(false)
+    const [styleBody, setStyleBody] = useState(false)
     const {account, user} = state
     const userParam = props.match.params.username
 
@@ -50,10 +51,14 @@ const Profile = (props) => {
         // setMemOpen(false)
         // setModalOpen(false)
     }, [props.match.params.username])
-
+    
+    const isInitialMount = useRef(true);
     useEffect(() => {
-        document.getElementsByTagName("body")[0].style.cssText = modalOpen && "position:fixed; overflow-y: scroll;"
-      }, [modalOpen])
+        if (isInitialMount.current){ isInitialMount.current = false }
+        else { 
+            document.getElementsByTagName("body")[0].style.cssText = styleBody && "overflow-y: hidden; margin-right: 17px"
+        }
+      }, [styleBody])
 
     const toggleModal = (param, type) => {
         if(param === 'edit'){setSaved(false)}

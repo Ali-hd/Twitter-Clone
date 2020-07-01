@@ -145,6 +145,7 @@
 .modal-body{
     display: flex;
     flex-direction: column;
+    height: 100%;
     
 }
 
@@ -199,6 +200,12 @@
     width: 22.5px;
     min-width: 22.5px;
     height: 22.5px;
+}
+
+.modal-scroll{
+    overflow-y: scroll;
+    height: 100%;
+    margin-bottom: 55px;
 }
 
 .modal-profile-pic{

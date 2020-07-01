@@ -1,6 +1,6 @@
 import React, {useEffect, useContext} from 'react'
 import { StoreContext } from '../../store/store'
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import './style.scss'
 import moment from 'moment'
 import {useMediaQuery} from 'react-responsive'
@@ -16,6 +16,8 @@ const Messages = (props) => {
         document.getElementsByTagName("body")[0].style.cssText = "position:fixed; overflow-y: scroll;"
     },[path])
 
+    useEffect( () => () => document.getElementsByTagName("body")[0].style.cssText = "", [] )
+
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 888px)' })
     return(
         <React.Fragment>
@@ -29,10 +31,11 @@ const Messages = (props) => {
                 <div className="recent-messages-wrapper">
                 {account && conversations && conversations.conversations.length>0 ? conversations.conversations.map(con=>{
                     return <div style={{borderRight: path.slice(10) === con._id ? '2px solid #1da1f2' : null}} key={con._id} onClick={()=>props.history.push(`/messages/${con._id}`)} className="message-box">
-                                <div className="message-avatar">
+                                <Link onClick={(e)=>e.stopPropagation()} to={`/profile/${con.participants[0].username !== account.username ?
+                                         con.participants[0].username : con.participants[1].username}`} className="message-avatar">
                                     <img width="100%" height="100" src={con.participants[0].username !== account.username ?
                                          con.participants[0].profileImg : con.participants[1].profileImg} alt="" />
-                                </div>
+                                </Link>
                                 {account && 
                                 <div className="message-details">
                                     <div className="message-info">

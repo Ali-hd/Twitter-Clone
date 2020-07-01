@@ -1,6 +1,6 @@
-import React , { useEffect, useState, useContext } from 'react'
+import React , { useEffect, useState, useContext, useRef } from 'react'
 import './style.scss'
-import {  withRouter } from 'react-router-dom'
+import {  withRouter, Link } from 'react-router-dom'
 import { StoreContext } from '../../store/store'
 import Loader from '../Loader'
 import TweetCard from '../TweetCard'
@@ -20,7 +20,23 @@ const [saved, setSaved] = useState(false)
 const [memOpen, setMemOpen] = useState(false)
 const [tab, setTab] = useState('Members')
 const [bannerLoading, setBannerLoading] = useState(false)
+const [styleBody, setStyleBody] = useState(false)
 const {account, list, listTweets, resultUsers} = state
+
+useEffect(() => {
+    window.scrollTo(0, 0)
+    actions.getList(props.match.params.id)
+}, [])
+
+const isInitialMount = useRef(true);
+useEffect(() => {
+    if (isInitialMount.current){ isInitialMount.current = false }
+    else { 
+        document.getElementsByTagName("body")[0].style.cssText = styleBody && "overflow-y: hidden; margin-right: 17px"
+    }
+}, [styleBody])
+
+useEffect( () => () => document.getElementsByTagName("body")[0].style.cssText = "", [] )
 
 const editList = () => {
     let values = {
@@ -37,7 +53,9 @@ const editList = () => {
 const toggleModal = (param) => {
     if(param === 'edit'){setSaved(false)}
     if(param === 'members'){setMemOpen(true)}
-    setModalOpen(!modalOpen)
+    if(param === 'close'){setMemOpen(false)}
+    setStyleBody(!styleBody)
+    setTimeout(()=>{ setModalOpen(!modalOpen) },20)
 }
 
 const handleModalClick = (e) => {
@@ -60,11 +78,6 @@ const changeBanner = () => {
     let file = document.getElementById('banner').files[0];
     uploadImage(file)
 }
-
-useEffect(() => {
-    window.scrollTo(0, 0)
-    actions.getList(props.match.params.id)
-}, [])
 
 const deleteList = () => {
     actions.deleteList(props.match.params.id)
@@ -129,11 +142,11 @@ return(
             return <TweetCard retweet={t.retweet} username={t.username} name={t.name} parent={t.parent} key={t._id} id={t._id} user={t.user} createdAt={t.createdAt} description={t.description} images={t.images} replies={t.replies} retweets={t.retweets} likes={t.likes}  />
         })}
     </div>
-    <div onClick={()=>toggleModal()} style={{display: modalOpen ? 'block' : 'none'}} className="modal-edit">
+    <div onClick={()=>toggleModal('close')} style={{display: modalOpen ? 'block' : 'none'}} className="modal-edit">
             <div style={{height: '572px'}} onClick={(e)=>handleModalClick(e)} className="modal-content">
                 <div className={memOpen ? "modal-header no-b-border" : "modal-header"}>
                     <div className="modal-closeIcon">
-                        <div onClick={()=>toggleModal()} className="modal-closeIcon-wrap">
+                        <div onClick={()=>toggleModal('close')} className="modal-closeIcon-wrap">
                             <ICON_CLOSE />
                         </div>
                     </div>
@@ -145,8 +158,8 @@ return(
                     </div>}
                 </div>
                 {memOpen ? 
-                <div>
-                    <div className="explore-nav-menu">
+                <div className="modal-body">
+                <div className="explore-nav-menu">
                     <div onClick={()=>setTab('Members')} className={tab =='Members' ? `explore-nav-item activeTab` : `explore-nav-item`}>
                         Members ({list.users.length})
                     </div>
@@ -154,12 +167,13 @@ return(
                         Search
                     </div>
                 </div>
+                <div className="modal-scroll">
                 {tab === 'Members' ? 
                 list.users.map(u=>{
                 return <div onClick={()=>goToUser(u.username)} key={u._id} className="search-result-wapper">
-                    <div className="search-userPic-wrapper">
+                    <Link to={`/profile/${u.username}`} className="search-userPic-wrapper">
                             <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={u.profileImg}/>
-                    </div>
+                    </Link>
                     <div className="search-user-details">
                         <div className="search-user-warp">
                             <div className="search-user-info">
@@ -189,9 +203,9 @@ return(
                 </div>
                 {resultUsers.length ? resultUsers.map(u=>{
                     return <div onClick={()=>goToUser(u.username)} key={u._id} className="search-result-wapper">
-                    <div className="search-userPic-wrapper">
+                    <Link to={`/profile/${u.username}`} className="search-userPic-wrapper">
                             <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={u.profileImg}/>
-                    </div>
+                    </Link>
                     <div className="search-user-details">
                         <div className="search-user-warp">
                             <div className="search-user-info">
@@ -210,6 +224,7 @@ return(
                 </div>
                 }) : null}
                 </div>}
+                </div>
                 </div>
                 :
                 <div className="modal-body">

@@ -1,7 +1,7 @@
 import React , { useEffect, useState, useContext, useRef} from 'react'
 import './style.scss'
 import { ICON_ARROWBACK, ICON_MARKDOWN, ICON_DATE, ICON_CLOSE, ICON_UPLOAD, ICON_NEWMSG } from '../../Icons'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { StoreContext } from '../../store/store'
 import Loader from '../Loader'
 import moment from 'moment'
@@ -28,7 +28,25 @@ const Profile = (props) => {
     const {account, user} = state
     const userParam = props.match.params.username
 
-    const changeTab = (tab) => {
+    useEffect(() => {
+        window.scrollTo(0, 0)
+        actions.getUser(props.match.params.username)
+        //preventing edit modal from apprearing after clicking a user on memOpen
+        setMemOpen(false)
+        setModalOpen(false)
+    }, [props.match.params.username])
+    
+    const isInitialMount = useRef(true);
+    useEffect(() => {
+        if (isInitialMount.current){ isInitialMount.current = false }
+        else { 
+            document.getElementsByTagName("body")[0].style.cssText = styleBody && "overflow-y: hidden; margin-right: 17px"
+        }
+      }, [styleBody])
+
+      useEffect( () => () => document.getElementsByTagName("body")[0].style.cssText = "", [] )
+
+      const changeTab = (tab) => {
         setActiveTab(tab)
     }
 
@@ -45,22 +63,8 @@ const Profile = (props) => {
         toggleModal()
     }
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-        actions.getUser(props.match.params.username)
-        // setMemOpen(false)
-        // setModalOpen(false)
-    }, [props.match.params.username])
-    
-    const isInitialMount = useRef(true);
-    useEffect(() => {
-        if (isInitialMount.current){ isInitialMount.current = false }
-        else { 
-            document.getElementsByTagName("body")[0].style.cssText = styleBody && "overflow-y: hidden; margin-right: 17px"
-        }
-      }, [styleBody])
-
     const toggleModal = (param, type) => {
+        setStyleBody(!styleBody)
         if(param === 'edit'){setSaved(false)}
         if(type){setTab(type)}
         if(param === 'members'){
@@ -68,7 +72,7 @@ const Profile = (props) => {
             actions.getFollowers(props.match.params.username)
         }
         if(memOpen){setMemOpen(false)}
-        setModalOpen(!modalOpen)
+        setTimeout(()=>{ setModalOpen(!modalOpen) },20)
     }
 
     const handleModalClick = (e) => {
@@ -103,6 +107,7 @@ const Profile = (props) => {
     }
 
     const goToUser = (id) => {
+        setModalOpen(false)
         props.history.push(`/profile/${id}`)      
     } 
 
@@ -236,12 +241,13 @@ const Profile = (props) => {
                             Following
                         </div>
                     </div>
+                    <div className="modal-scroll">
                     {tab === 'Followers' ? 
                      state.followers.map(f=>{
                          return <div onClick={()=>goToUser(f.username)} key={f._id} className="search-result-wapper">
-                         <div className="search-userPic-wrapper">
+                         <Link to={`/profile/${f.username}`} className="search-userPic-wrapper">
                                  <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={f.profileImg}/>
-                         </div>
+                         </Link>
                          <div className="search-user-details">
                              <div className="search-user-warp">
                                  <div className="search-user-info">
@@ -262,9 +268,9 @@ const Profile = (props) => {
                      :
                      state.following.map(f=>{
                          return <div onClick={()=>goToUser(f.username)} key={f._id} className="search-result-wapper">
-                         <div className="search-userPic-wrapper">
+                         <Link to={`/profile/${f.username}`} className="search-userPic-wrapper">
                                  <img style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={f.profileImg}/>
-                         </div>
+                         </Link>
                          <div className="search-user-details">
                              <div className="search-user-warp">
                                  <div className="search-user-info">
@@ -283,6 +289,7 @@ const Profile = (props) => {
                      </div>
                      })
                      }
+                     </div>
                     </div> : 
                     <div className="modal-body">
                         <div className="modal-banner">

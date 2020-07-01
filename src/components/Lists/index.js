@@ -1,4 +1,4 @@
-import React , { useEffect, useState, useContext } from 'react'
+import React , { useEffect, useState, useContext, useRef } from 'react'
 import './style.scss'
 import { Link, withRouter } from 'react-router-dom'
 import { StoreContext } from '../../store/store'
@@ -8,11 +8,32 @@ import {ICON_ARROWBACK, ICON_CLOSE, ICON_NEWLIST, ICON_UPLOAD} from '../../Icons
 
 const Lists = (props) => {
 
+    
+
+
 const { state, actions } = useContext(StoreContext)
 const [modalOpen, setModalOpen] = useState(false)
 const [name, setName] = useState('')
 const [description, setDescription] = useState('')
 const [banner, setBanner] = useState('')
+const [styleBody, setStyleBody] = useState(false)
+
+const {account, lists} = state
+
+useEffect(() => {
+    window.scrollTo(0, 0)
+    actions.getLists()
+}, [])
+
+const isInitialMount = useRef(true);
+useEffect(() => {
+    if (isInitialMount.current){ isInitialMount.current = false }
+    else { 
+        document.getElementsByTagName("body")[0].style.cssText = styleBody && "overflow-y: hidden; margin-right: 17px"
+    }
+}, [styleBody])
+
+useEffect( () => () => document.getElementsByTagName("body")[0].style.cssText = "", [] )
 
 const createList = () => {
     let values = { name, description, banner }
@@ -21,7 +42,8 @@ const createList = () => {
 }
 
 const toggleModal = () => {
-    setModalOpen(!modalOpen)
+    setStyleBody(!styleBody)
+    setTimeout(()=>{ setModalOpen(!modalOpen) },20)
 }
 
 const handleModalClick = (e) => {
@@ -41,12 +63,6 @@ const changeBanner = () => {
     uploadImage(file)
 }
 
-const {account, lists} = state
-
-useEffect(() => {
-    window.scrollTo(0, 0)
-    actions.getLists()
-}, [])
 
 
 return(

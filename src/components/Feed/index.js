@@ -1,6 +1,6 @@
 import React , { useEffect, useContext } from 'react'
 import './style.scss'
-import {  withRouter } from 'react-router-dom'
+import {  withRouter, Link } from 'react-router-dom'
 import { StoreContext } from '../../store/store'
 import Loader from '../Loader'
 
@@ -50,9 +50,9 @@ return(
                 if(s.username !== account.username) {
                     return <div key={s._id} className="feed-card-trend">
                     <div onClick={()=>goToUser(s.username)} className="sugg-result-wapper">
-                        <div className="search-userPic-wrapper">
+                        <Link to={`/profile/${s.username}`} className="search-userPic-wrapper">
                                 <img alt="" style={{borderRadius:'50%', minWidth:'49px'}} width="100%" height="49px" src={s.profileImg}/>
-                        </div>
+                        </Link>
                         <div className="search-user-details">
                             <div className="search-user-warp">
                                 <div className="search-user-info">

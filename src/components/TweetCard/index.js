@@ -15,6 +15,13 @@ const TweetCard = React.memo(function TweetCard(props) {
     const { state, actions } = useContext(StoreContext)
     const {account} = state
 
+    const [modalOpen, setModalOpen] = useState(false)
+    const [replyText, setReplyText] = useState('')
+    const [replyImage, setReplyImg] = useState(null)
+    const [imageLoaded, setImageLoaded] = useState(false)
+    const [parent, setParent] = useState(false)
+    const [styleBody, setStyleBody] = useState(false)
+
     let info
     const likeTweet = (e,id) => {
         e.stopPropagation()
@@ -54,13 +61,6 @@ const TweetCard = React.memo(function TweetCard(props) {
         if(props.replyTo){ actions.getTweet(id) }
         props.history.push(`/tweet/${props.user.username}/${id}`)      
     } 
-
-    const [modalOpen, setModalOpen] = useState(false)
-    const [replyText, setReplyText] = useState('')
-    const [replyImage, setReplyImg] = useState(null)
-    const [imageLoaded, setImageLoaded] = useState(false)
-    const [parent, setParent] = useState(false)
-    const [styleBody, setStyleBody] = useState(false)
 
     const uploadImage = (file) => {
         let bodyFormData = new FormData()
@@ -110,6 +110,8 @@ const TweetCard = React.memo(function TweetCard(props) {
             document.getElementsByTagName("body")[0].style.cssText = styleBody && "overflow-y: hidden; margin-right: 17px"
         }
       }, [styleBody])
+
+    useEffect( () => () => document.getElementsByTagName("body")[0].style.cssText = "", [] )
 
     useEffect(()=> {
         if (isInitialMount.current){ isInitialMount.current = false;}

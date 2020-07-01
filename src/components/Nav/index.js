@@ -21,14 +21,23 @@ const Nav = ({history}) => {
     const { account, session } = state
     const [moreMenu, setMoreMenu] = useState(false)
     const [theme, setTheme] = useState(true)
-
     const [modalOpen, setModalOpen] = useState(false)
+    const [styleBody, setStyleBody] = useState(false)
     const [tweetText, setTweetText] = useState('')
     const [tweetImage, setTweetImage] = useState(null)
     const [imageLoaded, setImageLoaded] = useState(false)
 
     const tweetT = useRef('');
 
+    const isInitialMount = useRef(true);
+    useEffect(() => {
+        if (isInitialMount.current){ isInitialMount.current = false }
+        else { 
+            document.getElementsByTagName("body")[0].style.cssText = styleBody && "overflow-y: hidden; margin-right: 17px"
+        }
+    }, [styleBody])
+
+    useEffect( () => () => document.getElementsByTagName("body")[0].style.cssText = "", [] )
 
     useEffect(()=>{  
         let ran = false
@@ -79,7 +88,8 @@ const Nav = ({history}) => {
 
     const toggleModal = (e, type) => {
         if(e){ e.stopPropagation() }
-        setModalOpen(!modalOpen)
+        setStyleBody(!styleBody)
+        setTimeout(()=>{ setModalOpen(!modalOpen) },20)
     }
 
     const handleModalClick = (e) => {

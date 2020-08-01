@@ -21,7 +21,7 @@
 }
 
 .card-content-wrapper{
-    overflow: hidden;
+    // overflow: hidden; removed it caused hover icons to cuttoff
     max-width: calc(100% - 60px);
     flex-basis: calc(100% - 49px);
 }

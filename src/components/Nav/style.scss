@@ -178,7 +178,6 @@
     min-height: 100px;
     max-width: 40vw;
     max-height: 50vh;
-    height: 104px;
     width: 190px;
     min-width: 190px;
     border-radius: 14px;
@@ -192,6 +191,13 @@
     box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
     display: flex;
     flex-direction: column;
+}
+
+@media only screen and (min-width: 451px){
+    .more-menu-content{
+        
+        height: 104px;
+    }
 }
 
 .more-menu-item{

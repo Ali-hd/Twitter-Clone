@@ -53,10 +53,6 @@ const Nav = ({history}) => {
             localStorage.setItem('Theme', 'light')
         }
       }, [])
-
-      if(!session){
-         return <Redirect to="/login" />
-      }
       
       const path = history.location.pathname.slice(0,5)
 
@@ -153,6 +149,8 @@ const Nav = ({history}) => {
                             <div className="Nav-item">Explore</div>
                         </div>
                     </Link>
+                    {session ? 
+                    <> 
                     <Link to="/notifications" className="Nav-link">
                         <div className={path === '/noti' ? "Nav-item-hover active-Nav" : "Nav-item-hover"}>
                             {path === '/noti' ? <ICON_BELLFILL /> : <ICON_BELL />}
@@ -183,6 +181,7 @@ const Nav = ({history}) => {
                             <div className="Nav-item">Profile</div>
                         </div>
                     </Link>
+                    </> : null}
                     <div id="moremenu" onClick={openMore} className="Nav-link">
                         <div className={"Nav-item-hover"}>
                             <ICON_SETTINGS  />
@@ -191,22 +190,28 @@ const Nav = ({history}) => {
                         <div onClick={()=>openMore()} style={{display: moreMenu ? 'block' : 'none'}} className="more-menu-background">
                         <div className="more-modal-wrapper">
                             {moreMenu ? 
-                            <div style={{top: `${document.getElementById('moremenu').getBoundingClientRect().top - 40}px`, left: `${document.getElementById('moremenu').getBoundingClientRect().left}px`}} onClick={(e)=>handleMenuClick(e)} className="more-menu-content">
+                            <div style={{top: `${document.getElementById('moremenu').getBoundingClientRect().top - 40}px`, left: `${document.getElementById('moremenu').getBoundingClientRect().left}px`, height: !session ? '104px' : null }} onClick={(e)=>handleMenuClick(e)} className="more-menu-content">
                                     <div onClick={changeTheme} className="more-menu-item">
                                         <span>Change Theme</span>
                                         <span>{theme ? <ICON_DARK/> : <ICON_LIGHT />}</span>
                                     </div>
+                                    {session ?
                                     <Link to={`/bookmarks`} className="more-menu-item more-item">
                                         <span>Bookmarks</span>
                                         <span><ICON_BOOKMARK/></span>
-                                    </Link>
+                                    </Link> : null }
+                                    {session ? 
                                     <div onClick={()=>actions.logout()} className="more-menu-item">
                                         Log out @{account && account.username}
-                                    </div>
+                                    </div> : 
+                                    <div onClick={()=>history.push('/login')} className="more-menu-item">
+                                    Log in 
+                                    </div>}
                             </div> : null }
                         </div>
                         </div>
                     </div>
+                    {session ? 
                     <div className="Nav-tweet">   
                         <div onClick={()=>toggleModal()} className="Nav-tweet-link">
                             <div className="Nav-tweet-btn btn-hide">
@@ -216,7 +221,7 @@ const Nav = ({history}) => {
                                 <span><ICON_FEATHER/></span>
                             </div>
                         </div>
-                    </div>
+                    </div> : null }
                 </nav>
                 <div>
 

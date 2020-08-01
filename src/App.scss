@@ -21,6 +21,7 @@
 
   .middle-section{
       max-width: 600px;
+      min-height: 100vh;
   }
 
   .ms-width{
@@ -658,13 +659,10 @@
         bottom: 46px !important;
         left: 47% !important;  
         overflow: hidden; 
-        height: 154px !important;     
+        height: 154px;     
     }
 
     .more-item{
         display: flex !important;
     }
-
-
-
 }

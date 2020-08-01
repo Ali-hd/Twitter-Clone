@@ -53,7 +53,7 @@ export const applyMiddleware = dispatch => action => {
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 
         case types.GET_USER:
-            return axios.get(`${API_URL}/user/${action.payload}/tweets`, headers)
+            return axios.get(`${API_URL}/user/${action.payload}/tweets`)
             .then(res=>dispatch({ type: types.GET_USER, payload: res.data }))
             .catch(err=>dispatch({ type: types.ERROR, payload: err.response.data }))
 

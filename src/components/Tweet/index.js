@@ -16,7 +16,7 @@ const TweetPage = (props) => {
     let history = useHistory();
 
     const { state, actions } = useContext(StoreContext)
-    const {tweet, account} = state
+    const {tweet, account, session} = state
 
     const [modalOpen, setModalOpen] = useState(false)
     const [replyText, setReplyText] = useState('')
@@ -31,14 +31,17 @@ const TweetPage = (props) => {
 
     let info
     const likeTweet = (id) => {
+        if(!session){ actions.alert('Please Sign In'); return }
         info = { dest: "tweet", id }
         actions.likeTweet(info)
     }
     const retweet = (id) => {
+        if(!session){ actions.alert('Please Sign In'); return }
         info = { dest: "tweet", id }
         actions.retweet(info)
     }
     const bookmarkTweet = (id) => {
+        if(!session){ actions.alert('Please Sign In'); return }
         info = { dest: "tweet", id }
         actions.bookmarkTweet(info)
     }
@@ -107,8 +110,8 @@ const TweetPage = (props) => {
     }
 
     return(
-        <div>
-            {tweet && account ? 
+        <>
+            {tweet ? 
             <div className="tweet-wrapper">
             <div className="tweet-header-wrapper">
                 <div className="profile-header-back">
@@ -157,18 +160,18 @@ const TweetPage = (props) => {
                     </div>
                     <div onClick={()=>retweet(tweet._id)} className="tweet-int-icon">
                         <div className="card-icon retweet-icon">
-                             <ICON_RETWEET styles={account.retweets.includes(tweet._id) ? {stroke: 'rgb(23, 191, 99)'} : {fill:'rgb(101, 119, 134)'}}/> 
+                             <ICON_RETWEET styles={account && account.retweets.includes(tweet._id) ? {stroke: 'rgb(23, 191, 99)'} : {fill:'rgb(101, 119, 134)'}}/> 
                         </div>
                     </div>
                     <div onClick={()=>likeTweet(tweet._id)} className="tweet-int-icon">
                         <div className="card-icon heart-icon">
-                        {account.likes.includes(tweet._id) ? <ICON_HEARTFULL styles={{fill:'rgb(224, 36, 94)'}}
+                        {account && account.likes.includes(tweet._id) ? <ICON_HEARTFULL styles={{fill:'rgb(224, 36, 94)'}}
                          /> : <ICON_HEART/>} </div>
                     </div>
-                    <div onClick={()=>account.username === tweet.user.username ? deleteTweet(tweet._id) : bookmarkTweet(tweet._id)} className="tweet-int-icon">
-                        <div className={account.username === tweet.user.username ? "card-icon delete-icon" :"card-icon share-icon"}>
-                            {account.username === tweet.user.username ? 
-                                <ICON_DELETE styles={{fill:'rgb(101, 119, 134)'}} /> : account.bookmarks.includes(tweet._id) ? <ICON_BOOKMARKFILL styles={{fill:'rgb(10, 113, 176)'}}/> :
+                    <div onClick={()=>account && account.username === tweet.user.username ? deleteTweet(tweet._id) : bookmarkTweet(tweet._id)} className="tweet-int-icon">
+                        <div className={account && account.username === tweet.user.username ? "card-icon delete-icon" :"card-icon share-icon"}>
+                            {account && account.username === tweet.user.username ? 
+                                <ICON_DELETE styles={{fill:'rgb(101, 119, 134)'}} /> : account && account.bookmarks.includes(tweet._id) ? <ICON_BOOKMARKFILL styles={{fill:'rgb(10, 113, 176)'}}/> :
                                 <ICON_BOOKMARK styles={{fill:'rgb(101, 119, 134)'}}/>}
                         </div>
                     </div>
@@ -267,7 +270,7 @@ const TweetPage = (props) => {
                 </div>
             </div> : null}
         </div>:null}
-        </div>
+        </>
     )
 }
 

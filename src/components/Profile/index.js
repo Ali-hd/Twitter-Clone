@@ -25,7 +25,7 @@ const Profile = (props) => {
     const [loadingAvatar, setLoadingAvatar] = useState(false)
     const [loadingBanner, setLoadingBanner] = useState(false)
     const [styleBody, setStyleBody] = useState(false)
-    const {account, user} = state
+    const {account, user, session} = state
     const userParam = props.match.params.username
 
     useEffect(() => {
@@ -80,6 +80,7 @@ const Profile = (props) => {
     }
 
     const followUser = (e,id) => {
+        if(!session){ actions.alert('Please Sign In'); return }
         e.stopPropagation()
         actions.followUser(id)
     }
@@ -112,6 +113,7 @@ const Profile = (props) => {
     } 
 
     const startChat = () => {
+        if(!session){ actions.alert('Please Sign In'); return }
         actions.startChat({id:user._id, func: goToMsg})
     }
 
@@ -122,7 +124,7 @@ const Profile = (props) => {
     
     return(
         <div>
-            {user && account ? 
+            {user ? 
             <div>
             <div className="profile-wrapper">
             <div className="profile-header-wrapper">
@@ -133,7 +135,7 @@ const Profile = (props) => {
                 </div>
                 <div className="profile-header-content">
                     <div className="profile-header-name">
-                            {account.username === userParam ? account.username : user.username}
+                            {account && account.username === userParam ? account.username : user.username}
                     </div>
                     {/* <div className="profile-header-tweets">
                             82 Tweets
@@ -148,17 +150,17 @@ const Profile = (props) => {
                     <div className="profile-image-wrapper">
                         <img src={avatar.length > 0 && saved ? avatar : user.profileImg} alt=""/>
                     </div>
-                    {account.username === userParam? null : <span onClick={()=>startChat()} className="new-msg"><ICON_NEWMSG/></span>}
-                    <div onClick={(e)=>account.username === userParam ? toggleModal('edit'): followUser(e,user._id)} 
-                     className={account.following.includes(user._id) ? 'unfollow-switch profile-edit-button' : 'profile-edit-button'}>
-                        {account.username === userParam?
+                    {account && account.username === userParam? null : <span onClick={()=>startChat()} className="new-msg"><ICON_NEWMSG/></span>}
+                    <div onClick={(e)=>account && account.username === userParam ? toggleModal('edit'): followUser(e,user._id)} 
+                     className={account && account.following.includes(user._id) ? 'unfollow-switch profile-edit-button' : 'profile-edit-button'}>
+                        {account && account.username === userParam?
                         <span>Edit profile</span> :
-                        <span><span>{ account.following.includes(user._id) ? 'Following' : 'Follow'}</span></span>}
+                        <span><span>{ account && account.following.includes(user._id) ? 'Following' : 'Follow'}</span></span>}
                     </div>
                 </div>
                 <div className="profile-details-box">
                     <div className="profile-name">{user.name}</div>
-                    <div className="profile-username">@{account.username === userParam ? account.username : user.username}</div>
+                    <div className="profile-username">@{account && account.username === userParam ? account.username : user.username}</div>
                     <div className="profile-bio">
                         {user.description}
                     </div>
@@ -254,9 +256,9 @@ const Profile = (props) => {
                                      <div className="search-user-name">{f.name}</div>
                                      <div className="search-user-username">@{f.username}</div>
                                  </div>
-                                 {f._id === account._id ? null :
-                                 <div onClick={(e)=>followUser(e,f._id)} className={account.following.includes(f._id) ? "follow-btn-wrap unfollow-switch":"follow-btn-wrap"}>
-                                     <span><span>{account.following.includes(f._id) ? 'Following' : 'Follow'}</span></span>
+                                 {f._id === account && account._id ? null :
+                                 <div onClick={(e)=>followUser(e,f._id)} className={account && account.following.includes(f._id) ? "follow-btn-wrap unfollow-switch":"follow-btn-wrap"}>
+                                     <span><span>{account && account.following.includes(f._id) ? 'Following' : 'Follow'}</span></span>
                                  </div>}
                              </div>
                              <div className="search-user-bio">
@@ -277,9 +279,9 @@ const Profile = (props) => {
                                      <div className="search-user-name">{f.name}</div>
                                      <div className="search-user-username">@{f.username}</div>
                                  </div>
-                                 {f._id === account._id ? null :
-                                 <div onClick={(e)=>followUser(e,f._id)} className={account.following.includes(f._id) ? "follow-btn-wrap unfollow-switch":"follow-btn-wrap"}>
-                                     <span><span>{account.following.includes(f._id) ? 'Following' : 'Follow'}</span></span>
+                                 {f._id === account && account._id ? null :
+                                 <div onClick={(e)=>followUser(e,f._id)} className={account && account.following.includes(f._id) ? "follow-btn-wrap unfollow-switch":"follow-btn-wrap"}>
+                                     <span><span>{account && account.following.includes(f._id) ? 'Following' : 'Follow'}</span></span>
                                  </div>}
                              </div>
                              <div className="search-user-bio">

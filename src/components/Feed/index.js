@@ -9,12 +9,14 @@ const Feed = (props) => {
 
 const { state, actions } = useContext(StoreContext)
 
-const {account, trends, suggestions} = state
+const {account, trends, suggestions, session} = state
 // const userParam = props.match.params.username
 
 useEffect(() => {
     actions.getTrend()
-    actions.whoToFollow()
+    if(session){
+        actions.whoToFollow()
+    }
 }, [])
 
 const goToUser = (id) => {

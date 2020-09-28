@@ -2,6 +2,7 @@
 .loader-wrapper{
     position: relative;
     height: 50%;
+    margin: 50px 0;
 }
 
 .loader_svg{

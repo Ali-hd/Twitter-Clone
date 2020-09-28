@@ -86,8 +86,9 @@ const TweetCard = React.memo(function TweetCard(props) {
     }
 
     const toggleModal = (e, type) => {
-        setStyleBody(!styleBody)
         if(e){ e.stopPropagation() }
+        if(!session){ actions.alert('Please Sign In'); return }
+        setStyleBody(!styleBody)
         if(type === 'parent'){setParent(true)}else{setParent(false)}
         setTimeout(()=>{ setModalOpen(!modalOpen) },20)
     }
@@ -124,6 +125,7 @@ const TweetCard = React.memo(function TweetCard(props) {
 
 
     const replyTweet = (type) => {
+        if(!session){ actions.alert('Please Sign In'); return }
         toggleModal()
 
         let hashtags = replyText.match(/#(\w+)/g)

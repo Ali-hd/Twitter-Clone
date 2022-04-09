@@ -10,7 +10,7 @@
     "darkreader": "^4.9.10",
     "dotenv": "^8.2.0",
     "jwt-decode": "^2.2.0",
-    "moment": "^2.26.0",
+    "moment": "^2.29.2",
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
     "react-contenteditable": "^3.3.4",
